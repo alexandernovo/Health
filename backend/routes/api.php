@@ -3,9 +3,24 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
-});
+Route::prefix('users')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+});    
+
+
+
+// Route::prefix('api')->group(function () {
+//     // Auth routes
+//     Route::post('login', [AuthController::class, 'login']);
+//     Route::post('register', [AuthController::class, 'register']);
+//     Route::post('logout', [AuthController::class, 'logout']);
+//     Route::post('refresh', [AuthController::class, 'refresh']);
+
+
+//remove routes
+// php artisan route:list | Where-Object { $_ -notmatch "/api" } 
+//add routes
+// php artisan route:list --path=api

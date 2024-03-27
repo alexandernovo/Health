@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import doctor from '@images/backround-avatar.png'
 
 const Login: React.FC = () => {
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
                             <input type="password" className="grow" placeholder='Password' />
                         </label>
                         <button className="btn btn-active btn-primary w-full">LOGIN</button>
-                        <p className='text-[14px] text-center mt-1 text-white'>Don't have account? <a className='text-white'>Register Here</a></p>
+                        <p className='text-[14px] text-center mt-1 text-white'>Don't have account? <Link to="register" className='text-white hover:text-blue-800'>Register Here</Link></p>
                     </div>
                 </div>
             </div>
