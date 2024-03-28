@@ -7,16 +7,16 @@ import NotFound from '@pages/NotFound'
 
 function App() {
   return (
-    <MainLayout>
-      <Router>
+    <Router>
+      <MainLayout>
         <Routes>
           <Route element={<Home />} path='/home' ></Route>
           <Route element={<Login />} path='/' ></Route>
           <Route element={<Register />} path='/register' ></Route>
           <Route element={<NotFound />} path='*'></Route>
         </Routes>
-      </Router>
-    </MainLayout>
+      </MainLayout>
+    </Router>
   )
 }
 
