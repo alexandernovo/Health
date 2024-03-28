@@ -11,15 +11,6 @@ Route::prefix('users')->group(function () {
 });    
 
 
-
-// Route::prefix('api')->group(function () {
-//     // Auth routes
-//     Route::post('login', [AuthController::class, 'login']);
-//     Route::post('register', [AuthController::class, 'register']);
-//     Route::post('logout', [AuthController::class, 'logout']);
-//     Route::post('refresh', [AuthController::class, 'refresh']);
-
-
 //remove routes
 // php artisan route:list | Where-Object { $_ -notmatch "/api" } 
 //add routes
