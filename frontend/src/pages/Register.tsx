@@ -40,8 +40,15 @@ const Register: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('YOUR_ENDPOINT_URL_HERE', formData);
+            const response = await axios.post('/api/users/register', formData);
             console.log(response.data);
+            if (response.data.status == 'success') {
+                console.log(response.data.message);
+                localStorage.setItem('token', response.data.authorization.token);
+            }
+            else {
+                setError(response.data.errors);
+            }
         } catch (error) {
             console.error('Error occurred:', error);
         }
@@ -59,29 +66,31 @@ const Register: React.FC = () => {
                     <div className='md:w-full lg:w-full px-[35px]'>
                         <img src={doctor} className='md:w-[200px] md:h-[220px] lg:w-[200px] lg:h-[220px] mx-auto bg-blend-normal' />
                         <p className='font-semibold text-[20px] mb-2 text-white tracking-wide'>REGISTER HERE</p>
-                        <form onSubmit={handleSubmit}>
-                            <div className='flex gap-2 w-full'>
-                                <label className="input input-bordered flex items-center mb-3 w-full">
+                        <form onSubmit={handleSubmit} className='w-full'>
+                            <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap'>
+                                <label className="input input-bordered flex items-center md:w-1/2 lg:w-1/2 w-full mb-1 md:mb-0 lg:mb-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                     <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} className="grow" placeholder="Firstname" />
                                 </label>
-                                <label className="input input-bordered flex items-center mb-3 w-full">
+                                {error.firstname && <p className="text-red-500 text-[13px]">{error.firstname}</p>}
+                                <label className="input input-bordered flex items-center md:w-1/2 lg:w-1/2 w-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                     <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} className="grow" placeholder="Lastname" />
                                 </label>
+                                {error.lastname && <p className="text-red-500 text-[13px]">{error.lastname}</p>}
                             </div>
                             <div className='w-full'>
-                                <label className="input input-bordered flex items-center w-full mb-3">
+                                <label className="input input-bordered flex items-center w-full mt-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                     <input type="text" name="username" value={formData.username} onChange={handleChange} className="grow" placeholder='Username' />
                                 </label>
-                                <label className="input input-bordered flex items-center w-full mb-3">
+                                {error.username && <p className="text-red-500 text-[13px]">{error.username}</p>}
+                                <label className="input input-bordered flex items-center w-full mt-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                         className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
                                     <input type="password" name="password" value={formData.password} onChange={handleChange} className="grow" placeholder='Password' />
                                 </label>
-
-                                <label className="input input-bordered flex items-center w-full">
+                                <label className="input input-bordered flex items-center w-full mt-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
                                     <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="grow" placeholder='Confirm Password' />
                                 </label>

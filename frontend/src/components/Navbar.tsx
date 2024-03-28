@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '@images/logo-center.png'
 const Navbar: React.FC = () => {
     return (
-        <div className="navbar bg-base-100 top-0 sticky">
+        <div className="navbar bg-base-100 top-0 sticky border-b-[1px] z-10">
             <div className="navbar-start w-[80%] md:w-auto lg:w-auto">
                 {/* <div className="dropdown"> */}
                 {/* <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
