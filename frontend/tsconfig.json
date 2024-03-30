@@ -29,7 +29,8 @@
       "@images/*": ["src/assets/images/*"],
       "@assets/*": ["src/assets/*"],
       "@store/*": ["src/store/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@datatypes/*": ["src/types/*"]
     }
   },
   "include": ["src"],
