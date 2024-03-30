@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { useDispatch } from 'react-redux';
 import { storeUser } from '@store/user/userSlice';
+import { UserModel } from "@datatypes/userType";
+import Toast from '@/components/Toast';
+
 interface MainLayoutProps {
     children: React.ReactNode;
 }
@@ -18,7 +21,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const isAuthenticated: boolean = useSelector((state: RootState) => state.userState.isSignedIn);
+    const isAuthenticated: boolean | undefined = useSelector((state: RootState) => state.userState.isSignedIn);
+    const isToast: boolean | undefined = useSelector((state: RootState) => state.globalState.toast);
+    const toastMessage: string | undefined = useSelector((state: RootState) => state.globalState.toastMessage);
+    const typeMessage: boolean | undefined = useSelector((state: RootState) => state.globalState.toastSuccess);
 
     useEffect(() => {
         handleAuthentication();
@@ -54,11 +60,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                     const data = response.data;
                     localStorage.setItem('token', data.authorization.token);
 
-                    const userToStore = {
-                        _id: data.user.id,
+                    const userToStore: UserModel = {
+                        id: data.user.id,
                         token: data.authorization.token,
                         firstname: data.user.firstname,
                         lastname: data.user.lastname,
+                        username: data.user.username,
+                        usertype: data.user.usertype,
                         isSignedIn: true
                     }
 
@@ -76,27 +84,28 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
     };
 
     return (
-        <>
-            <div className='md:h-[100vh] lg:h-[100vh] flex flex-col'>
-                <Navbar />
+        <div className='flex flex-col'>
+            <Navbar />
 
-                {loading && (
-                    <Loading />
-                )}
+            {loading && (
+                <Loading />
+            )}
 
-                {!loading && (
-                    <div className='flex-1 flex'>
-                        {isAuthenticated && (
-                            <Sidebar />
-                        )}
-                        <div className={isAuthenticated ? 'ml-[240px] w-full' : 'flex'}>
-                            {children}
-                        </div>
+            {!loading && (
+                <div className='flex-1 flex h-full'>
+                    {isAuthenticated && (
+                        <Sidebar />
+                    )}
+                    <div className={isAuthenticated ? 'ml-[240px] w-full bg-gray-100 min-h-[80vh]' : 'flex w-full'}>
+                        {children}
                     </div>
-                )}
+                </div>
+            )}
 
-            </div >
-        </>
+            {isToast && (
+                <Toast Message={toastMessage} Type={typeMessage} />
+            )}
+        </div >
     );
 };
 

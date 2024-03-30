@@ -19,8 +19,11 @@ const globalSlice = createSlice({
         setToastState: (state, action: PayloadAction<{ toast?: boolean, toastMessage?: string, toastSuccess?: boolean }>) => {
             return { ...state, ...action.payload };
         },
+        setToastStatus: (state, action: PayloadAction<boolean>) => {
+            state.toast = action.payload;
+        }
     }
 });
 
-export const { setToastState } = globalSlice.actions;
+export const { setToastState, setToastStatus } = globalSlice.actions;
 export default globalSlice.reducer;

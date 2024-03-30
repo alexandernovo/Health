@@ -1,20 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserModel } from "@datatypes/userType";
 
-interface UserState {
-    _id: string,
-    token: string,
-    firstname: string,
-    lastname: string,
-    username: string,
-    isSignedIn: boolean
-}
-
-const userInitialState: UserState = {
-    _id: "",
+const userInitialState: UserModel = {
+    id: 0,
     token: "",
     firstname: "",
     lastname: "",
     username: "",
+    usertype: 0,
+    gender: "",
     isSignedIn: false
 }
 
@@ -22,7 +16,7 @@ const userSlice = createSlice({
     name: "userState",
     initialState: userInitialState,
     reducers: {
-        storeUser: (state, action: PayloadAction<Partial<UserState>>) => {
+        storeUser: (state, action: PayloadAction<Partial<UserModel>>) => {
             return { ...state, ...action.payload };
         },
         removeUser: () => {
