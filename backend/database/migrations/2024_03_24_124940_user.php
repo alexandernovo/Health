@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('username')->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->integer('usertype');
+            $table->integer('userstatus');
+            $table->string('contact_number');
+            $table->string('address');
+            $table->string('gender');
             $table->timestamps();
         });
     }
@@ -30,3 +34,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
+//reset
+//php artisan migrate:rollback
+//migrate
+//php artisan migrate

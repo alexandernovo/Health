@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -52,6 +51,11 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'address' => 'required|string',
+            'gender' => 'required|string',
+            'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
+        ], [
+            'contact_number.regex' => 'The contact number is invalid.'
         ]);
 
         // Check if validation fails
@@ -59,7 +63,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $validator->errors(),
-            ], 422);
+            ]);
         }
 
         $user = User::create([
@@ -67,6 +71,11 @@ class AuthController extends Controller
             'lastname' => $request->lastname,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'address' => $request->address,
+            'contact_number' => $request->contact_number,
+            'gender' => $request->gender,
+            'usertype' => 1,
+            'userstatus' => 1
         ]);
 
         // Generate token for the registered user
