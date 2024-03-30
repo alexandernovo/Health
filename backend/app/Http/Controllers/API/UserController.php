@@ -59,6 +59,7 @@ class UserController extends Controller
             'username' => $request->username,
             'address' => $request->address,
             'gender' => $request->gender,
+            'usertype' => $request->usertype,
             'contact_number' => $request->contact_number,
         ];
 

@@ -19,6 +19,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         contact_number: '',
         address: '',
         gender: '',
+        usertype: 1,
         password: '',
         confirmPassword: ''
     });
@@ -142,6 +143,16 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
                                             </svg>
                                             <input type="text" name="address" value={formData.address} onChange={handleChange} className="grow" placeholder='Address' />
                                         </label>
+
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                            <select value={formData.usertype} className="outline-0 grow w-full h-full" name="usertype" onChange={handleChange}>
+                                                <option value="" disabled>Role</option>
+                                                <option value="1">Patient</option>
+                                                <option value="0">Admin</option>
+                                            </select>
+                                        </label>
+
                                         {error.address && <p className="text-red-500 text-[13px]">{error.address}</p>}
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"

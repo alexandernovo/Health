@@ -5,6 +5,7 @@ import Login from '@pages/Login'
 import Register from '@pages/Register'
 import NotFound from '@pages/NotFound'
 import ManageUsers from './pages/ManageUsers'
+import ManageConsultationType from './pages/ManageConsultationType'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route element={<NotFound />} path='*'></Route>
           <Route element={<Home />} path='/home' ></Route>
           <Route element={<ManageUsers />} path='/manageusers' ></Route>
+          <Route element={<ManageConsultationType />} path='/manageconsultationtype' ></Route>
         </Routes>
       </MainLayout>
     </Router>

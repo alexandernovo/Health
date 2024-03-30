@@ -24,6 +24,7 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*", "src/components"],
       "@pages/*": ["src/pages/*"],
+      "@dialogs/*": ["src/dialogs/*"],
       "@middleware/*": ["src/middleware/*"],
       "@layout/*": ["src/layout/*"],
       "@images/*": ["src/assets/images/*"],

@@ -8,7 +8,6 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'https://chat-app-xsxm.onrender.com',
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false,
@@ -21,6 +20,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src/'),
       '@components': path.resolve(__dirname, './src/components'),
       '@pages': path.resolve(__dirname, './src/pages'),
+      '@dialogs': path.resolve(__dirname, './src/dialogs'),
       '@middleware': path.resolve(__dirname, './src/middleware'),
       '@layout': path.resolve(__dirname, './src/layout'),
       '@images': path.resolve(__dirname, './src/assets/images'),

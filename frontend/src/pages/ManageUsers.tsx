@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Avatar from '@images/default.jpg';
 import axios from 'axios';
 import { UserModel } from '@datatypes/userType';
-import AddUserDialog from '@/components/AddUserDialog';
-import UpdateUserDialog from '@/components/UpdateUserDialog';
-import ConfirmationDialog from '@/components/ConfirmationDialog';
+import AddUserDialog from '@dialogs/userdialogs/AddUserDialog';
+import UpdateUserDialog from '@dialogs/userdialogs/UpdateUserDialog';
+import ConfirmationDialog from '@dialogs/confirmationdialog/ConfirmationDialog';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 
@@ -198,7 +198,7 @@ const ManageUsers: React.FC = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            {user.usertype == 1 ?
+                                            {user.usertype == 0 ?
                                                 'Admin'
                                                 :
                                                 'Patient'
