@@ -190,3 +190,8 @@
   display: inline-block;
   margin: 0 16px;
 }
+
+.select__control {
+  height: 49px !important;
+  border-radius: 9px !important;
+}

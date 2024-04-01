@@ -13,9 +13,9 @@ const ManageUsers: React.FC = () => {
     const [originalUsers, setOriginalUsers] = useState<UserModel[]>([]); // Maintain original list
     const [users, setUsers] = useState<UserModel[]>([]);
 
-    const [addUserModal, setAddUserModel] = useState<boolean>(false);
-    const [updateUserModal, setUpdateUserModel] = useState<boolean>(false);
-    const [activateUserModal, setActivateUserModel] = useState<boolean>(false);
+    const [addUserModal, setAddUserModal] = useState<boolean>(false);
+    const [updateUserModal, setUpdateUserModal] = useState<boolean>(false);
+    const [activateUserModal, setActivateUserModal] = useState<boolean>(false);
 
     const dispatch = useDispatch();
 
@@ -26,13 +26,13 @@ const ManageUsers: React.FC = () => {
     });
 
     const toggleAddUser = () => {
-        setAddUserModel(!addUserModal);
+        setAddUserModal(!addUserModal);
     }
     const toggleUpdateUser = () => {
-        setUpdateUserModel(!updateUserModal);
+        setUpdateUserModal(!updateUserModal);
     }
     const toggleActivateUser = () => {
-        setActivateUserModel(!activateUserModal);
+        setActivateUserModal(!activateUserModal);
     }
 
     const [toUpdate, setToUpdate] = useState<UserModel>({
@@ -63,18 +63,29 @@ const ManageUsers: React.FC = () => {
     };
 
     const HandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const searchValue = e.target.value.toLowerCase();
+        const searchValue = e.target.value.trim().toLowerCase();
         if (searchValue === '') {
             // If search input is empty, revert to original list
             setUsers(originalUsers);
         } else {
-            const filteredUsers = originalUsers.filter((user) => {
-                const fullName = `${user.firstname} ${user.lastname}`.toLowerCase();
-                return fullName.includes(searchValue);
+            const filteredUsers = originalUsers.filter(user => {
+                if (searchValue.toLowerCase().includes('admin')) {
+                    return user.usertype === 0;
+                } else if (searchValue.toLowerCase().includes('patient')) {
+                    return user.usertype === 1;
+                } else {
+                    return Object.values(user).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(searchValue);
+                        }
+                        return false;
+                    });
+                }
             });
             setUsers(filteredUsers);
         }
     };
+
 
     const HandleUpdateData = (data: UserModel) => {
         setToUpdate(data);

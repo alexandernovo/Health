@@ -94,7 +94,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
     };
     return (
         <dialog className={`modal ${props.Show && 'modal-open'}`} >
-            <div className="modal-box max-w-none w-[700px] rounded-md p-0 overflow-hidden">
+            <div className="modal-box max-w-none w-[700px] max-h-none h-[97vh] rounded-md p-0 overflow-hidden">
                 <div className='bg-[#219EBC] p-4 px-5 sticky top-0 z-10 text-white flex justify-between'>
                     <h3 className="font-bold text-lg flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
