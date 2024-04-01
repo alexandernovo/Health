@@ -64,7 +64,7 @@ class UserController extends Controller
         ];
 
         // Hash password if provided
-        if ($request->password !== '') {
+        if ($request->password != null) {
             $data['password'] = Hash::make($request->password);
         }
 
