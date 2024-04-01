@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConsultationType extends Model
 {
-    protected $primaryKey = 'consulationTypeId';
+    protected $primaryKey = 'consultationTypeId';
+    protected $table = 'consultationtype';
     protected $fillable = [
-        'consulationTypeName',
+        'consultationTypeName',
         'consultationTypeStatus',
     ];
 }
