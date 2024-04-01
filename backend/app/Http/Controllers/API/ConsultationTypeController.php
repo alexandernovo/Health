@@ -27,7 +27,7 @@ class ConsultationTypeController extends Controller
     public function createConsultationType(Request $request)
     {
         $validate = [
-            'consultationTypeName' => 'required|string|max:255',
+            'consultationTypeName' => 'required|string|max:255|unique:consultationtype',
         ];
 
         $validator = Validator::make($request->all(), $validate);
@@ -36,17 +36,57 @@ class ConsultationTypeController extends Controller
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()]);
         }
 
-        $user = ConsultationType::create([
-            'firstname' => $request->firstname,
+        $consultation = ConsultationType::create([
+            'consultationTypeName' => $request->consultationTypeName,
             'consultationTypeStatus' => 1,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Added consultation type successfully',
+            'consultation' => $consultation,
         ]);
     }
 
     public function updateConsultationType(Request $request, $id)
     {
+        $consultation = ConsultationType::find($id);
+
+        if ($consultation->consultationTypeName != $request->consultationTypeName) {
+            $validate = [
+                'consultationTypeName' => 'required|string|max:255|unique:consultationtype',
+            ];
+
+            $validator = Validator::make($request->all(), $validate);
+
+            if ($validator->fails()) {
+                return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()]);
+            }
+        }
+
+        $data = [
+            'consultationTypeName' => $request->consultationTypeName,
+        ];
+
+        $consultation->update($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Updated consultation type successfully',
+            'consultation' => $consultation,
+        ]);
     }
 
     public function activation($id, $status)
     {
+        $consultation = ConsultationType::find($id);
+
+        $data = [
+            'consultationTypeStatus' => $status == 0 ? 1 : 0
+        ];
+
+        $consultation->update($data);
+
+        return response()->json(['status' => 'success', 'message' => 'Consultation Type activation successfully', 'consultation' => $consultation]);
     }
 }
