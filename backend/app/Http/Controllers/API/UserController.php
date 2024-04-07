@@ -24,6 +24,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function getPatients()
+    {
+        $user = User::where('usertype', 1)->where('userstatus', 1)->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Fetch user successfully',
+            'patients' => $user,
+        ]);
+    }
+
     public function UpdateUser(Request $request, $id)
     {
         $user = User::find($id);
