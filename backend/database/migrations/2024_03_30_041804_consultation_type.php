@@ -29,5 +29,5 @@ return new class extends Migration
 };
 
 
-//php artisan migrate --path=database/migrations/2024_03_30_041804_consultation_type.php
+//php artisan migrate --path=database/migrations/2024_04_02_135001_appointments.php
 // php artisan migrate:rollback --path=database/migrations/2024_03_30_041804_consultation_type.php
