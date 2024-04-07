@@ -24,6 +24,16 @@ class ConsultationTypeController extends Controller
         ]);
     }
 
+    public function getConsultationTypesActive()
+    {
+        $consultation_type = ConsultationType::where('consultationTypeStatus', 1)->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Fetch consultation type successfully',
+            'consultations' => $consultation_type,
+        ]);
+    }
+
     public function createConsultationType(Request $request)
     {
         $validate = [
