@@ -7,6 +7,7 @@ export interface UserModel {
     username: string;
     usertype?: number;
     isSignedIn?: boolean;
+    birthdate?: string;
     contact_number?: string;
     address?: string;
     password?: string;
