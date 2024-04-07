@@ -155,13 +155,13 @@ const ManageConsultationType: React.FC = () => {
                                 <tr>
                                     <th className='w-[33%]'>Consultation Name</th>
                                     <th className='w-[33%]'>Status</th>
-                                    <th className='w-[33%]' colSpan={2}>
-                                        <button className='btn btn-success btn-outline btn-xs flex gap-1 px-4' onClick={() => toggleAddModal()}>
+                                    <th className='w-[33%]'>
+                                        {/* <button className='btn btn-success btn-outline btn-xs flex gap-1 px-4' onClick={() => toggleAddModal()}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                                                 <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
                                             </svg>
                                             Consultation Type
-                                        </button>
+                                        </button> */}
                                     </th>
                                 </tr>
                             </thead>
@@ -174,7 +174,7 @@ const ManageConsultationType: React.FC = () => {
                                         <td className={consultation.consultationTypeStatus == 0 ? "text-error" : "text-success"}>
                                             {consultation.consultationTypeStatus == 0 ? "Inactive" : "Active"}
                                         </td>
-                                        <td className='w-[12%]'>
+                                        {/* <td className='w-[12%]'>
                                             <button className="btn btn-outline btn-primary btn-xs flex gap-1" onClick={() => HandleUpdateData(consultation)}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                                     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
@@ -182,9 +182,9 @@ const ManageConsultationType: React.FC = () => {
                                                 </svg>
                                                 Update
                                             </button>
-                                        </td>
+                                        </td> */}
                                         <td className='w-[15%]'>
-                                            <button onClick={() => ConfirmationModal(consultation)} className={`btn btn-outline w-full btn-xs flex gap-1 ${consultation.consultationTypeStatus == 0 ? 'btn-success' : 'btn-error'}`}>
+                                            <button onClick={() => ConfirmationModal(consultation)} className={`btn btn-outline btn-xs flex gap-1 ${consultation.consultationTypeStatus == 0 ? 'btn-success' : 'btn-error'}`}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                                     <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd" />
                                                 </svg>
