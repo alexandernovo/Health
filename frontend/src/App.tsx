@@ -10,7 +10,8 @@ import Appointments from '@pages/Appointments'
 import Settings from '@pages/Settings'
 import PatientRecords from '@pages/PatientRecords'
 import Dashboard from '@pages/Dashboard'
-import CreateAppointments from '@components/CreateAppointments'
+import CreateAppointments from '@pages/CreateAppointments'
+import ManageMaternalHealthRecords from './pages/MaternalHealthRecords/ManageMaternalHealthRecords'
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
           <Route element={<Dashboard />} path='/dashboard' ></Route>
           <Route element={<ManageConsultationType />} path='/manageconsultationtype' ></Route>
           <Route element={<CreateAppointments />} path='/createappointments' ></Route>
+          {/* maternal */}
+          <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:id' ></Route>
+
         </Routes>
       </MainLayout>
     </Router>
