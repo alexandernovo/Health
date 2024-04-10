@@ -80,7 +80,7 @@ const Appointments: React.FC = () => {
                                     <td>{DateToString(appointment.appointmentDate)} {TimeToString12Hour(appointment.appointmentTime)}</td>
                                     <td>{appointment.contact_number}</td>
                                     <td>{appointment.consultationTypeName}</td>
-                                    <td>{appointment.appointmentStatus == 1 ? 'Pending' : appointment.appointmentStatus == 2 ? 'Declined' : appointment.appointmentStatus == 3 ? 'Approved' : 'Cancelled'}</td>
+                                    <td>{appointment.appointmentStatus == 1 ? 'Pending' : appointment.appointmentStatus == 2 ? 'Declined' : appointment.appointmentStatus == 3 ? 'Approved' : appointment.appointmentStatus == 4 ? 'Done' : 'Cancelled'}</td>
                                     <td className='flex items-center justify-center'>
                                         <div className="dropdown dropdown-end">
                                             <div tabIndex={0} role="button" className="btn m-1 btn-ghost p-1 rounded-full px-3">
