@@ -74,6 +74,10 @@ class AuthController extends Controller
             'address' => $request->address,
             'contact_number' => $request->contact_number,
             'gender' => $request->gender,
+            'birthdate' => $request->birthdate,
+            'occupation' => $request->occupation,
+            'religion' => $request->religion,
+            'education' => $request->education,
             'usertype' => $request->usertype != null ? $request->usertype : 1,
             'userstatus' => 1
         ]);

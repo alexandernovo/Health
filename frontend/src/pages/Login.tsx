@@ -42,6 +42,10 @@ const Login: React.FC = () => {
                         lastname: data.user.lastname,
                         username: data.user.username,
                         usertype: data.user.usertype,
+                        birthdate: data.user.birthdate,
+                        occupation: data.user.occupation,
+                        education: data.user.education,
+                        religion: data.user.religion,
                         isSignedIn: true
                     }
                     dispatch(storeUser(userToStore));

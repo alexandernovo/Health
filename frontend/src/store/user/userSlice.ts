@@ -8,6 +8,10 @@ const userInitialState: UserModel = {
     lastname: "",
     username: "",
     usertype: 0,
+    birthdate: "",
+    occupation: "",
+    education: "",
+    religion: "",
     gender: "",
     isSignedIn: false
 }

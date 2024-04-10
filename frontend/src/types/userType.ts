@@ -2,12 +2,15 @@
 export interface UserModel {
     id?: number;
     token?: string;
-    firstname: string;
-    lastname: string;
-    username: string;
+    firstname?: string;
+    lastname?: string;
+    birthdate?: string;
+    occupation?: string;
+    education?: string;
+    religion?: string;
+    username?: string;
     usertype?: number;
     isSignedIn?: boolean;
-    birthdate?: string;
     contact_number?: string;
     address?: string;
     password?: string;

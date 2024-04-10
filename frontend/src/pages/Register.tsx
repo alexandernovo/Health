@@ -18,6 +18,10 @@ const Register: React.FC = () => {
         username: '',
         contact_number: '',
         address: '',
+        birthdate: '',
+        occupation: '',
+        education: '',
+        religion: '',
         gender: '',
         password: '',
         confirmPassword: ''
@@ -29,6 +33,10 @@ const Register: React.FC = () => {
         username: '',
         contact_number: '',
         address: '',
+        birthdate: '',
+        occupation: '',
+        education: '',
+        religion: '',
         gender: '',
         password: '',
         confirmPassword: ''
@@ -79,6 +87,10 @@ const Register: React.FC = () => {
                         username: data.user.username,
                         contact_number: data.user.contact_number,
                         address: data.user.address,
+                        birthdate: data.user.birthdate,
+                        occupation: data.user.occupation,
+                        education: data.user.education,
+                        religion: data.user.religion,
                         gender: data.user.gender,
                         usertype: data.user.usertype,
                         isSignedIn: true
@@ -159,6 +171,37 @@ const Register: React.FC = () => {
                                             <input type="text" name="address" value={formData.address} onChange={handleChange} className="grow" placeholder='Address' />
                                         </label>
                                         {error.address && <p className="text-red-500 text-[13px]">{error.address}</p>}
+
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
+                                                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                                                <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
+                                            </svg>
+                                            <input type="text" name="education" value={formData.education} onChange={handleChange} className="grow" placeholder='Education' />
+                                        </label>
+
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
+                                                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                                                <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
+                                            </svg>
+                                            <input type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} className="grow" placeholder='Birthdate' />
+                                        </label>
+
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
+                                                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                                                <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
+                                            </svg>
+                                            <input type="text" name="occupation" value={formData.occupation} onChange={handleChange} className="grow" placeholder='Occupation' />
+                                        </label>
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
+                                                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                                                <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
+                                            </svg>
+                                            <input type="text" name="religion" value={formData.religion} onChange={handleChange} className="grow" placeholder='Religion' />
+                                        </label>
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                                 className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
