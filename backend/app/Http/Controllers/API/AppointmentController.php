@@ -78,4 +78,53 @@ class AppointmentController extends Controller
             ], 500);
         }
     }
+
+    public function getAppointmentById($id)
+    {
+        $appointment = Appointment::with("user")->where('appointment_id', $id)->first();
+
+        if ($appointment == null) {
+            return response()->json([
+                'message' => 'Fetch failed',
+            ], 404);
+        }
+        $data = [
+            'appointment_id' => $appointment->appointment_id,
+            'firstname' => $appointment->user->firstname,
+            'lastname' => $appointment->user->lastname,
+            'birthdate' => $appointment->user->birthdate,
+            'occupation' => $appointment->user->occupation,
+            'education' => $appointment->user->education,
+            'address' => $appointment->user->address,
+            'religion' => $appointment->user->religion,
+            'user_id' =>  $appointment->user->id,
+            'consultationTypeId' =>  $appointment->consultationTypeId,
+            'appointmentDate' =>  $appointment->appointmentDate,
+            'appointmentTime' =>  $appointment->appointmentTime,
+            'appointmentStatus' =>  $appointment->appointmentStatus,
+            'isActive' =>  $appointment->isActive,
+        ];
+
+        return response()->json([
+            'message' => 'Fetch Appointment Successfully',
+            'status' => 'success',
+            'appointment' => $data,
+        ], 200);
+    }
+    public function changeAppointmentStatus($id, $status)
+    {
+        $appointment = Appointment::find($id);
+
+        if ($appointment) {
+            $appointment->update(["appointmentStatus" => $status]);
+            return response()->json([
+                'message' => 'Status Change Successfully',
+                'status' => 'success',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Change Status Failed',
+            ], 404);
+        }
+    }
 }

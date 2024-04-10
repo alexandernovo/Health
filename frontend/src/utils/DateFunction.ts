@@ -29,3 +29,28 @@ export const TimeToString12Hour = (timeString?: string) => {
     const formattedTime = `${hoursNum}:${minutes} ${period}`;
     return formattedTime;
 }
+
+export const calculateAge = (birthdate?: string): number | undefined => {
+    // Check if the birthdate is provided
+    if (!birthdate) {
+        return undefined; // Return null if birthdate is not provided
+    }
+
+    const today = new Date(); // Get the current date
+    const birthDate = new Date(birthdate); // Convert the birthdate string to a Date object
+
+    // Check if the birthdate is valid
+    if (isNaN(birthDate.getTime())) {
+        return undefined; // Return null if birthdate is invalid
+    }
+
+    let age = today.getFullYear() - birthDate.getFullYear(); // Calculate the difference in years
+
+    // Check if the birthday has occurred this year
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--; // Subtract 1 from age if birthday hasn't occurred yet
+    }
+
+    return age; // Return the calculated age
+}
