@@ -1,22 +1,229 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { MaternalModel } from '@/types/MaternalType';
+import { MedicalAssessmentModel } from '@/types/MedicalAssessment';
+import { DateToString, calculateAge } from '@/utils/DateFunction';
+import { generateRandomId } from '@/utils/CommonFunctions';
+import { useDispatch } from 'react-redux';
+import { setToastState } from '@/store/common/global';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { AppointmentModel } from '@/types/appointmentType';
 
 const ManageMaternalHealthRecords: React.FC = () => {
+    const [medical, setMedical] = useState<MedicalAssessmentModel[]>([]);
+    const { appointment_id } = useParams<{ appointment_id: string }>();
+    const [appointment, setAppointment] = useState<AppointmentModel>({});
+    const [errorAssessment, setErrorAssessment] = useState("");
+    const token: string | null = localStorage.getItem("token");
+    const dispatch = useDispatch();
 
-    const [checkboxes, setCheckboxes] = useState({
-        PTB: false,
-        HeartDisease: false,
-        Diabetes: false,
-        Asthma: false,
-        Goiter: false
+    useEffect(() => {
+        fetchAppointmentDetails();
+    }, []);
+
+    useEffect(() => {
+        if (appointment) {
+            setMaternal(prevMaternal => ({
+                ...prevMaternal,
+                appointment_id: appointment_id,
+                user_id: appointment.user_id,
+                firstname: appointment.firstname || "",
+                lastname: appointment.lastname || "",
+                birthdate: appointment.birthdate || "",
+                occupation: appointment.occupation || "",
+                education: appointment.education || "",
+                address: appointment.address || "",
+                religion: appointment.religion || "",
+                age: calculateAge(appointment.birthdate || ""),
+            }));
+        }
+    }, [appointment, appointment_id]);
+
+    const fetchAppointmentDetails = async () => {
+        const response = await axios.get(`/api/appointment/getAppointmentById/${appointment_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if (response.data.status == "success") {
+            setAppointment(response.data.appointment);
+            console.log(response.data.appointment)
+        }
+    }
+
+    const [error, setError] = useState<MaternalModel>({
+        dateAdmitted: "",
+        dateDischarge: "",
     });
 
-    const handleCheckboxChange = (event: any) => {
+    const [maternal, setMaternal] = useState<MaternalModel>({
+        husbandName: "",
+        husbandbirthdate: "",
+        husbandage: undefined,
+        dateofmarriage: "",
+        dateAdmitted: "",
+        dateDischarge: "",
+        pastPTB: false,
+        pastHeartDisease: false,
+        pastDiabetes: false,
+        pastAsthma: false,
+        pastGoiter: false,
+        familyHistoryPTB: false,
+        familyHistoryHeartDisease: false,
+        familyHistoryDiabetes: false,
+        familyHistoryHypertension: false,
+        familyHistoryGoiter: false,
+        LMP: "",
+        EDC: "",
+        GRAVIDA: "",
+        PARA: "",
+        OBScore: "",
+        below18ORabove35: false,
+        pregnancyMore4: false,
+        poorObstetrical: false,
+        Below2YearsBirthInterval: false,
+        lessThan145cm: false,
+        moreThan145cm: false,
+        antePostPartrum: false,
+        prematureLabor: false,
+        abnormalPresentation: false,
+        preEnclampsia: false,
+        STD: false,
+        TT1: false,
+        TT2: false,
+        TT3: false,
+        TT4: false,
+        TT5: false,
+    });
+
+
+
+    const InitialValueMedicalAssessment = {
+        keyId: "",
+        Date: "",
+        BP: "",
+        HR: "",
+        AOG: 0,
+        RR: "",
+        FH: 0,
+        WT: 0,
+        TEMP: 0,
+        FHBPres: false,
+        Remarks: ""
+    };
+
+    const [medicalForm, setMedicalForm] = useState(InitialValueMedicalAssessment);
+
+    const handleCheckboxChangeOBScore = (event: any) => {
         const { name, checked } = event.target;
-        setCheckboxes(prevState => ({
+        if (checked) {
+            setMaternal(prevState => ({ ...prevState, [name]: event.target.value }));
+        } else {
+            setMaternal(prevState => ({ ...prevState, [name]: '' }));
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setMedicalForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleHusbandAGE = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const husbandBirthdate = event.target.value; // Assuming the event target value is the husband's birthdate
+        const husbandAge = calculateAge(husbandBirthdate);
+
+        setMaternal(prevState => ({
+            ...prevState,
+            husbandbirthdate: husbandBirthdate,
+            husbandage: husbandAge
+        }));
+    };
+
+
+    const removeMedicalAssessment = (keyIdToRemove?: string) => {
+        const indexToRemove = medical.findIndex((item) => item.keyId === keyIdToRemove);
+        if (indexToRemove !== -1) {
+            const updatedMedical = [...medical]; // Create a copy of the array
+            updatedMedical.splice(indexToRemove, 1); // Remove the item
+            setMedical(updatedMedical); // Update the state with the new array
+        }
+    };
+
+    const handleInputChangeMaternal = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setMaternal(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+    const handleMedicalCheckbox = (event: any) => {
+        const { name, checked } = event.target;
+        setMedicalForm(prevState => ({
             ...prevState,
             [name]: checked
         }));
     };
+    const handleCheckboxChangeMaternal = (event: any) => {
+        const { name, checked } = event.target;
+        setMaternal(prevState => ({
+            ...prevState,
+            [name]: checked
+        }));
+    };
+
+
+    const addForm = () => {
+        if (!medicalForm.Date || !medicalForm.BP || !medicalForm.HR || !medicalForm.RR) {
+            setErrorAssessment('Please fill in all required fields (Date, BP, HR, RR)');
+            return;
+        }
+
+        setMedical(prevMedical => {
+            const newMedicalAssessment = {
+                keyId: generateRandomId(),
+                Date: medicalForm.Date,
+                BP: medicalForm.BP,
+                HR: medicalForm.HR,
+                AOG: medicalForm.AOG,
+                RR: medicalForm.RR,
+                FH: medicalForm.FH,
+                WT: medicalForm.WT,
+                TEMP: medicalForm.TEMP,
+                FHBPres: medicalForm.FHBPres,
+                Remarks: medicalForm.Remarks
+            };
+            return [...prevMedical, newMedicalAssessment];
+        });
+
+        setMedicalForm(InitialValueMedicalAssessment);
+    };
+
+    const createMaternal = async () => {
+        try {
+            maternal.medicalAssessment = medical; //put medical in medicalAssessment model
+
+            const response = await axios.post("/api/maternal/createMaternalRecord", maternal,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (response.data.status == "success") {
+                dispatch(setToastState({ toast: true, toastMessage: "Maternal Health Record Created Successfully", toastSuccess: true }));
+            }
+            else {
+                setError(response.data.errors);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <div className='m-3'>
@@ -36,19 +243,19 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='w-1/3'>
                                 <div className='flex flex-col w-full'>
                                     <label className='font-semibold text-[14px]'>Patient Name</label>
-                                    <input type="text" placeholder="Patient Name" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={`${maternal.firstname} ${maternal.lastname}`} placeholder="Patient Name" className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px] w-full'>Date of Birth</label>
-                                    <input type="text" placeholder="Date of Birth" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={DateToString(maternal.birthdate)} placeholder="Date of Birth" className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Patient Age</label>
-                                    <input type="text" placeholder="Age" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={maternal.age} placeholder="Age" className="input input-bordered w-full" />
                                 </div>
                             </div>
                         </div>
@@ -56,19 +263,19 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Address</label>
-                                    <input type="text" placeholder="Address" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={maternal.address} placeholder="Address" className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Education</label>
-                                    <input type="text" placeholder="Education" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={maternal.education} placeholder="Education" className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Occupation</label>
-                                    <input type="text" placeholder="Occupation" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={maternal.occupation} placeholder="Occupation" className="input input-bordered w-full" />
                                 </div>
                             </div>
                         </div>
@@ -76,19 +283,19 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Husband</label>
-                                    <input type="text" placeholder="Husband's name" className="input input-bordered w-full" />
+                                    <input type="text" placeholder="Husband's name" name='husbandName' value={maternal.husbandName} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Date of Birth</label>
-                                    <input type="text" placeholder="Education" className="input input-bordered w-full" />
+                                    <input type="date" name='husbandbirthdate' value={maternal.husbandbirthdate} onChange={handleHusbandAGE} className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/3'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Age</label>
-                                    <input type="text" placeholder="Age" className="input input-bordered w-full" />
+                                    <input type="text" readOnly placeholder="Age" value={maternal.husbandage} className="input input-bordered w-full" />
                                 </div>
                             </div>
                         </div>
@@ -96,13 +303,13 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Date of Marriage</label>
-                                    <input type="text" placeholder="Date of Marriage" className="input input-bordered w-full" />
+                                    <input type="date" placeholder="Date of Marriage" name='dateofmarriage' value={maternal.dateofmarriage} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Religion</label>
-                                    <input type="text" placeholder="Religion" className="input input-bordered w-full" />
+                                    <input type="text" placeholder="Religion" readOnly value={maternal.religion} className="input input-bordered w-full" />
                                 </div>
                             </div>
                         </div>
@@ -110,14 +317,16 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Date Admitted</label>
-                                    <input type="text" placeholder="Husband's name" className="input input-bordered w-full" />
+                                    <input type="date" value={maternal.dateAdmitted} name='dateAdmitted' onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
+                                {error.dateAdmitted && <p className="text-red-500 text-[13px]">{error.dateAdmitted}</p>}
                             </div>
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Date Discharge</label>
-                                    <input type="text" placeholder="Education" className="input input-bordered w-full" />
+                                    <input type="date" placeholder="Education" name='dateDischarge' value={maternal.dateDischarge} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
+                                {error.dateDischarge && <p className="text-red-500 text-[13px]">{error.dateDischarge}</p>}
                             </div>
                         </div>
                         <h1 className='font-bold mb-4 mt-5'>2. Medical History</h1>
@@ -128,31 +337,31 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='flex w-1/2 justify-between'>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="PTB" checked={checkboxes.PTB} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="pastPTB" checked={maternal.pastPTB} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">PTB</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="pastHeartDisease" checked={maternal.pastHeartDisease} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Heart Disease</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="pastDiabetes" checked={maternal.pastDiabetes} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Diabetes</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="pastAsthma" checked={maternal.pastAsthma} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Asthma</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Goiter" checked={checkboxes.Goiter} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="pastGoiter" checked={maternal.pastGoiter} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Goiter</span>
                                     </label>
                                 </div>
@@ -162,30 +371,30 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
                                         <span className="label-text text-[13px]">PTB</span>
-                                        <input type="checkbox" name="PTB" checked={checkboxes.PTB} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="familyHistoryPTB" checked={maternal.familyHistoryPTB} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="familyHistoryHeartDisease" checked={maternal.familyHistoryHeartDisease} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Heart Disease</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="familyHistoryDiabetes" checked={maternal.familyHistoryDiabetes} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Diabetes</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="familyHistoryHypertension" checked={maternal.familyHistoryHypertension} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Hypertension</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Goiter" checked={checkboxes.Goiter} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="familyHistoryGoiter" checked={maternal.familyHistoryGoiter} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">Goiter</span>
                                     </label>
                                 </div>
@@ -194,19 +403,19 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             <div className='flex gap-3'>
                                 <div className='flex flex-col mt-2 w-1/4'>
                                     <label className='font-semibold text-[12px]'>LMP (Last Menstrual Period)</label>
-                                    <input type="date" placeholder="LMP" className="input input-bordered w-full input-sm" />
+                                    <input type="date" placeholder="LMP" name='LMP' value={maternal.LMP} onChange={handleInputChangeMaternal} className="input input-bordered w-full input-sm" />
                                 </div>
                                 <div className='flex flex-col mt-2 w-1/4'>
                                     <label className='font-semibold text-[12px]'>EDC (Estimated Date of Confinement)</label>
-                                    <input type="date" placeholder="LMP" className="input input-bordered w-full input-sm" />
+                                    <input type="date" placeholder="EDC" name='EDC' value={maternal.EDC} onChange={handleInputChangeMaternal} className="input input-bordered w-full input-sm" />
                                 </div>
                                 <div className='flex flex-col mt-2 w-1/4'>
                                     <label className='font-semibold text-[12px]'>GRAVIDA</label>
-                                    <input type="text" placeholder="GRAVIDA" className="input input-bordered w-full input-sm" />
+                                    <input type="text" placeholder="GRAVIDA" name='GRAVIDA' value={maternal.GRAVIDA} onChange={handleInputChangeMaternal} className="input input-bordered w-full input-sm" />
                                 </div>
                                 <div className='flex flex-col mt-2 w-1/4'>
                                     <label className='font-semibold text-[12px]'>PARA</label>
-                                    <input type="number" placeholder="PARA" className="input input-bordered w-full input-sm" />
+                                    <input type="number" placeholder="PARA" name='PARA' value={maternal.PARA} onChange={handleInputChangeMaternal} className="input input-bordered w-full input-sm" />
                                 </div>
                             </div>
                             <h2 className='font-semibold text-[14px] mt-4'>OB GYNE HISTORY</h2>
@@ -214,47 +423,48 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 <label className='text-[12px]'>OB SCORE</label>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="F" checked={maternal.OBScore === 'F'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">F</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="P" checked={maternal.OBScore === 'P'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">P</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="A" checked={maternal.OBScore === 'A'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">A</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="Goiter" checked={checkboxes.Goiter} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="L" checked={maternal.OBScore === 'L'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">L</span>
                                     </label>
                                 </div>
                             </div>
+
                             <h2 className='font-semibold text-[14px] mt-3'>RISK FACTOR</h2>
                             <div className='flex'>
                                 <div className='w-1/3'>
                                     <div className="form-control my-1">
                                         <label className="cursor-pointer flex gap-2 items-center">
-                                            <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="below18ORabove35" checked={maternal.below18ORabove35} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Below 18 - above 35 yrs.</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="pregnancyMore4" checked={maternal.pregnancyMore4} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Pregnancy more than 4</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="poorObstetrical" checked={maternal.poorObstetrical} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Poor Obstetrical Condition</span>
                                         </label>
                                     </div>
@@ -262,19 +472,19 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 <div className='w-1/3'>
                                     <div className="form-control my-1">
                                         <label className="cursor-pointer flex gap-2 items-center">
-                                            <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="Below2YearsBirthInterval" checked={maternal.Below2YearsBirthInterval} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Below 2 yrs. Birth Interval</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="lessThan145cm" checked={maternal.lessThan145cm} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Less Than 145 cm. Height</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="moreThan145cm" checked={maternal.moreThan145cm} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">More than 145 cm. Height</span>
                                         </label>
                                     </div>
@@ -288,31 +498,31 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 <div className='w-1/3'>
                                     <div className="form-control my-1">
                                         <label className="cursor-pointer flex gap-2 items-center">
-                                            <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="antePostPartrum" checked={maternal.antePostPartrum} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Ante and post partrum hemmorrhage.</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="prematureLabor" checked={maternal.prematureLabor} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Premature labor</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="abnormalPresentation" checked={maternal.abnormalPresentation} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Abnormal Presentation</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="preEnclampsia" checked={maternal.preEnclampsia} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">Pre Enclampsia</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="STD" checked={maternal.STD} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">STD</span>
                                         </label>
                                     </div>
@@ -320,31 +530,31 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 <div className='w-1/3'>
                                     <div className="form-control my-1">
                                         <label className="cursor-pointer flex gap-2 items-center">
-                                            <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="TT1" checked={maternal.TT1} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">TT1</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Diabetes" checked={checkboxes.Diabetes} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="TT2" checked={maternal.TT2} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">TT2</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="TT3" checked={maternal.TT3} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">TT3</span>
                                         </label>
                                     </div>
                                     <div className="form-control mb-1">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="TT3" checked={maternal.TT4} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">TT4</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="Asthma" checked={checkboxes.Asthma} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="TT5" checked={maternal.TT5} onChange={handleCheckboxChangeMaternal} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">TT5</span>
                                         </label>
                                     </div>
@@ -362,76 +572,184 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                         <th className="font-semibold text-black">TEMP</th>
                                         <th className="font-semibold text-black">AOG</th>
                                         <th className="font-semibold text-black">FH</th>
-                                        <th className="font-semibold text-black">FHB Pres.</th>
+                                        <th className="font-semibold text-center text-black">FHB Pres.</th>
                                         <th className="font-semibold text-black">REMARKS</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    {medical.map(md => (
+                                        <tr key={md.keyId}>
+                                            <td className='border-r-[1px] py-0'>{DateToString(md.Date)}</td>
+                                            <td className='border-r-[1px] py-0'>{md.BP}</td>
+                                            <td className='border-r-[1px] py-0'>{md.WT}</td>
+                                            <td className='border-r-[1px] py-0'>{md.HR}</td>
+                                            <td className='border-r-[1px] py-0'>{md.RR}</td>
+                                            <td className='border-r-[1px] py-0'>{md.TEMP}</td>
+                                            <td className='border-r-[1px] py-0'>{md.AOG}</td>
+                                            <td className='border-r-[1px] py-0'>{md.FH}</td>
+                                            <td className='border-r-[1px] py-0'>
+                                                <div className='flex justify-center items-center'>
+                                                    {md.FHBPres ? (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                        </svg>
+                                                    ) : (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className='border-r-[1px] py-0'>{md.Remarks}</td>
+                                            <td className='border-r-[1px] py-0'>
+                                                <div className='flex justify-center items-center'>
+                                                    <button onClick={() => removeMedicalAssessment(md.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 active:text-white ">
+                                                            <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+
+                                    {medical.length == 0 && (
+                                        <tr>
+                                            <td colSpan={11}>
+                                                <p className='text-[12px] text-gray-400 text-center'>No Data</p>
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                             <div className='border p-3 mt-3 rounded-md mb-3'>
-                                <h1 className='font-semibold text-[15px] mt-3 mb-2'>MEDICAL ASSESSMENTS FORM</h1>
+                                <h1 className='font-semibold text-[15px] mt-3 mb-2 flex items-center gap-2'>
+                                    MEDICAL ASSESSMENTS FORM
+                                    {errorAssessment && (
+                                        <p className='text-red-400 text-[13px]'>{errorAssessment}</p>
+                                    )}
+                                </h1>
                                 <div className='flex gap-3'>
                                     <div className='w-1/3'>
                                         <div className='flex flex-col mb-1'>
                                             <label className='font-semibold text-[14px]'>Date</label>
-                                            <input type="date" placeholder="Type here" className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="date"
+                                                placeholder="Type here"
+                                                className="input w-full input-bordered input-sm"
+                                                name="Date"
+                                                value={medicalForm.Date}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <div className='flex flex-col mb-1'>
                                             <label className='font-semibold text-[14px]'>Heart Rate(HR)</label>
-                                            <input type="text" placeholder="Heart Rate" className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="text"
+                                                placeholder="Heart Rate"
+                                                className="input w-full input-bordered input-sm"
+                                                name="HR"
+                                                value={medicalForm.HR}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label className='font-semibold text-[14px]'>Age of Gestation (AOG)</label>
-                                            <input type="number" placeholder="AOG" className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="number"
+                                                placeholder="AOG"
+                                                className="input w-full input-bordered input-sm"
+                                                name="AOG"
+                                                value={medicalForm.AOG}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                     </div>
                                     <div className='w-1/3'>
                                         <div className='flex flex-col mb-1'>
                                             <label className='font-semibold text-[14px]'>Blood Pressure (BP)</label>
-                                            <input type="string" placeholder="Blood Pressure" className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="text"
+                                                placeholder="Blood Pressure"
+                                                className="input w-full input-bordered input-sm"
+                                                name="BP"
+                                                value={medicalForm.BP}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <div className='flex flex-col mb-1'>
                                             <label className='font-semibold text-[14px]'>Respiratory Rate(RR)</label>
-                                            <input type="text" placeholder="Respiratory Rate" className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="text"
+                                                placeholder="Respiratory Rate"
+                                                className="input w-full input-bordered input-sm"
+                                                name="RR"
+                                                value={medicalForm.RR}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label className='font-semibold text-[14px]'>Fundal Height(FH)</label>
-                                            <input type="number" placeholder="Fundal Height" step={0.01} className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="number"
+                                                placeholder="Fundal Height"
+                                                step={0.01}
+                                                className="input w-full input-bordered input-sm"
+                                                name="FH"
+                                                value={medicalForm.FH}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                     </div>
                                     <div className='w-1/3'>
                                         <div className='flex flex-col mb-1'>
                                             <label className='font-semibold text-[14px]'>Weight (WT)</label>
-                                            <input type="number" placeholder="Weight" step={0.01} className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="number"
+                                                placeholder="Weight"
+                                                step={0.01}
+                                                className="input w-full input-bordered input-sm"
+                                                name="WT"
+                                                value={medicalForm.WT}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label className='font-semibold text-[14px]'>Temperature (TEMP)</label>
-                                            <input type="number" placeholder="Temperature" step={0.01} className="input w-full input-bordered input-sm" />
+                                            <input
+                                                type="number"
+                                                placeholder="Temperature"
+                                                step={0.01}
+                                                className="input w-full input-bordered input-sm"
+                                                name="TEMP"
+                                                value={medicalForm.TEMP}
+                                                onChange={handleInputChange}
+                                            />
                                         </div>
                                         <label className="cursor-pointer flex gap-2 items-center items-end mt-[30px]">
-                                            <input type="checkbox" name="HeartDisease" checked={checkboxes.HeartDisease} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input
+                                                type="checkbox"
+                                                name="FHBPres"
+                                                checked={medicalForm.FHBPres}
+                                                onChange={handleMedicalCheckbox}
+                                                className="checkbox checkbox-primary checkbox-xs"
+                                            />
                                             <span className="label-text text-[13px]">Fetal Heartbeat Present (FHB Pres.)</span>
                                         </label>
                                     </div>
                                 </div>
                                 <div className='mt-2 flex flex-col'>
                                     <label className='font-semibold text-[14px]'>Remarks</label>
-                                    <textarea className="textarea textarea-bordered w-full" placeholder="Remarks"></textarea>
+                                    <textarea
+                                        className="textarea textarea-bordered w-full"
+                                        placeholder="Remarks"
+                                        name="Remarks"
+                                        value={medicalForm.Remarks}
+                                        onChange={handleInputChange}
+                                    ></textarea>
                                 </div>
-                                <button className="btn btn-sm btn-primary btn-outline mt-2">
+                                <button className="btn btn-sm btn-primary btn-outline mt-2" onClick={addForm}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                                         <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
                                     </svg>
@@ -439,7 +757,7 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 </button>
                             </div>
                             <div className='flex justify-end'>
-                                <button className="btn btn-sm btn-primary mt-2 text-white">Save Medical Health Record</button>
+                                <button onClick={() => createMaternal()} className="btn btn-sm btn-primary mt-2 text-white">Save Maternal Health Record</button>
                             </div>
                         </div>
                     </div>
