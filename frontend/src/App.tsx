@@ -31,7 +31,7 @@ function App() {
           <Route element={<ManageConsultationType />} path='/manageconsultationtype' ></Route>
           <Route element={<CreateAppointments />} path='/createappointments' ></Route>
           {/* maternal */}
-          <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:id' ></Route>
+          <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:appointment_id' ></Route>
 
         </Routes>
       </MainLayout>
