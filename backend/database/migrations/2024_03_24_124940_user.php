@@ -19,8 +19,12 @@ return new class extends Migration
             $table->string('password');
             $table->integer('usertype');
             $table->integer('userstatus');
+            $table->date('birthdate');
+            $table->string('education');
+            $table->string('occupation');
             $table->string('contact_number');
             $table->string('address');
+            $table->string('religion');
             $table->string('gender');
             $table->timestamps();
         });
@@ -37,5 +41,8 @@ return new class extends Migration
 
 //reset
 //php artisan migrate:rollback
+//php artisan migrate --path=database/migrations/2024_03_24_124940_user.php
+// php artisan migrate:rollback --path=database/migrations/2024_03_24_124940_user.php
 //migrate
 //php artisan migrate
+//php artisan migrate:reset

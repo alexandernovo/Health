@@ -37,3 +37,4 @@ return new class extends Migration
 
 //php artisan migrate --path=database/migrations/2024_04_02_135001_appointments.php
 // php artisan migrate:rollback --path=database/migrations/2024_04_02_135001_appointments.php
+
