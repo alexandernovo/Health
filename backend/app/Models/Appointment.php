@@ -10,7 +10,7 @@ use App\Models\ConsultationType;
 
 class Appointment extends Model
 {
-    protected $primaryKey = 'appointmentId';
+    protected $primaryKey = 'appointment_id';
     protected $table = 'appointments';
     protected $fillable = [
         'user_id',
