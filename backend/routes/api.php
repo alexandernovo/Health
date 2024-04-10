@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ConsultationTypeController;
 use App\Http\Controllers\API\AppointmentController;
+use App\Http\Controllers\API\MaternalRecordController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -28,6 +29,11 @@ Route::prefix('consultation')->group(function () {
 Route::prefix('appointment')->group(function () {
     Route::post('/createappointment', [AppointmentController::class, 'createAppointment']);
     Route::get('/getAppointments/{status}', [AppointmentController::class, 'getAppointments']);
+    Route::get('/getAppointmentById/{id}', [AppointmentController::class, 'getAppointmentById']);
+});
+
+Route::prefix('maternal')->group(function () {
+    Route::post('/createMaternalRecord', [MaternalRecordController::class, 'createMaternalRecord']);
 });
 
 
