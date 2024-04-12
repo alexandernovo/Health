@@ -17,7 +17,7 @@ const CreateAppointments: React.FC = () => {
     const isAdmin: number | undefined = useSelector((state: RootState) => state.userState.usertype);
 
     const [appointment, setAppointments] = useState<AppointmentModel>({
-        appointmentId: undefined,
+        appointment_id: undefined,
         firstname: undefined,
         lastname: undefined,
         contact_number: '',
