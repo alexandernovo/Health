@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Avatar from '@images/default.jpg';
 import axios from 'axios';
 import { UserModel } from '@datatypes/userType';
 import AddUserDialog from '@dialogs/userdialogs/AddUserDialog';
@@ -7,18 +6,17 @@ import UpdateUserDialog from '@dialogs/userdialogs/UpdateUserDialog';
 import ConfirmationDialog from '@dialogs/confirmationdialog/ConfirmationDialog';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
+import DataTable, { TableColumn } from 'react-data-table-component';
 
 const ManageUsers: React.FC = () => {
     const token: string | null = localStorage.getItem('token');
-    const [originalUsers, setOriginalUsers] = useState<UserModel[]>([]); // Maintain original list
+    const [originalUsers, setOriginalUsers] = useState<UserModel[]>([]);
     const [users, setUsers] = useState<UserModel[]>([]);
-
     const [addUserModal, setAddUserModal] = useState<boolean>(false);
     const [updateUserModal, setUpdateUserModal] = useState<boolean>(false);
     const [activateUserModal, setActivateUserModal] = useState<boolean>(false);
-
+    const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useDispatch();
-
     const [confirmData, setConfirmData] = useState({
         buttonColor: "",
         buttonText: "",
@@ -27,13 +25,15 @@ const ManageUsers: React.FC = () => {
 
     const toggleAddUser = () => {
         setAddUserModal(!addUserModal);
-    }
+    };
+
     const toggleUpdateUser = () => {
         setUpdateUserModal(!updateUserModal);
-    }
+    };
+
     const toggleActivateUser = () => {
         setActivateUserModal(!activateUserModal);
-    }
+    };
 
     const [toUpdate, setToUpdate] = useState<UserModel>({
         firstname: '',
@@ -65,7 +65,6 @@ const ManageUsers: React.FC = () => {
     const HandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value.trim().toLowerCase();
         if (searchValue === '') {
-            // If search input is empty, revert to original list
             setUsers(originalUsers);
         } else {
             const filteredUsers = originalUsers.filter(user => {
@@ -86,7 +85,6 @@ const ManageUsers: React.FC = () => {
         }
     };
 
-
     const HandleUpdateData = (data: UserModel) => {
         setToUpdate(data);
         toggleUpdateUser();
@@ -105,7 +103,7 @@ const ManageUsers: React.FC = () => {
 
     const HandleActivation = () => {
         ActivationUsers();
-    }
+    };
 
     const ActivationUsers = async () => {
         try {
@@ -123,8 +121,7 @@ const ManageUsers: React.FC = () => {
         catch (error) {
             console.log(error);
         }
-
-    }
+    };
 
     useEffect(() => {
         GetUsers();
@@ -135,6 +132,7 @@ const ManageUsers: React.FC = () => {
     };
 
     const GetUsers = async () => {
+        setLoading(true);
         try {
             const response = await axios.get('/api/users/getUsers', {
                 headers: {
@@ -142,8 +140,9 @@ const ManageUsers: React.FC = () => {
                 },
             });
             if (response.data.status == 'success') {
-                setOriginalUsers(Object.values(response.data.users)); // Set original list
-                setUsers(Object.values(response.data.users)); // Set users with fetched data
+                setOriginalUsers(Object.values(response.data.users));
+                setUsers(Object.values(response.data.users));
+                setLoading(false);
             } else {
                 console.log('Error');
             }
@@ -151,6 +150,66 @@ const ManageUsers: React.FC = () => {
             console.log(error);
         }
     };
+
+    const columns: TableColumn<UserModel>[] = [
+        {
+            name: 'Name',
+            selector: (row: UserModel) => `${row.firstname} ${row.lastname}`,
+            sortable: true,
+        },
+        {
+            name: 'Role',
+            selector: (row: UserModel) => (row.usertype === 0 ? 'Admin' : 'Patient'),
+            sortable: true,
+        },
+        {
+            name: 'Address',
+            selector: (row: UserModel) => row.address || '',
+            sortable: true,
+        },
+        {
+            name: 'Contact No.',
+            selector: (row: UserModel) => row.contact_number || '',
+            sortable: true,
+        },
+        {
+            name: 'Status',
+            selector: (row: UserModel) => (row.userstatus === 0 ? 'Inactive' : 'Active'),
+            sortable: true,
+        },
+        {
+            name: 'Actions',
+            cell: (row: UserModel) => (
+                <button onClick={() => HandleUpdateData(row)} className="btn btn-outline btn-primary btn-xs flex gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                        <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                    </svg>
+                    Update
+                </button>
+            ),
+            sortable: false,
+        },
+        {
+            name: (
+                <button onClick={() => toggleAddUser()} className='btn btn-success btn-outline btn-xs px-4'>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
+                    </svg>
+                    User
+                </button>
+            ),
+            cell: (row: UserModel) => (
+                <button onClick={() => ConfirmationModal(row)} className={`btn btn-outline w-full btn-xs flex gap-1 ${row.userstatus == 0 ? 'btn-success' : 'btn-error'}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd" />
+                    </svg>
+                    {row.userstatus == 0 ? 'Activate' : 'Deactivate'}
+                </button>
+            ),
+            sortable: false,
+        },
+    ];
 
     return (
         <div className='m-3'>
@@ -174,87 +233,16 @@ const ManageUsers: React.FC = () => {
                         </div>
                     </div>
                     <div className="overflow-x-auto px-5 pb-5 h-[74vh]">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Address</th>
-                                    <th>Contact No.</th>
-                                    <th>Status</th>
-                                    <th>
-                                        <button onClick={() => toggleAddUser()} className='btn btn-success btn-outline btn-xs flex gap-1 px-4'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                                                <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
-                                            </svg>
-                                            User
-                                        </button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users.map(user => (
-                                    <tr key={user.id}>
-                                        <td>
-                                            <div className="flex items-center gap-3">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle w-12 h-12">
-                                                        <img src={Avatar} alt="Avatar Tailwind CSS Component" />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold">{`${user.firstname} ${user.lastname}`}</div>
-                                                    <div className="text-sm opacity-50">{user.gender}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {user.usertype == 0 ?
-                                                'Admin'
-                                                :
-                                                'Patient'
-                                            }
-                                        </td>
-                                        <td>
-                                            {user.address}
-                                        </td>
-                                        <td>{user.contact_number}</td>
-                                        <td className={user.userstatus == 0 ? "text-error" : "text-success"}>
-                                            {user.userstatus == 0 ? "Inactive" : "Active"}
-                                        </td>
-
-                                        <td>
-                                            <button onClick={() => HandleUpdateData(user)} className="btn btn-outline btn-primary btn-xs flex gap-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                                                    <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                                                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                                                </svg>
-                                                Update
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button onClick={() => ConfirmationModal(user)} className={`btn btn-outline w-full btn-xs flex gap-1 ${user.userstatus == 0 ? 'btn-success' : 'btn-error'}`}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                                                    <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd" />
-                                                </svg>
-                                                {user.userstatus == 0 ?
-                                                    'Activate'
-                                                    :
-                                                    'Deactivate'
-                                                }
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-
-                                {users.length == 0 &&
-                                    (
-                                        <tr>
-                                            <td className='text-center text-[12px] text-gray-300' colSpan={6}>No Data</td>
-                                        </tr>
-                                    )}
-                            </tbody>
-                        </table>
+                        <DataTable
+                            columns={columns}
+                            data={users}
+                            noHeader
+                            pagination
+                            highlightOnHover
+                            persistTableHead={true}
+                            progressPending={loading}
+                            progressComponent={<span className="loading loading-spinner text-info mt-2"></span>}
+                        />
                     </div>
                 </div>
             </div>
@@ -263,7 +251,7 @@ const ManageUsers: React.FC = () => {
             <UpdateUserDialog Toggle={toggleUpdateUser} OnUpdate={UpdateUserData} Data={toUpdate} Show={updateUserModal} />
             <ConfirmationDialog Toggle={toggleActivateUser} Show={activateUserModal} OnConfirm={HandleActivation} Message={confirmData.message} ConfirmButton={confirmData.buttonText} ButtonColor={confirmData.buttonColor} />
         </div>
-    )
-}
+    );
+};
 
-export default ManageUsers
+export default ManageUsers;
