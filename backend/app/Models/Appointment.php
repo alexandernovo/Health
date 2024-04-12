@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 use App\Models\ConsultationType;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Maternal;
 
 class Appointment extends Model
 {
@@ -25,9 +27,12 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
     public function consultation(): BelongsTo
     {
         return $this->belongsTo(ConsultationType::class, 'consultationTypeId');
+    }
+    public function maternal(): HasMany
+    {
+        return $this->hasMany(Maternal::class, 'appointment_id');
     }
 }
