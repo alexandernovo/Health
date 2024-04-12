@@ -51,7 +51,7 @@ class AppointmentController extends Controller
 
             $mappedAppointments = $appointments->map(function ($appointment) {
                 return [
-                    'appointmentId' => $appointment->appointment_id,
+                    'appointment_id' => $appointment->appointment_id,
                     'firstname' => $appointment->user->firstname,
                     'lastname' => $appointment->user->lastname,
                     'contact_number' => $appointment->user->contact_number,
@@ -119,11 +119,12 @@ class AppointmentController extends Controller
             $appointment->update(["appointmentStatus" => $status]);
             return response()->json([
                 'message' => 'Status Change Successfully',
+                'appointment' => $appointment,
                 'status' => 'success',
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Change Status Failed',
+                'message' => 'Cannot find appointment',
             ], 404);
         }
     }
