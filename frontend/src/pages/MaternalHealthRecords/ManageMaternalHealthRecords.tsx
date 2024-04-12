@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { MaternalModel } from '@/types/MaternalType';
 import { MedicalAssessmentModel } from '@/types/MedicalAssessment';
-import { DateToString, calculateAge } from '@/utils/DateFunction';
+import { DateToString, calculateAge, StringToDate } from '@/utils/DateFunction';
 import { generateRandomId } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AppointmentModel } from '@/types/appointmentType';
 
@@ -16,6 +17,7 @@ const ManageMaternalHealthRecords: React.FC = () => {
     const [errorAssessment, setErrorAssessment] = useState("");
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchAppointmentDetails();
@@ -214,6 +216,7 @@ const ManageMaternalHealthRecords: React.FC = () => {
             );
             if (response.data.status == "success") {
                 dispatch(setToastState({ toast: true, toastMessage: "Maternal Health Record Created Successfully", toastSuccess: true }));
+                navigate('/appointments');
             }
             else {
                 setError(response.data.errors);
@@ -578,41 +581,47 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {medical.map(md => (
-                                        <tr key={md.keyId}>
-                                            <td className='border-r-[1px] py-0'>{DateToString(md.Date)}</td>
-                                            <td className='border-r-[1px] py-0'>{md.BP}</td>
-                                            <td className='border-r-[1px] py-0'>{md.WT}</td>
-                                            <td className='border-r-[1px] py-0'>{md.HR}</td>
-                                            <td className='border-r-[1px] py-0'>{md.RR}</td>
-                                            <td className='border-r-[1px] py-0'>{md.TEMP}</td>
-                                            <td className='border-r-[1px] py-0'>{md.AOG}</td>
-                                            <td className='border-r-[1px] py-0'>{md.FH}</td>
-                                            <td className='border-r-[1px] py-0'>
-                                                <div className='flex justify-center items-center'>
-                                                    {md.FHBPres ? (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                                        </svg>
-                                                    ) : (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                                        </svg>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td className='border-r-[1px] py-0'>{md.Remarks}</td>
-                                            <td className='border-r-[1px] py-0'>
-                                                <div className='flex justify-center items-center'>
-                                                    <button onClick={() => removeMedicalAssessment(md.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 active:text-white ">
-                                                            <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                    {medical
+                                        .sort((a, b) => {
+                                            const dateA = StringToDate(a.Date) || new Date(0);
+                                            const dateB = StringToDate(b.Date) || new Date(0);
+                                            return dateA.getTime() - dateB.getTime();
+                                        })
+                                        .map(md => (
+                                            <tr key={md.keyId}>
+                                                <td className='border-r-[1px] py-0'>{DateToString(md.Date)}</td>
+                                                <td className='border-r-[1px] py-0'>{md.BP}</td>
+                                                <td className='border-r-[1px] py-0'>{md.WT}</td>
+                                                <td className='border-r-[1px] py-0'>{md.HR}</td>
+                                                <td className='border-r-[1px] py-0'>{md.RR}</td>
+                                                <td className='border-r-[1px] py-0'>{md.TEMP}</td>
+                                                <td className='border-r-[1px] py-0'>{md.AOG}</td>
+                                                <td className='border-r-[1px] py-0'>{md.FH}</td>
+                                                <td className='border-r-[1px] py-0'>
+                                                    <div className='flex justify-center items-center'>
+                                                        {md.FHBPres ? (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                            </svg>
+                                                        ) : (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                            </svg>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className='border-r-[1px] py-0'>{md.Remarks}</td>
+                                                <td className='border-r-[1px] py-0'>
+                                                    <div className='flex justify-center items-center'>
+                                                        <button onClick={() => removeMedicalAssessment(md.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 active:text-white ">
+                                                                <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
 
                                     {medical.length == 0 && (
                                         <tr>
