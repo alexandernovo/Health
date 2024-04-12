@@ -66,4 +66,25 @@ class MaternalRecordController extends Controller
             ]);
         }
     }
+
+    public function getAllUserMaternalRecord($user_id)
+    {
+        try {
+            $maternal_record = Appointment::has('maternal')
+                ->where('user_id', $user_id)
+                ->orderBy('appointmentDate', 'desc')
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch maternal record successfully',
+                'maternal_record' => $maternal_record,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Create maternal record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
 }
