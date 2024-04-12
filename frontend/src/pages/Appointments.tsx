@@ -1,37 +1,155 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { AppointmentModel } from '@datatypes/appointmentType'
-import { DateToString } from '@/utils/DateFunction'
-import { TimeToString12Hour } from '@/utils/DateFunction'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { AppointmentModel } from '@datatypes/appointmentType';
+import { DateToString } from '@/utils/DateFunction';
+import { TimeToString12Hour } from '@/utils/DateFunction';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setToastState } from '@/store/common/global';
+import DataTable, { TableColumn } from 'react-data-table-component';
 
 const Appointments: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const [appointments, setAppointments] = useState<AppointmentModel[]>([]);
+    const [filteredAppointments, setFilteredAppointments] = useState<AppointmentModel[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        FetchActiveAppointments();
+        fetchActiveAppointments();
     }, []);
 
-    const FetchActiveAppointments = async () => {
+    const handleRefresh = () => {
+        fetchActiveAppointments();
+    }
+    const fetchActiveAppointments = async () => {
         try {
-            const response = await axios.get("/api/appointment/getAppointments/1",
+            setLoading(true);
+            const response = await axios.get("/api/appointment/getAppointments/1", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.data.status === "success") {
+                setAppointments(response.data.appointment);
+                setFilteredAppointments(response.data.appointment);
+                setLoading(false);
+            } else {
+                console.log("Fetch Failed");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value.toLowerCase();
+        const filteredData = appointments.filter(appointment =>
+            appointment.firstname?.toLowerCase().includes(value) ||
+            appointment.lastname?.toLowerCase().includes(value) ||
+            appointment.contact_number?.toLowerCase().includes(value) ||
+            appointment.address?.toLowerCase().includes(value)
+        );
+        setFilteredAppointments(filteredData);
+    };
+
+    const changeStatusAppointment = async (id?: number, status?: number) => {
+        try {
+            const response = await axios.post(`/api/appointment/changeAppointmentStatus/${id}/${status}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
-                });
-            if (response.data.status == "success") {
-                setAppointments(response.data.appointment); // Set users with fetched data
+                }
+            );
+            if (response.data.status === "success") {
+                updateStatus(response.data.appointment);
+                const message: string = status === 3 ? "Approved Successfully" : "Cancelled Successfully";
+                dispatch(setToastState({ toast: true, toastMessage: message, toastSuccess: true }));
             }
-            else {
-                console.log("Fetch Failed");
-            }
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
+            // Handle error
         }
-    }
+    };
+
+    const updateStatus = (updatedAppointment: AppointmentModel) => {
+        setFilteredAppointments(prevAppointments => {
+            return prevAppointments.map(appointment => {
+                if (appointment.appointment_id === updatedAppointment.appointment_id) {
+                    return { ...appointment, appointmentStatus: updatedAppointment.appointmentStatus };
+                }
+                return appointment;
+            });
+        });
+    };
+
+    const columns: TableColumn<AppointmentModel>[] = [
+        {
+            name: 'Patient Name',
+            selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}`,
+            sortable: true,
+            width: '17%'
+        },
+        {
+            name: 'Appointment Date',
+            selector: (row: AppointmentModel) => `${DateToString(row.appointmentDate)} ${TimeToString12Hour(row.appointmentTime)}`,
+            sortable: true,
+            width: '18%'
+        },
+        {
+            name: 'Contact No.',
+            selector: (row: AppointmentModel) => row.contact_number || '',
+            sortable: true,
+            width: '12%'
+        },
+        {
+            name: 'Consultation Type',
+            selector: (row: AppointmentModel) => row.consultationTypeName || '',
+            sortable: true,
+            width: '19%'
+        },
+        {
+            name: 'Status',
+            selector: (row: AppointmentModel) => (row.appointmentStatus == 1 ? 'Pending' : row.appointmentStatus == 2 ? 'Declined' : row.appointmentStatus == 3 ? 'Approved' : row.appointmentStatus == 4 ? 'Done' : 'Cancelled'),
+            sortable: true,
+            width: '10%'
+        },
+        {
+            name: (
+                <Link to="/createappointments" className='btn btn-success btn-outline btn-xs px-4'>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
+                    </svg>
+                    Create Appointment
+                </Link>
+            ),
+            cell: (row: AppointmentModel) => (
+                row.appointmentStatus === 1 ? (
+                    <div className='flex items-center gap-1'>
+                        <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
+                            Approve
+                        </button>
+                        <button className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
+                            Edit
+                        </button>
+                        <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 2)}>
+                            Decline
+                        </button>
+                    </div>
+                ) : (
+                    <Link to={ToRedirect(row.consultationTypeName, row.appointment_id)} className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        View
+                    </Link>
+                )
+            ),
+            sortable: false,
+        }
+    ];
 
     const ToRedirect = (type?: string, param?: number) => {
         if (type == "Maternal Health Records") {
@@ -54,98 +172,39 @@ const Appointments: React.FC = () => {
                             </svg>
                             Manage Appointments
                         </h1>
+                        <div className='flex gap-1'>
+                            <button className='btn btn-ghost btn-sm' onClick={() => handleRefresh()}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                                    <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clipRule="evenodd" />
+                                </svg>
+                            </button>
+                            <input
+                                type="search"
+                                className="input input-bordered input-sm w-full max-w-xs"
+                                placeholder="Search"
+                                onChange={handleSearch}
+                            />
+                        </div>
                     </div>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th className='w-[20%]'>Name</th>
-                                <th>Date and Time of Appointment</th>
-                                <th>Contact No.</th>
-                                <th>Consultation Type</th>
-                                <th>Status</th>
-                                <th colSpan={2}>
-                                    <Link to="/createappointments" className='btn btn-success btn-outline btn-xs flex gap-1 px-4 w-[150px]'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
-                                        </svg>
-                                        Appointment
-                                    </Link>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {appointments.map(appointment => (
-                                <tr key={appointment.appointmentId}>
-                                    <td>{appointment.firstname} {appointment.lastname}</td>
-                                    <td>{DateToString(appointment.appointmentDate)} {TimeToString12Hour(appointment.appointmentTime)}</td>
-                                    <td>{appointment.contact_number}</td>
-                                    <td>{appointment.consultationTypeName}</td>
-                                    <td>{appointment.appointmentStatus == 1 ? 'Pending' : appointment.appointmentStatus == 2 ? 'Declined' : appointment.appointmentStatus == 3 ? 'Approved' : appointment.appointmentStatus == 4 ? 'Done' : 'Cancelled'}</td>
-                                    <td className='flex items-center justify-center'>
-                                        <div className="dropdown dropdown-end">
-                                            <div tabIndex={0} role="button" className="btn m-1 btn-ghost p-1 rounded-full px-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-                                                </svg>
-                                            </div>
-                                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow  border bg-base-100 rounded-box w-52">
 
-                                                {appointment.appointmentStatus == 1 && (
-                                                    <li>
-                                                        <Link to="">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                            </svg>
-                                                            Approved
-                                                        </Link>
-                                                    </li>
-                                                )}
-
-                                                {appointment.appointmentStatus == 3 && (
-                                                    <>
-                                                        <li>
-                                                            <Link to={ToRedirect(appointment.consultationTypeName, appointment.appointmentId)}>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                                                </svg>
-                                                                View
-                                                            </Link>
-                                                        </li>
-                                                    </>
-
-                                                )}
-                                                {appointment.appointmentStatus == 1 && (
-                                                    <li>
-                                                        <Link to="">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                            </svg>
-                                                            Edit
-                                                        </Link>
-                                                    </li>
-                                                )}
-                                                {appointment.appointmentStatus == 1 && (
-                                                    <li>
-                                                        <Link to="">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                            </svg>
-                                                            Cancel
-                                                        </Link>
-                                                    </li>
-                                                )}
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <DataTable
+                        columns={columns}
+                        data={filteredAppointments}
+                        pagination
+                        highlightOnHover
+                        paginationPerPage={10}
+                        noHeader
+                        persistTableHead={true}
+                        // dense
+                        striped
+                        paginationRowsPerPageOptions={[10, 20, 30]}
+                        progressPending={loading}
+                        progressComponent={<span className="loading loading-spinner text-info mt-2"></span>}
+                    />
                 </div>
             </div>
         </div >
     )
 }
 
-export default Appointments
+export default Appointments;
