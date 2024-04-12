@@ -54,3 +54,17 @@ export const calculateAge = (birthdate?: string): number | undefined => {
 
     return age; // Return the calculated age
 }
+
+
+export const StringToDate = (dateString?: string): Date | undefined => {
+    if (!dateString) {
+        return undefined; // Return undefined if dateString is not provided
+    }
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return undefined; // Return undefined if dateString is not a valid date
+    }
+
+    return date; // Return the Date object
+}

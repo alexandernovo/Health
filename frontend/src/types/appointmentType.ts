@@ -1,5 +1,5 @@
 export interface AppointmentModel {
-    appointmentId?: number;
+    appointment_id?: number;
     firstname?: string;
     lastname?: string;
     birthdate?: string;

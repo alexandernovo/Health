@@ -1,3 +1,5 @@
+import { MaternalModel } from "./MaternalType";
+import { AppointmentModel } from "./appointmentType";
 
 export interface UserModel {
     id?: number;
@@ -14,8 +16,10 @@ export interface UserModel {
     contact_number?: string;
     address?: string;
     password?: string;
-    gender?: string,
-    userstatus?: number,
+    gender?: string;
+    userstatus?: number;
     confirmPassword?: string;
-    [key: string]: string | number | boolean | undefined;
+    // [key: string]: string | number | boolean | undefined;
+    maternal?: MaternalModel[];
+    appointment?: AppointmentModel[];
 }
