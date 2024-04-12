@@ -8,6 +8,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Appointment;
+use App\Models\Maternal;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -75,5 +78,14 @@ class User extends Authenticatable implements JWTSubject
             'username' => $this->username,
             'usertype' => $this->usertype,
         ];
+    }
+
+    public function maternal(): HasMany
+    {
+        return $this->hasMany(Maternal::class);
+    }
+    public function appointment(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }
