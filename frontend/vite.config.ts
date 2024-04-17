@@ -26,6 +26,7 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/assets/images'),
       '@assets': path.resolve(__dirname, './src/assets'),
       '@store': path.resolve(__dirname, './src/store'),
+      '@reports': path.resolve(__dirname, './src/reports'),
       '@types': path.resolve(__dirname, './src/datatypes'),
     }
   }

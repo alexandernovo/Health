@@ -37,6 +37,9 @@ Route::prefix('appointment')->group(function () {
 
 Route::prefix('maternal')->group(function () {
     Route::post('/createMaternalRecord', [MaternalRecordController::class, 'createMaternalRecord']);
+    Route::get('/getUserMaternalRecord/{user_id}', [MaternalRecordController::class, 'getUserMaternalRecord']);
+    Route::get('/getMaternalOneRecord/{appointment_id}', [MaternalRecordController::class, 'getMaternalOneRecord']);
+    Route::put('/updateMaternalRecords', [MaternalRecordController::class, 'updateMaternalRecords']);
 });
 
 Route::prefix('record')->group(function () {

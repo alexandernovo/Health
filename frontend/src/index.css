@@ -11,7 +11,16 @@
   font-weight: 400;
   font-style: normal;
 }
-
+@media print {
+  @page {
+    size: 8.5in 11in;
+    margin: 1cm;
+  }
+  .report-card {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
