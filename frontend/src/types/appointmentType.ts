@@ -1,13 +1,7 @@
-export interface AppointmentModel {
+import { UserModel } from "./userType";
+
+export interface AppointmentModel extends UserModel {
     appointment_id?: number;
-    firstname?: string;
-    lastname?: string;
-    birthdate?: string;
-    occupation?: string;
-    education?: string;
-    religion?: string;
-    contact_number?: string;
-    address?: string;
     consultationTypeId?: number;
     consultationTypeName?: string;
     appointmentDate?: string;

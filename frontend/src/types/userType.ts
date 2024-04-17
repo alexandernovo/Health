@@ -7,6 +7,7 @@ export interface UserModel {
     firstname?: string;
     lastname?: string;
     birthdate?: string;
+    age?: number;
     occupation?: string;
     education?: string;
     religion?: string;
