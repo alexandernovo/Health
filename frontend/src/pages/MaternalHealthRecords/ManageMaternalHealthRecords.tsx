@@ -59,11 +59,18 @@ const ManageMaternalHealthRecords: React.FC = () => {
     });
 
     const [maternal, setMaternal] = useState<MaternalModel>({
+        fNo: "",
+        philhealth: "",
         husbandName: "",
         husbandbirthdate: "",
-        husbandage: undefined,
+        husbandage: 0,
+        husbandAddress: "",
+        husbandEducation: "",
+        husbandOccupation: "",
         dateofmarriage: "",
         dateAdmitted: "",
+        timeAdmitted: "",
+        timeDischarge: "",
         dateDischarge: "",
         pastPTB: false,
         pastHeartDisease: false,
@@ -240,7 +247,20 @@ const ManageMaternalHealthRecords: React.FC = () => {
                             Maternal Health Record
                         </h1>
                     </div>
-                    <div className="overflow-x-auto px-5 pb-[30px] h-[73vh] w-full mt-3">
+
+                    <div className='flex px-[24px]'>
+                        <div>
+                            <div className='flex flex-col'>
+                                <label className='font-semibold text-[14px]'>F. No.</label>
+                                <input type="text" placeholder="F. No." name='fNo' value={maternal.fNo} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                            </div>
+                            <div className='flex flex-col mt-3'>
+                                <label className='font-semibold text-[14px]'>Philhealth No:</label>
+                                <input type="text" placeholder="Philhealth No:" name='philhealth' value={maternal.philhealth} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="overflow-x-auto px-5 pb-[30px] w-full mt-3">
                         <h1 className='font-bold mb-4'>1. General Data</h1>
                         <div className='flex justify-between gap-4'>
                             <div className='w-1/3'>
@@ -302,6 +322,26 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='flex mt-3 justify-between gap-4'>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Address</label>
+                                    <input type="text" name='husbandAddress' value={maternal.husbandAddress} onChange={handleInputChangeMaternal} placeholder="Address" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Education</label>
+                                    <input type="text" name='husbandEducation' value={maternal.husbandEducation} onChange={handleInputChangeMaternal} placeholder="Education" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Occupation</label>
+                                    <input type="text" name='husbandOccupation' value={maternal.husbandOccupation} onChange={handleInputChangeMaternal} placeholder="Occupation" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                        </div>
                         <div className='flex mt-3 w-full gap-5'>
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
@@ -330,6 +370,20 @@ const ManageMaternalHealthRecords: React.FC = () => {
                                     <input type="date" placeholder="Education" name='dateDischarge' value={maternal.dateDischarge} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
                                 {error.dateDischarge && <p className="text-red-500 text-[13px]">{error.dateDischarge}</p>}
+                            </div>
+                        </div>
+                        <div className='flex mt-3 gap-5'>
+                            <div className='w-1/2'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Time Admitted</label>
+                                    <input type="time" value={maternal.timeAdmitted} name='timeAdmitted' onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/2'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Time Discharge</label>
+                                    <input type="time" placeholder="Education" name='timeDischarge' value={maternal.timeDischarge} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                                </div>
                             </div>
                         </div>
                         <h1 className='font-bold mb-4 mt-5'>2. Medical History</h1>

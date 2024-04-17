@@ -5,13 +5,14 @@ import { DateToString, calculateAge, StringToDate } from '@/utils/DateFunction';
 import { generateRandomId } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AppointmentModel } from '@/types/appointmentType';
 
 const UpdateManageMaternalHealthRecords: React.FC = () => {
     const [medical, setMedical] = useState<MedicalAssessmentModel[]>([]);
+    const [medicalToRemove, setMedicalToRemove] = useState<MedicalAssessmentModel[]>([]);
     const { appointment_id } = useParams<{ appointment_id: string }>();
     const [appointment, setAppointment] = useState<AppointmentModel>({});
     const [errorAssessment, setErrorAssessment] = useState("");
@@ -20,6 +21,7 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        fetchMaternalDetails();
         fetchAppointmentDetails();
     }, []);
 
@@ -53,18 +55,40 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
         }
     }
 
+    const fetchMaternalDetails = async () => {
+        const response = await axios.get(`/api/maternal/getMaternalOneRecord/${appointment_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (response.data.status == "success") {
+            setMaternal(response.data.maternal);
+            if (response.data.maternal.medical.length > 0) {
+                setMedical(response.data.maternal.medical);
+            }
+        }
+    }
+
     const [error, setError] = useState<MaternalModel>({
         dateAdmitted: "",
         dateDischarge: "",
     });
 
     const [maternal, setMaternal] = useState<MaternalModel>({
+        fNo: "",
+        philhealth: "",
         husbandName: "",
         husbandbirthdate: "",
         husbandage: undefined,
+        husbandAddress: "",
+        husbandEducation: "",
+        husbandOccupation: "",
         dateofmarriage: "",
         dateAdmitted: "",
         dateDischarge: "",
+        timeAdmitted: "",
+        timeDischarge: "",
         pastPTB: false,
         pastHeartDisease: false,
         pastDiabetes: false,
@@ -148,6 +172,10 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
     const removeMedicalAssessment = (keyIdToRemove?: string) => {
         const indexToRemove = medical.findIndex((item) => item.keyId === keyIdToRemove);
         if (indexToRemove !== -1) {
+            const medicalToRemove = medical[indexToRemove]; // Get the medical model
+            if (medicalToRemove.medicalAssessmentID != 0) {
+                setMedicalToRemove((prev) => [...prev, medicalToRemove]); // Add the medical model to remove array
+            }
             const updatedMedical = [...medical]; // Create a copy of the array
             updatedMedical.splice(indexToRemove, 1); // Remove the item
             setMedical(updatedMedical); // Update the state with the new array
@@ -195,7 +223,9 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                 WT: medicalForm.WT,
                 TEMP: medicalForm.TEMP,
                 FHBPres: medicalForm.FHBPres,
-                Remarks: medicalForm.Remarks
+                Remarks: medicalForm.Remarks,
+                medicalAssessmentID: 0,
+                maternal_id: maternal.maternal_id
             };
             return [...prevMedical, newMedicalAssessment];
         });
@@ -203,11 +233,11 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
         setMedicalForm(InitialValueMedicalAssessment);
     };
 
-    const createMaternal = async () => {
+    const updateMaternal = async () => {
         try {
             maternal.medicalAssessment = medical; //put medical in medicalAssessment model
-
-            const response = await axios.post("/api/maternal/createMaternalRecord", maternal,
+            maternal.removeMedicalAssessment = medicalToRemove;
+            const response = await axios.put("/api/maternal/updateMaternalRecords", maternal,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -215,8 +245,8 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                 }
             );
             if (response.data.status == "success") {
-                dispatch(setToastState({ toast: true, toastMessage: "Maternal Health Record Created Successfully", toastSuccess: true }));
-                navigate('/appointments');
+                dispatch(setToastState({ toast: true, toastMessage: "Maternal Health Record Updated Successfully", toastSuccess: true }));
+                navigate(`/maternal_records/${appointment.user_id}`);
             }
             else {
                 setError(response.data.errors);
@@ -229,7 +259,44 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
 
 
     return (
-        <div className='m-3'>
+        <div className='m-3 overflow-hidden'>
+            <div className="text-sm breadcrumbs">
+                <ul>
+                    <li>
+                        <Link to="/managerecords">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                            </svg>
+                            Manage Records
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={`/patientRecords/${appointment.user_id}`} className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                            </svg>
+                            {appointment?.firstname} {appointment?.lastname} Records
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={`/maternal_records/${appointment.user_id}`} className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                            </svg>
+                            {appointment?.firstname} {appointment?.lastname} Maternal Health Records
+                        </Link>
+                    </li>
+                    <li>
+                        <span className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                                <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                                <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                            </svg>
+                            Update {appointment?.firstname} {appointment?.lastname} Maternal Health Records
+                        </span>
+                    </li>
+                </ul>
+            </div>
             <div className="card border border-gray-100 rounded-md bg-base-100 shadow-md mb-3">
                 <div className="card-body p-0">
                     <div className='flex justify-between p-4 px-5'>
@@ -240,7 +307,19 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                             Maternal Health Record
                         </h1>
                     </div>
-                    <div className="overflow-x-auto px-5 pb-[30px] h-[73vh] w-full mt-3">
+                    <div className='flex px-[24px]'>
+                        <div>
+                            <div className='flex flex-col'>
+                                <label className='font-semibold text-[14px]'>F. No.</label>
+                                <input type="text" placeholder="F. No." name='fNo' value={maternal.fNo} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                            </div>
+                            <div className='flex flex-col mt-3'>
+                                <label className='font-semibold text-[14px]'>Philhealth No:</label>
+                                <input type="text" placeholder="Philhealth No:" name='philhealth' value={maternal.philhealth} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="overflow-x-auto px-5 pb-[30px] w-full mt-3">
                         <h1 className='font-bold mb-4'>1. General Data</h1>
                         <div className='flex justify-between gap-4'>
                             <div className='w-1/3'>
@@ -302,6 +381,26 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='flex mt-3 justify-between gap-4'>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Address</label>
+                                    <input type="text" name='husbandAddress' value={maternal.husbandAddress} onChange={handleInputChangeMaternal} placeholder="Address" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Education</label>
+                                    <input type="text" name='husbandEducation' value={maternal.husbandEducation} onChange={handleInputChangeMaternal} placeholder="Education" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/3'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Occupation</label>
+                                    <input type="text" name='husbandOccupation' value={maternal.husbandOccupation} onChange={handleInputChangeMaternal} placeholder="Occupation" className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                        </div>
                         <div className='flex mt-3 w-full gap-5'>
                             <div className='w-1/2'>
                                 <div className='flex flex-col'>
@@ -330,6 +429,20 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                                     <input type="date" placeholder="Education" name='dateDischarge' value={maternal.dateDischarge} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
                                 </div>
                                 {error.dateDischarge && <p className="text-red-500 text-[13px]">{error.dateDischarge}</p>}
+                            </div>
+                        </div>
+                        <div className='flex mt-3 gap-5'>
+                            <div className='w-1/2'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Time Admitted</label>
+                                    <input type="time" value={maternal.timeAdmitted} name='timeAdmitted' onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                                </div>
+                            </div>
+                            <div className='w-1/2'>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[14px]'>Time Discharge</label>
+                                    <input type="time" placeholder="Education" name='timeDischarge' value={maternal.timeDischarge} onChange={handleInputChangeMaternal} className="input input-bordered w-full" />
+                                </div>
                             </div>
                         </div>
                         <h1 className='font-bold mb-4 mt-5'>2. Medical History</h1>
@@ -765,8 +878,9 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                                     Add
                                 </button>
                             </div>
-                            <div className='flex justify-end'>
-                                <button onClick={() => createMaternal()} className="btn btn-sm btn-primary mt-2 text-white">Save Maternal Health Record</button>
+                            <div className='flex justify-end gap-2'>
+                                <Link to={`/maternal_records/${appointment.user_id}`} className='btn btn-default btn-sm mt-2 btn-outline'>Cancel</Link>
+                                <button onClick={() => updateMaternal()} className="btn btn-sm btn-primary mt-2 text-white">Update Maternal Health Record</button>
                             </div>
                         </div>
                     </div>

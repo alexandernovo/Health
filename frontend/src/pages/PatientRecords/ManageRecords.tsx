@@ -29,8 +29,8 @@ const ManageRecords: React.FC = () => {
         if (response.data.status === "success") {
             setUsers(response.data.records);
             setFilteredUsers(response.data.records);
-            setLoading(false);
         }
+        setLoading(false);
     }
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

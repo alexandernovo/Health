@@ -13,7 +13,6 @@ const PatientRecords: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const { user_id } = useParams<{ user_id: string }>();
-    const navigate = useNavigate();
 
     useEffect(() => {
         FetchUser();
@@ -70,7 +69,7 @@ const PatientRecords: React.FC = () => {
 
     const RedirectTo = (user_id?: number, consultationTypeId?: number, consultationTypeName?: string) => {
         if (consultationTypeName == "Maternal Health Records") {
-            return `/maternal_records/${user_id}/${consultationTypeId}`;
+            return `/maternal_records/${user_id}`;
         }
         else {
             return "";

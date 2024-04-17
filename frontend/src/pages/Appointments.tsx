@@ -151,9 +151,12 @@ const Appointments: React.FC = () => {
         }
     ];
 
-    const ToRedirect = (type?: string, param?: number) => {
+    const ToRedirect = (type?: string, appointment_id?: number) => {
         if (type == "Maternal Health Records") {
-            return `/managematernal/${param}`;
+            return `/managematernal/${appointment_id}`;
+        }
+        else if (type == "Newborn Delivery Record") {
+            return `/newborndeliveryform/${appointment_id}`;
         }
         else {
             return "";
