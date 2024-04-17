@@ -67,6 +67,49 @@ class MaternalRecordController extends Controller
         }
     }
 
+    public function updateMaternalRecords(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'appointment_id' => 'required',
+            'user_id' => 'required',
+            'dateAdmitted' => 'required',
+            'dateDischarge' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $find_maternal = Maternal::where('maternal_id', $request->maternal_id)->first();
+        $update = $find_maternal->update($request->input());
+        if ($update) {
+            foreach ($request->medicalAssessment as $medical) {
+                if ($medical['medicalAssessmentID'] != 0) {
+                    $find_medical = MedicalAssessment::where('medicalAssessmentID', $medical['medicalAssessmentID'])->first();
+                    if ($find_medical) {
+                        $find_medical->update($medical);
+                    }
+                } else {
+                    MedicalAssessment::create($medical);
+                }
+            }
+            foreach ($request->removeMedicalAssessment as $medical) {
+                $find_medical = MedicalAssessment::where('medicalAssessmentID', $medical['medicalAssessmentID'])->first();
+                if ($find_medical) {
+                    $find_medical->delete();
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Maternal Record Updated Successfully',
+        ]);
+    }
+
     public function getAllUserMaternalRecord($user_id)
     {
         try {
@@ -84,6 +127,40 @@ class MaternalRecordController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Create maternal record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function getUserMaternalRecord($user_id)
+    {
+        try {
+            $maternal = Appointment::has('maternal')->where('user_id', $user_id)->orderBy('appointmentDate', 'desc')->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch maternal record successfully',
+                'maternal' => $maternal,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch maternal record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function getMaternalOneRecord($appointment_id)
+    {
+        try {
+            $maternal = Maternal::whereHas('medical')->with('medical')->where('appointment_id', $appointment_id)->first();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch maternal record successfully',
+                'maternal' => $maternal,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch maternal record failed: ' . $e->getMessage(),
             ]);
         }
     }

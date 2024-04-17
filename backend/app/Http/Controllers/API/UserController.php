@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function getUserById($id)
     {
-        $user = User::find($id);
+        $user = User::where('id', $id)->first();
         return response()->json([
             'status' => 'success',
             'message' => 'Fetch user successfully',

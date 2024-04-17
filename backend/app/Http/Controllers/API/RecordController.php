@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Maternal;
 use App\Models\MedicalAssessment;
 use App\Models\Appointment;
+use Illuminate\Support\Facades\DB;
 use Exception;
 
 class RecordController extends Controller
@@ -44,24 +45,26 @@ class RecordController extends Controller
         try {
             $userRecords = Appointment::has('maternal')
                 ->with('maternal', 'consultation', 'user')
-                ->where('user_id', $id)
-                ->get()
-                ->groupBy('consultationTypeId');
+                ->whereIn('appointment_id', function ($query) use ($id) {
+                    $query->select(DB::raw('MIN(appointment_id)'))
+                        ->from('appointments')
+                        ->where('user_id', $id)
+                        ->groupBy('consultationTypeId');
+                })
+                ->get();
+
 
             if ($userRecords->isNotEmpty()) {
-
-                $mappedRecords = $userRecords->flatMap(function ($appointments) {
-                    return $appointments->map(function ($appointment) {
-                        return [
-                            'firstname' => $appointment->user->firstname,
-                            'lastname' => $appointment->user->lastname,
-                            'appointment_id' => $appointment->appointment_id,
-                            'consultationTypeId' => $appointment->consultationTypeId,
-                            'consultationTypeName' => $appointment->consultation->consultationTypeName,
-                            'isActive' => $appointment->isActive,
-                            'user_id' => $appointment->user_id,
-                        ];
-                    });
+                $mappedRecords = $userRecords->map(function ($appointment) {
+                    return [
+                        'firstname' => $appointment->user->firstname,
+                        'lastname' => $appointment->user->lastname,
+                        'appointment_id' => $appointment->appointment_id,
+                        'consultationTypeId' => $appointment->consultationTypeId,
+                        'consultationTypeName' => $appointment->consultation->consultationTypeName,
+                        'isActive' => $appointment->isActive,
+                        'user_id' => $appointment->user_id,
+                    ];
                 });
 
                 return response()->json([
