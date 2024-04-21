@@ -52,6 +52,7 @@ class AuthController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
             'address' => 'required|string',
+            'civil_status' => 'required',
             'gender' => 'required|string',
             'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
         ], [
@@ -75,6 +76,7 @@ class AuthController extends Controller
             'contact_number' => $request->contact_number,
             'gender' => $request->gender,
             'birthdate' => $request->birthdate,
+            'civil_status' => $request->civil_status,
             'occupation' => $request->occupation,
             'religion' => $request->religion,
             'education' => $request->education,

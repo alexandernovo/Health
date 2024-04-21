@@ -57,6 +57,7 @@ class UserController extends Controller
             'lastname' => 'required|string|max:255',
             'address' => 'required|string',
             'gender' => 'required|string',
+            'civil_status' => 'required',
             'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
         ];
 
@@ -81,6 +82,7 @@ class UserController extends Controller
             'gender' => $request->gender,
             'birthdate' => $request->birthdate,
             'occupation' => $request->occupation,
+            'civil_status' => $request->civil_status,
             'religion' => $request->religion,
             'education' => $request->education,
             'usertype' => $request->usertype,

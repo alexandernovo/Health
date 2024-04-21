@@ -3,12 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Maternal;
-use App\Models\MedicalAssessment;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -43,16 +38,19 @@ class RecordController extends Controller
     public function getUserRecord($id)
     {
         try {
-            $userRecords = Appointment::has('maternal')
-                ->with('maternal', 'consultation', 'user')
+            $userRecords = Appointment::whereHas('maternal')
+                ->orWhereHas('newborn')
+                ->with('consultation', 'user')
                 ->whereIn('appointment_id', function ($query) use ($id) {
-                    $query->select(DB::raw('MIN(appointment_id)'))
+                    $query->select(DB::raw('MAX(appointment_id)'))
                         ->from('appointments')
                         ->where('user_id', $id)
                         ->groupBy('consultationTypeId');
                 })
                 ->get();
 
+            // Remove duplicates based on consultationTypeId
+            $userRecords = $userRecords->unique('consultationTypeId');
 
             if ($userRecords->isNotEmpty()) {
                 $mappedRecords = $userRecords->map(function ($appointment) {
