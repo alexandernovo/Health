@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\ConsultationType;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Maternal;
+use App\Models\Newborn;
 
 class Appointment extends Model
 {
@@ -34,5 +35,9 @@ class Appointment extends Model
     public function maternal(): HasMany
     {
         return $this->hasMany(Maternal::class, 'appointment_id');
+    }
+    public function newborn(): HasMany
+    {
+        return $this->hasMany(Newborn::class, 'appointment_id');
     }
 }
