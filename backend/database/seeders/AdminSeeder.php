@@ -26,6 +26,7 @@ class AdminSeeder extends Seeder
                 'birthdate' => '1990-01-01',
                 'education' => 'Bachelor\'s Degree',
                 'occupation' => 'Administrator',
+                'civil_status' => 'Single',
                 'contact_number' => '1234567890',
                 'address' => 'Admin Address',
                 'gender' => 'Male',
