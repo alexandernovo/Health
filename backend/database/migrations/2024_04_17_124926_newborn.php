@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('newborndelivery', function (Blueprint $table) {
             $table->bigIncrements("newBornId");
+            $table->unsignedBigInteger("appointment_id");
             $table->unsignedBigInteger('user_id');
             $table->string('infantsName')->nullable();
             $table->datetime('dateTimeDelivery')->nullable();
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->string('specify')->nullable();
             $table->timestamps();
 
+            $table->foreign('appointment_id')->references('appointment_id')->on('appointments');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -45,3 +47,6 @@ return new class extends Migration
         Schema::dropIfExists('newborndelivery');
     }
 };
+
+// php artisan migrate --path=database/migrations/2024_04_17_124926_newborn.php
+// php artisan migrate:rollback --path=database/migrations/2024_04_17_124926_newborn.php

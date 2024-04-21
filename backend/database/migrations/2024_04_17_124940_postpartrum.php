@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('postPartrumRemarks')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('newBornId')->references('newBornId')->on('newborndelivery');
         });
     }
 
@@ -34,4 +34,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('postpartrum');
     }
+
+    // php artisan migrate --path=database/migrations/2024_04_17_124940_postpartrum.php
+    // php artisan migrate:rollback --path=database/migrations/2024_04_17_124940_postpartrum.php
 };

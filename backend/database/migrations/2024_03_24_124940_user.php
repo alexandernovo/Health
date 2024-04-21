@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('userstatus');
             $table->date('birthdate');
             $table->string('education');
+            $table->string('civil_status');
             $table->string('occupation');
             $table->string('contact_number');
             $table->string('address');
