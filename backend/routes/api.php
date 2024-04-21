@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ConsultationTypeController;
 use App\Http\Controllers\API\AppointmentController;
 use App\Http\Controllers\API\MaternalRecordController;
 use App\Http\Controllers\API\RecordController;
+use App\Http\Controllers\API\NewBornController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -45,6 +46,14 @@ Route::prefix('maternal')->group(function () {
 Route::prefix('record')->group(function () {
     Route::get('/getUserWithRecord', [RecordController::class, 'getUserWithRecord']);
     Route::get('/getUserRecord/{id}', [RecordController::class, 'getUserRecord']);
+});
+
+
+Route::prefix('newborn')->group(function () {
+    Route::post('/createNewBornRecord', [NewBornController::class, 'createNewBornRecord']);
+    Route::get('/getUserNewbornRecord/{user_id}', [NewBornController::class, 'getUserNewbornRecord']);
+    Route::get('/getNewbornOneRecord/{appointment_id}', [NewBornController::class, 'getNewbornOneRecord']);
+    Route::put('/updateNewbornRecord', [NewBornController::class, 'updateNewbornRecord']);
 });
 
 
