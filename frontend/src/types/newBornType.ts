@@ -4,6 +4,7 @@ import { UserModel } from "./userType";
 export interface NewBornModel extends UserModel {
     newBornId?: number;
     user_id?: number;
+    appointment_id?: string;
     infantsName?: string;
     dateTimeDelivery?: string;
     infantsSex?: string;
@@ -22,4 +23,5 @@ export interface NewBornModel extends UserModel {
     discharge?: string;
     specify?: string;
     postPartrum?: PostPartrumModel[];
+    postPartrumToRemove?: PostPartrumModel[];
 }

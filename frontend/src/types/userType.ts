@@ -13,6 +13,7 @@ export interface UserModel {
     religion?: string;
     username?: string;
     usertype?: number;
+    civil_status?: string;
     isSignedIn?: boolean;
     contact_number?: string;
     address?: string;
