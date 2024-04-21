@@ -7,9 +7,9 @@ const MaternalHealthRecordReport: React.FC = () => {
     const { appointment_id } = useParams<{ appointment_id: string }>();
 
     return (
-        <div >
+        <>
             <MaternalReport appointment_id={appointment_id} />
-        </div>
+        </>
     )
 }
 

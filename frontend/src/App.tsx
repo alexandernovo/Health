@@ -17,6 +17,9 @@ import ManageRecords from '@pages/PatientRecords/ManageRecords'
 import MaternalHealthRecords from './pages/MaternalHealthRecords/MaternalHealthRecords'
 import MaternalHealthRecordReport from './pages/MaternalHealthRecords/MaternalHealthRecordReport'
 import NewbornDeliveryRecords from './pages/NewbornDeliveryRecords/NewbornDeliveryRecords'
+import NewbornDeliveryRecordsUpdate from './pages/NewbornDeliveryRecords/NewbornDeliveryRecordsUpdate'
+import ManageNewbornRecord from './pages/NewbornDeliveryRecords/ManageNewbornRecord'
+import NewbornReportViewer from './pages/NewbornDeliveryRecords/NewbornReportViewer'
 
 function App() {
   return (
@@ -45,6 +48,9 @@ function App() {
           <Route element={<PatientRecords />} path='/patientRecords/:user_id' ></Route>
           {/* newborn delivery record */}
           <Route element={<NewbornDeliveryRecords />} path='/newborndeliveryform/:appointment_id' ></Route>
+          <Route element={<NewbornDeliveryRecordsUpdate />} path='/newborndeliveryformupdate/:appointment_id' ></Route>
+          <Route element={<ManageNewbornRecord />} path='/newborn_record/:user_id' ></Route>
+          <Route element={<NewbornReportViewer />} path='/newborn_report/:appointment_id' ></Route>
         </Routes>
       </MainLayout>
     </Router>

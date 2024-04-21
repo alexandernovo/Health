@@ -12,7 +12,7 @@ interface AddUserDialogProps {
 const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) => {
     const dispatch = useDispatch();
 
-    const [formData, setFormData] = useState<UserModel>({
+    const userInitialData = {
         firstname: '',
         lastname: '',
         username: '',
@@ -21,12 +21,15 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         gender: '',
         usertype: 1,
         password: '',
+        civil_status: '',
         birthdate: '',
         occupation: '',
         religion: '',
         education: '',
-        confirmPassword: ''
-    });
+        confirmPassword: '',
+    }
+
+    const [formData, setFormData] = useState<UserModel>(userInitialData);
 
     const [error, setError] = useState<UserModel>({
         firstname: '',
@@ -36,6 +39,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         religion: '',
         address: '',
         gender: '',
+        civil_status: '',
         password: '',
         birthdate: '',
         occupation: '',
@@ -74,6 +78,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
             console.log(response.data);
             if (response.data.status == 'success') {
                 props.OnAdd(response.data.user); // append data in manage user
+                setFormData(userInitialData);
                 dispatch(setToastState({ toast: true, toastMessage: "User Registered Successfully", toastSuccess: true }));
                 props.Toggle();
             }
@@ -142,7 +147,21 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
                                                 <option value="Female">Female</option>
                                             </select>
                                         </label>
+
                                         {error.gender && <p className="text-red-500 text-[13px]">{error.gender}</p>}
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                            <select value={formData.civil_status} className="outline-0 grow w-full h-full" name="civil_status" onChange={handleChange}>
+                                                <option value="" disabled>Civil Status</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Married">Married</option>
+                                                <option value="Divorced">Divorced</option>
+                                                <option value="Widowed">Widowed</option>
+                                                <option value="Separated">Separated</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </label>
+                                        {error.civil_status && <p className="text-red-500 text-[13px]">{error.civil_status}</p>}
 
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">

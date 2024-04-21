@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { MaternalModel } from '@/types/MaternalType';
 import { UserModel } from '@/types/userType';
 import { AppointmentModel } from '@/types/appointmentType';
 import { Link } from 'react-router-dom';

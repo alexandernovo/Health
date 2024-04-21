@@ -6,17 +6,17 @@ import { generateRandomId } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { StringToDate } from '@/utils/DateFunction';
+import { DateToString } from '@/utils/DateFunction';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { DateToString } from '@/utils/DateFunction';
 import axios from 'axios';
 
-const NewbornDeliveryRecords: React.FC = () => {
+const NewbornDeliveryRecordsUpdate: React.FC = () => {
     const [appointment, setAppointment] = useState<AppointmentModel>({});
 
     const initialNewbornValue = {
-        newBornId: undefined,
-        user_id: undefined,
+        newBornId: 0,
+        user_id: 0,
         appointment_id: "",
         infantsName: "",
         dateTimeDelivery: "",
@@ -35,6 +35,7 @@ const NewbornDeliveryRecords: React.FC = () => {
         laceration: "",
         discharge: "",
         specify: "",
+        postPartrum: []
     }
     const [newborn, setNewBorn] = useState<NewBornModel>(initialNewbornValue);
     const [error, setError] = useState<NewBornModel>(initialNewbornValue);
@@ -42,7 +43,13 @@ const NewbornDeliveryRecords: React.FC = () => {
     const { appointment_id } = useParams<{ appointment_id: string }>();
     const navigate = useNavigate();
     const [postPartrum, setPostPartrum] = useState<PostPartrumModel[]>([]);
+    const [postPartrumToRemove, setPostPartrumToRemove] = useState<PostPartrumModel[]>([]);
     const token: string | null = localStorage.getItem("token");
+
+    useEffect(() => {
+        fetchAppointmentDetails();
+        fetchNewbornRecord();
+    }, []);
 
     const fetchAppointmentDetails = async () => {
         const response = await axios.get(`/api/appointment/getAppointmentById/${appointment_id}`, {
@@ -55,7 +62,20 @@ const NewbornDeliveryRecords: React.FC = () => {
             console.log(response.data.appointment)
         }
     }
+    const fetchNewbornRecord = async () => {
+        const response = await axios.get(`/api/newborn/getNewbornOneRecord/${appointment_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
+        if (response.data.status == "success") {
+            setNewBorn(response.data.newborn);
+            if (response.data.newborn.postpartrum.length > 0) {
+                setPostPartrum(response.data.newborn.postpartrum);
+            }
+        }
+    }
     const [postPartrumAdd, setPostPartrumAdd] = useState<PostPartrumModel>({
         keyId: "",
         postPartrumId: 0,
@@ -69,9 +89,7 @@ const NewbornDeliveryRecords: React.FC = () => {
     });
 
 
-    useEffect(() => {
-        fetchAppointmentDetails();
-    }, [])
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setNewBorn(prevState => ({
@@ -111,29 +129,34 @@ const NewbornDeliveryRecords: React.FC = () => {
     const removePostPartrum = (keyIdToRemove?: string) => {
         const indexToRemove = postPartrum.findIndex((item) => item.keyId === keyIdToRemove);
         if (indexToRemove !== -1) {
+            const postPartrumToRemove = postPartrum[indexToRemove];
+            if (postPartrumToRemove.newBornId != 0) {
+                setPostPartrumToRemove((prev) => [...prev, postPartrumToRemove]); // Add the medical model to remove array
+            }
             const updatedPostPartrum = [...postPartrum]; // Create a copy of the array
             updatedPostPartrum.splice(indexToRemove, 1); // Remove the item
             setPostPartrum(updatedPostPartrum); // Update the state with the new array
         }
     };
 
-    const submitNewBorn = async () => {
+    const updateNewborn = async () => {
 
         if (newborn !== undefined) {
             newborn.postPartrum = postPartrum;
+            newborn.postPartrumToRemove = postPartrumToRemove;
             newborn.appointment_id = appointment_id;
             newborn.user_id = appointment.user_id;
         }
 
-        const response = await axios.post("/api/newborn/createNewBornRecord", newborn, {
+        const response = await axios.put("/api/newborn/updateNewbornRecord", newborn, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
 
         if (response.data.status == "success") {
-            dispatch(setToastState({ toast: true, toastMessage: "Newborn Delivery Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+            dispatch(setToastState({ toast: true, toastMessage: "Newborn Delivery Record Updated Successfully", toastSuccess: true }));
+            navigate(`/newborn_record/${appointment.user_id}`);
         }
         else {
             setError(response.data.errors);
@@ -238,7 +261,7 @@ const NewbornDeliveryRecords: React.FC = () => {
                                         return dateA.getTime() - dateB.getTime();
                                     })
                                     .map(pP => (
-                                        <tr key={pP.keyId}>
+                                        <tr key={pP.postPartrumId}>
                                             <td className='border'>{DateToString(pP.postPartrumDate)}</td>
                                             <td className='border text-center'>{pP.bodyTemperature}</td>
                                             <td className='border'>{pP.postPartrumBP}</td>
@@ -418,7 +441,7 @@ const NewbornDeliveryRecords: React.FC = () => {
                                 {error?.specify && <p className="text-red-500 text-[13px]">{error?.specify}</p>}
                             </div>
                             <div className='flex justify-end mb-[30px] mt-4'>
-                                <button className="btn btn-sm btn-primary mt-2 text-white" onClick={() => submitNewBorn()}>Save Newborn Delivery Record</button>
+                                <button className="btn btn-sm btn-primary mt-2 text-white" onClick={() => updateNewborn()}>Save Newborn Delivery Record</button>
                             </div>
                         </div>
                     </div>
@@ -429,4 +452,4 @@ const NewbornDeliveryRecords: React.FC = () => {
     )
 }
 
-export default NewbornDeliveryRecords
+export default NewbornDeliveryRecordsUpdate
