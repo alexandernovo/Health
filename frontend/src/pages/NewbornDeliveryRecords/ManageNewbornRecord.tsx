@@ -59,8 +59,8 @@ const ManageNewbornRecord: React.FC = () => {
                 }
             })
             if (response.data.status == "success") {
-                console.log(response.data.maternal);
-                setNewborn(response.data.maternal);
+                console.log(response.data.newborn);
+                setNewborn(response.data.newborn);
                 setLoading(false);
             }
         } catch (error) {

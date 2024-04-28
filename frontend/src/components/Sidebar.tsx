@@ -1,15 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import avatar from '@images/default.jpg'
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/store';
+import { UserModel } from '@/types/userType';
 
 const Sidebar: React.FC = () => {
+    const user: UserModel = useSelector((state: RootState) => state.userState);
+
     return (
         <div className='fixed w-[240px] border border-t-0 h-[100%] p-5 '>
             <div className='flex items-center gap-2 mb-5'>
                 <div className='w-[40px] h-[40px] rounded-full border overflow-hidden'>
                     <img src={avatar} className='w-full h-full object-cover' />
                 </div>
-                <p className='text-[15px] font-semibold'>Monica Villanueva</p>
+                <p className='text-[15px] font-semibold'> 
+                    {user.firstname == "Admin" ? (
+                        user.firstname
+                    ) :
+                        `${user.firstname} ${user.lastname}`
+                    }
+                </p>
             </div>
             <div className='flex flex-col gap-4'>
                 <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to="/home">

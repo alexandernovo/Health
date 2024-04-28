@@ -20,6 +20,7 @@ import NewbornDeliveryRecords from './pages/NewbornDeliveryRecords/NewbornDelive
 import NewbornDeliveryRecordsUpdate from './pages/NewbornDeliveryRecords/NewbornDeliveryRecordsUpdate'
 import ManageNewbornRecord from './pages/NewbornDeliveryRecords/ManageNewbornRecord'
 import NewbornReportViewer from './pages/NewbornDeliveryRecords/NewbornReportViewer'
+import FamilyPlanningForm from './pages/FamilyPlanning/FamilyPlanningForm'
 
 function App() {
   return (
@@ -51,6 +52,9 @@ function App() {
           <Route element={<NewbornDeliveryRecordsUpdate />} path='/newborndeliveryformupdate/:appointment_id' ></Route>
           <Route element={<ManageNewbornRecord />} path='/newborn_record/:user_id' ></Route>
           <Route element={<NewbornReportViewer />} path='/newborn_report/:appointment_id' ></Route>
+          {/* family planning */}
+          <Route element={<FamilyPlanningForm />} path='/familyplanning_form/:appointment_id' ></Route>
+
         </Routes>
       </MainLayout>
     </Router>
