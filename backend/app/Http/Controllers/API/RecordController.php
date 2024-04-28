@@ -13,8 +13,7 @@ class RecordController extends Controller
     public function getUserWithRecord()
     {
         try {
-            $usersWithMaternalRecords = User::has('maternal')->with('maternal')->get();
-
+            $usersWithMaternalRecords = User::whereHas('maternal')->orWhereHas('newborn')->orWhereHas('family')->get();
             if ($usersWithMaternalRecords->isNotEmpty()) {
                 return response()->json([
                     'status' => 'success',
@@ -40,6 +39,7 @@ class RecordController extends Controller
         try {
             $userRecords = Appointment::whereHas('maternal')
                 ->orWhereHas('newborn')
+                ->orWhereHas('family')
                 ->with('consultation', 'user')
                 ->whereIn('appointment_id', function ($query) use ($id) {
                     $query->select(DB::raw('MAX(appointment_id)'))

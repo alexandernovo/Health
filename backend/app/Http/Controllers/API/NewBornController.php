@@ -88,8 +88,8 @@ class NewBornController extends Controller
             $newborn = Appointment::has('newborn')->where('user_id', $user_id)->orderBy('appointmentDate', 'desc')->get();
             return response()->json([
                 'status' => 'success',
-                'message' => 'Fetch maternal record successfully',
-                'maternal' => $newborn,
+                'message' => 'Fetch newborn record successfully',
+                'newborn' => $newborn,
             ]);
         } catch (Exception $e) {
             return response()->json([
