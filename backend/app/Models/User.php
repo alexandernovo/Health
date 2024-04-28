@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Appointment;
 use App\Models\Maternal;
+use App\Models\NewBorn;
+use App\Models\FamilyPlanning;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
@@ -84,6 +86,15 @@ class User extends Authenticatable implements JWTSubject
     public function maternal(): HasMany
     {
         return $this->hasMany(Maternal::class);
+    }
+    public function newborn(): HasMany
+    {
+        return $this->hasMany(NewBorn::class);
+    }
+
+    public function family(): HasMany
+    {
+        return $this->hasMany(FamilyPlanning::class);
     }
     public function appointment(): HasMany
     {
