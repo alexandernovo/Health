@@ -10,6 +10,10 @@ use Exception;
 
 class RecordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function getUserWithRecord()
     {
         try {

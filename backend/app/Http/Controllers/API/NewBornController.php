@@ -14,6 +14,11 @@ use Exception;
 
 class NewBornController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function createNewBornRecord(Request $request)
     {
         $vaidation = [

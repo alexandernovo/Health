@@ -12,6 +12,10 @@ use Exception;
 
 class MaternalRecordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function createMaternalRecord(Request $request)
     {
         $validator = Validator::make($request->all(), [

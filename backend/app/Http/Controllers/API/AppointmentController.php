@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AppointmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function createAppointment(Request $request)
     {
         $validator = Validator::make($request->all(), [

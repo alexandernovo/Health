@@ -11,6 +11,10 @@ use Exception;
 
 class FamilyPlanningController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function createFamilyPlanning(Request $request)
     {
         $validation = [
