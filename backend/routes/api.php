@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AppointmentController;
 use App\Http\Controllers\API\MaternalRecordController;
 use App\Http\Controllers\API\RecordController;
 use App\Http\Controllers\API\NewBornController;
+use App\Http\Controllers\API\FamilyPlanningController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -57,6 +58,9 @@ Route::prefix('newborn')->group(function () {
 });
 
 
+Route::prefix('family')->group(function () {
+    Route::post('/createFamilyPlanning', [FamilyPlanningController::class, 'createFamilyPlanning']);
+});
 
 
 //  remove routes
