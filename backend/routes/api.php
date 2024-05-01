@@ -60,6 +60,9 @@ Route::prefix('newborn')->group(function () {
 
 Route::prefix('family')->group(function () {
     Route::post('/createFamilyPlanning', [FamilyPlanningController::class, 'createFamilyPlanning']);
+    Route::put('/updateFamilyPlanning', [FamilyPlanningController::class, 'updateFamilyPlanning']);
+    Route::get('/getFamilyPlanningOne/{appointment_id}', [FamilyPlanningController::class, 'getFamilyPlanningOne']);
+    Route::get('/getFamilyPlanningRecord/{user_id}', [FamilyPlanningController::class, 'getFamilyPlanningRecord']);
 });
 
 

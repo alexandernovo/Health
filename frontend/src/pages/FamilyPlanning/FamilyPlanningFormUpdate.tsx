@@ -7,12 +7,13 @@ import { generateRandomId } from '@/utils/CommonFunctions';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
-const FamilyPlanningForm: React.FC = () => {
+const FamilyPlanningFormUpdate: React.FC = () => {
 
     const [familyAssessmentModel, setFamilyAssessmentModel] = useState<FamilyAssessmentModel>(FamilyAssessmentModelInitialValue);
     const [familyAssessmentModelList, setFamilyAssessmentModelList] = useState<FamilyAssessmentModel[]>([]);
+    const [removeFamilyAssessmentModelList, setRemoveFamilyAssessmentModelList] = useState<FamilyAssessmentModel[]>([]);
     const [familyPlanningModel, setFamilyPlanningModel] = useState<FamilyPlanningModel>(FamilyPlanningModelInitialValue);
     const [appointment, setAppointment] = useState<AppointmentModel>({});
     const { appointment_id } = useParams<{ appointment_id: string }>();
@@ -23,6 +24,7 @@ const FamilyPlanningForm: React.FC = () => {
 
     useEffect(() => {
         fetchAppointmentDetails();
+        fetchFamilyPlanning();
     }, []);
 
     const fetchAppointmentDetails = async () => {
@@ -37,6 +39,18 @@ const FamilyPlanningForm: React.FC = () => {
         }
     }
 
+    const fetchFamilyPlanning = async () => {
+        const response = await axios.get(`/api/family/getFamilyPlanningOne/${appointment_id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        if (response.data.status == 'success') {
+            setFamilyPlanningModel(response.data.familyplanning);
+            setFamilyAssessmentModelList(response.data.familyplanning.familyassessment);
+        }
+    }
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
 
@@ -135,14 +149,21 @@ const FamilyPlanningForm: React.FC = () => {
             }
         }
     };
+
     const removeAssessment = (keyIdToRemove?: string) => {
         const indexToRemove = familyAssessmentModelList.findIndex((item) => item.keyId === keyIdToRemove);
         if (indexToRemove !== -1) {
-            const updatedAssessment = [...familyAssessmentModelList]; // Create a copy of the array
-            updatedAssessment.splice(indexToRemove, 1); // Remove the item
-            setFamilyAssessmentModelList(updatedAssessment); // Update the state with the new array
+            const familyAssementToRemove = familyAssessmentModelList[indexToRemove];
+            if (familyAssementToRemove.familyAssessmentId != 0) {
+                setRemoveFamilyAssessmentModelList((prev) => [...prev, familyAssementToRemove]);
+            }
+            setRemoveFamilyAssessmentModelList
+            const updatedAssessment = [...familyAssessmentModelList];
+            updatedAssessment.splice(indexToRemove, 1);
+            setFamilyAssessmentModelList(updatedAssessment);
         }
     };
+
     const handleInputChangeAssessment = (e: any) => {
         const { name, value } = e.target;
 
@@ -172,15 +193,16 @@ const FamilyPlanningForm: React.FC = () => {
     };
 
 
-    const savePlanning = async () => {
+    const updatePlanning = async () => {
         if (appointment_id != null) {
             familyPlanningModel.appointment_id = appointment_id;
         }
         familyPlanningModel.user_id = appointment.user_id;
         familyPlanningModel.familyAssessment = familyAssessmentModelList;
+        familyPlanningModel.removeFamilyAssessment = removeFamilyAssessmentModelList;
 
         try {
-            const response = await axios.post("/api/family/createFamilyPlanning", familyPlanningModel,
+            const response = await axios.put("/api/family/updateFamilyPlanning", familyPlanningModel,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -189,8 +211,8 @@ const FamilyPlanningForm: React.FC = () => {
             )
 
             if (response.data.status == "success") {
-                dispatch(setToastState({ toast: true, toastMessage: "Family Planning Record Created Successfully", toastSuccess: true }));
-                navigate('/appointments');
+                dispatch(setToastState({ toast: true, toastMessage: "Family Planning Record Updated Successfully", toastSuccess: true }));
+                navigate(`/familyPlanning_record/${appointment.user_id}`);
             }
         }
         catch (error) {
@@ -200,6 +222,43 @@ const FamilyPlanningForm: React.FC = () => {
 
     return (
         <div className='m-3'>
+            <div className="text-sm breadcrumbs">
+                <ul>
+                    <li>
+                        <Link to="/managerecords">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                            </svg>
+                            Manage Records
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={`/patientRecords/${appointment.user_id}`} className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                            </svg>
+                            {appointment?.firstname} {appointment?.lastname} Records
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={`/familyPlanning_record/${appointment.user_id}`} className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                            </svg>
+                            {appointment?.firstname} {appointment?.lastname} Family Planning Records
+                        </Link>
+                    </li>
+                    <li>
+                        <span className="inline-flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                                <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                                <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                            </svg>
+                            Update {appointment?.firstname} {appointment?.lastname} Family Planning Record
+                        </span>
+                    </li>
+                </ul>
+            </div>
             <div className="card border border-gray-100 rounded-md bg-base-100 shadow-md mb-3">
                 <div className="card-body p-0 pb-3">
                     <div className='flex justify-between p-4 px-5'>
@@ -1140,19 +1199,19 @@ const FamilyPlanningForm: React.FC = () => {
                             <p className='font-semibold'>SIDE B</p>
                             <p className='font-semibold text-right'>FP FORM 1</p>
                         </div>
-                        <table className='border-black mb-1 text-black text-[13px]'>
+                        <table className='text-[13px] border-black mb-1 text-black'>
                             <thead>
-                                <tr className='border-black'>
+                                <tr className='border border-black'>
                                     <th colSpan={5} className='border border-r-1 border-black text-center font-semibold text-black'>
                                         FAMILY PLANNING CLIENT ASSESSMENT RECORD
                                     </th>
 
                                 </tr>
-                                <tr className='border-black'>
+                                <tr className='border border-black'>
                                     <th className='border border-r-1 border-black w-[15%] text-black font-semibold'>DATE OF VISIT</th>
                                     <th className='border border-r-1 border-black text-black w-[25%] text-center'>
                                         <p className='font-semibold mb-0 pb-0'>MEDICAL FINDINGS</p>
-                                        <span className='text-[11px]'>
+                                        <span className="text-[11px]">
                                             (Medical observation, complaints/complication, service rendered/ procedures, laboratory examination,<br /> treatment and referrals)
                                         </span>
                                     </th>
@@ -1170,13 +1229,13 @@ const FamilyPlanningForm: React.FC = () => {
                             </thead>
                             <tbody>
                                 {familyAssessmentModelList.map(assessment => (
-                                    <tr key={assessment.keyId} className='border-b-1 border-black'>
-                                        <td className='border border-r-1 border-black text-black text-center'>{DateToString(assessment.dateOfVisit)}</td>
-                                        <td className='border border-r-1 border-black text-black text-center'>{assessment.medicalFindings}</td>
-                                        <td className='border border-r-1 border-black text-black text-center'>{assessment.methodAccepted}</td>
-                                        <td className='border border-r-1 border-black text-black text-center'>{assessment.nameAndSignatureSP}</td>
-                                        <td className='border border-r-1 border-black text-black text-center'>{assessment.dateFollowUp}</td>
-                                        <td className='border border-r-1 border-black text-black text-center'>
+                                    <tr key={assessment.keyId} className='border-b-1 border border-black'>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>{DateToString(assessment.dateOfVisit)}</td>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>{assessment.medicalFindings}</td>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>{assessment.methodAccepted}</td>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>{assessment.nameAndSignatureSP}</td>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>{DateToString(assessment.dateFollowUp)}</td>
+                                        <td className='border border-r-1 border-black text-black p-1 text-center'>
                                             <div className='flex justify-center items-center'>
                                                 <button onClick={() => removeAssessment(assessment.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 active:text-white ">
@@ -1190,7 +1249,7 @@ const FamilyPlanningForm: React.FC = () => {
                                 {familyAssessmentModelList.length == 0 && (
                                     <tr>
                                         <td colSpan={6} className='border  border-black'>
-                                            <p className='text-[12px] text-gray-400 text-center'>No Data</p>
+                                            <p className='text-[12px] p-1 text-gray-400 text-center'>No Data</p>
                                         </td>
                                     </tr>
                                 )}
@@ -1211,7 +1270,7 @@ const FamilyPlanningForm: React.FC = () => {
                                 <input type="text" name='methodAccepted' value={familyAssessmentModel.methodAccepted} onChange={handleInputChangeAssessment} placeholder="Method Accepted" className="input input-bordered input-primary w-full input-sm" />
                             </div>
                             <div className='flex flex-col w-[25%]'>
-                                <label className='text-[12px] font-semibold'>Name and Signature of Service Provider</label>
+                                <label className='text-[13px] font-semibold'>Name and Signature of Service Provider</label>
                                 <input type="text" placeholder="Name and Signature of Service Provider" name='nameAndSignatureSP' value={familyAssessmentModel.nameAndSignatureSP} onChange={handleInputChangeAssessment} className="input input-bordered input-primary w-full input-sm" />
                             </div>
                             <div className='flex flex-col w-[25%] mb-3'>
@@ -1335,11 +1394,11 @@ const FamilyPlanningForm: React.FC = () => {
                     </div>
                 </div>
                 <div className='flex justify-end mb-3 mr-3'>
-                    <button onClick={() => savePlanning()} className="btn btn-sm btn-primary mt-2 text-white">Save Family Planning Record</button>
+                    <button onClick={() => updatePlanning()} className="btn btn-sm btn-primary mt-2 text-white">Update Family Planning Record</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default FamilyPlanningForm
+export default FamilyPlanningFormUpdate

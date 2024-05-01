@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
                 <div className='w-[40px] h-[40px] rounded-full border overflow-hidden'>
                     <img src={avatar} className='w-full h-full object-cover' />
                 </div>
-                <p className='text-[15px] font-semibold'> 
+                <p className='text-[15px] font-semibold'>
                     {user.firstname == "Admin" ? (
                         user.firstname
                     ) :
@@ -23,13 +23,13 @@ const Sidebar: React.FC = () => {
                 </p>
             </div>
             <div className='flex flex-col gap-4'>
-                <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to="/home">
+                {/* <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to="/home">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mb-[2px]">
                         <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
                         <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
                     </svg>
                     Home
-                </Link>
+                </Link> */}
                 <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to="/dashboard">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mb-[2px]">
                         <path d="M6 3a3 3 0 0 0-3 3v2.25a3 3 0 0 0 3 3h2.25a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3H6ZM15.75 3a3 3 0 0 0-3 3v2.25a3 3 0 0 0 3 3H18a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3h-2.25ZM6 12.75a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h2.25a3 3 0 0 0 3-3v-2.25a3 3 0 0 0-3-3H6ZM17.625 13.5a.75.75 0 0 0-1.5 0v2.625H13.5a.75.75 0 0 0 0 1.5h2.625v2.625a.75.75 0 0 0 1.5 0v-2.625h2.625a.75.75 0 0 0 0-1.5h-2.625V13.5Z" />

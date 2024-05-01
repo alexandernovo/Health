@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\FamilyPlanning;
 use App\Models\FamilyAssessment;
+use App\Models\Appointment;
 use Exception;
 
 class FamilyPlanningController extends Controller
@@ -96,6 +97,12 @@ class FamilyPlanningController extends Controller
                 $familyAssessment['familyId'] = $familyplanning->familyId;
                 FamilyAssessment::create($familyAssessment);
             }
+            $appointment = Appointment::find($request->appointment_id);
+
+            if ($appointment) {
+                $appointment->update(["appointmentStatus" => 4]);
+            }
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create family planning record Successfully',
@@ -104,6 +111,82 @@ class FamilyPlanningController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Create maternal record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function updateFamilyPlanning(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'appointment_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $find_family = FamilyPlanning::where('familyId', $request->familyId)->first();
+        $update = $find_family->update($request->input());
+        if ($update) {
+            foreach ($request->familyAssessment as $assessment) {
+                if ($assessment['familyAssessmentId'] != 0) {
+                    $find_assessment = FamilyAssessment::where('familyAssessmentId', $assessment['familyAssessmentId'])->first();
+                    if ($find_assessment) {
+                        $find_assessment->update($assessment);
+                    }
+                } else {
+                    $assessment['familyId'] = $find_family['familyId'];
+                    FamilyAssessment::create($assessment);
+                }
+            }
+            foreach ($request->removeFamilyAssessment as $assessment) {
+                $find_assessment = FamilyAssessment::where('familyAssessmentId', $assessment['familyAssessmentId'])->first();
+                if ($find_assessment) {
+                    $find_assessment->delete();
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Maternal Record Updated Successfully',
+        ]);
+    }
+
+    public function getFamilyPlanningOne($appointment_id)
+    {
+        try {
+            $familyplanning = FamilyPlanning::whereHas('familyassessment')->with('familyassessment')->where('appointment_id', $appointment_id)->first();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch maternal record successfully',
+                'familyplanning' => $familyplanning,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch familyplanning record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function getFamilyPlanningRecord($user_id)
+    {
+        try {
+            $familyplanning = Appointment::has('family')->where('user_id', $user_id)->orderBy('appointmentDate', 'desc')->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch maternal record successfully',
+                'familyplanning' => $familyplanning,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch familyplanning record failed: ' . $e->getMessage(),
             ]);
         }
     }

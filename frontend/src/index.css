@@ -20,6 +20,9 @@
     border: 0 !important;
     box-shadow: none !important;
   }
+  .print-adjust-margin {
+    margin-top: 80px !important;
+  }
 }
 /* width */
 ::-webkit-scrollbar {

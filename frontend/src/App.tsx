@@ -12,15 +12,18 @@ import PatientRecords from '@pages/PatientRecords/PatientRecords'
 import Dashboard from '@pages/Dashboard'
 import CreateAppointments from '@pages/CreateAppointments'
 import ManageMaternalHealthRecords from '@pages/MaternalHealthRecords/ManageMaternalHealthRecords'
-import UpdateManageMaternalHealthRecords from './pages/MaternalHealthRecords/UpdateManageMaternalHealthRecords'
+import UpdateManageMaternalHealthRecords from '@pages/MaternalHealthRecords/UpdateManageMaternalHealthRecords'
 import ManageRecords from '@pages/PatientRecords/ManageRecords'
-import MaternalHealthRecords from './pages/MaternalHealthRecords/MaternalHealthRecords'
-import MaternalHealthRecordReport from './pages/MaternalHealthRecords/MaternalHealthRecordReport'
-import NewbornDeliveryRecords from './pages/NewbornDeliveryRecords/NewbornDeliveryRecords'
-import NewbornDeliveryRecordsUpdate from './pages/NewbornDeliveryRecords/NewbornDeliveryRecordsUpdate'
-import ManageNewbornRecord from './pages/NewbornDeliveryRecords/ManageNewbornRecord'
-import NewbornReportViewer from './pages/NewbornDeliveryRecords/NewbornReportViewer'
-import FamilyPlanningForm from './pages/FamilyPlanning/FamilyPlanningForm'
+import MaternalHealthRecords from '@pages/MaternalHealthRecords/MaternalHealthRecords'
+import MaternalHealthRecordReport from '@pages/MaternalHealthRecords/MaternalHealthRecordReport'
+import NewbornDeliveryRecords from '@pages/NewbornDeliveryRecords/NewbornDeliveryRecords'
+import NewbornDeliveryRecordsUpdate from '@pages/NewbornDeliveryRecords/NewbornDeliveryRecordsUpdate'
+import ManageNewbornRecord from '@pages/NewbornDeliveryRecords/ManageNewbornRecord'
+import NewbornReportViewer from '@pages/NewbornDeliveryRecords/NewbornReportViewer'
+import FamilyPlanningForm from '@pages/FamilyPlanning/FamilyPlanningForm'
+import FamilyPlanningFormUpdate from '@pages/FamilyPlanning/FamilyPlanningFormUpdate'
+import FamilyPlanningRecords from '@pages/FamilyPlanning/FamilyPlanningRecords'
+import FamilyPlanningReportViewer from '@pages/FamilyPlanning/FamilyPlanningReportViewer'
 
 function App() {
   return (
@@ -54,7 +57,9 @@ function App() {
           <Route element={<NewbornReportViewer />} path='/newborn_report/:appointment_id' ></Route>
           {/* family planning */}
           <Route element={<FamilyPlanningForm />} path='/familyplanning_form/:appointment_id' ></Route>
-
+          <Route element={<FamilyPlanningFormUpdate />} path='/familyplanning_form_update/:appointment_id'></Route>
+          <Route element={<FamilyPlanningRecords />} path='/familyPlanning_record/:user_id' ></Route>
+          <Route element={<FamilyPlanningReportViewer />} path='/familyplanning_report/:appointment_id' ></Route>
         </Routes>
       </MainLayout>
     </Router>

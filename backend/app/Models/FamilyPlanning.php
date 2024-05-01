@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\PostPartrum;
+use App\Models\FamilyAssessment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FamilyPlanning extends Model
@@ -84,4 +84,9 @@ class FamilyPlanning extends Model
         'abortionPast7Days',
         'usingContraceptives'
     ];
+
+    public function familyassessment(): HasMany
+    {
+        return $this->hasMany(FamilyAssessment::class, 'familyId');
+    }
 }
