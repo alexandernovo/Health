@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Maternal;
 use App\Models\Newborn;
 use App\Models\FamilyPlanning;
+use App\Models\Hypertensive;
 
 class Appointment extends Model
 {
@@ -45,5 +46,10 @@ class Appointment extends Model
     public function family(): HasMany
     {
         return $this->hasMany(FamilyPlanning::class, 'appointment_id');
+    }
+
+    public function hypertensive(): HasMany
+    {
+        return $this->hasMany(Hypertensive::class, 'appointment_id');
     }
 }
