@@ -24,6 +24,8 @@ import FamilyPlanningForm from '@pages/FamilyPlanning/FamilyPlanningForm'
 import FamilyPlanningFormUpdate from '@pages/FamilyPlanning/FamilyPlanningFormUpdate'
 import FamilyPlanningRecords from '@pages/FamilyPlanning/FamilyPlanningRecords'
 import FamilyPlanningReportViewer from '@pages/FamilyPlanning/FamilyPlanningReportViewer'
+import HypertensiveForm from './pages/Hypertensive/HypertensiveForm'
+import HypertensiveRecord from './pages/Hypertensive/HypertensiveRecord'
 
 function App() {
   return (
@@ -60,6 +62,10 @@ function App() {
           <Route element={<FamilyPlanningFormUpdate />} path='/familyplanning_form_update/:appointment_id'></Route>
           <Route element={<FamilyPlanningRecords />} path='/familyPlanning_record/:user_id' ></Route>
           <Route element={<FamilyPlanningReportViewer />} path='/familyplanning_report/:appointment_id' ></Route>
+          {/* hypertensive */}
+          <Route element={<HypertensiveForm />} path='/hypertensive_form/:appointment_id' ></Route>
+          <Route element={<HypertensiveRecord />} path='/hypertensive_record/:user_id' ></Route>
+
         </Routes>
       </MainLayout>
     </Router>

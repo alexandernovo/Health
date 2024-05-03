@@ -161,6 +161,9 @@ const Appointments: React.FC = () => {
         else if (type == "Family Planning") {
             return `/familyplanning_form/${appointment_id}`
         }
+        else if (type == "Hypertensive/Diabetic") {
+            return `/hypertensive_form/${appointment_id}`
+        }
         else {
             return "";
         }
