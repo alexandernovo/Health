@@ -25,3 +25,30 @@ export interface UserModel {
     maternal?: MaternalModel[];
     appointment?: AppointmentModel[];
 }
+
+
+export const userInitialValue = () => {
+    return {
+        id: undefined,
+        token: "",
+        firstname: "",
+        lastname: "",
+        birthdate: "",
+        age: undefined,
+        occupation: "",
+        education: "",
+        religion: "",
+        username: "",
+        usertype: undefined,
+        civil_status: "",
+        isSignedIn: 0,
+        contact_number: "",
+        address: "",
+        password: "",
+        gender: "",
+        userstatus: undefined,
+        confirmPassword: "",
+        maternal: [],
+        appointment: [],
+    }
+}
