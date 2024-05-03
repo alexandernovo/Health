@@ -44,6 +44,7 @@ class RecordController extends Controller
             $userRecords = Appointment::whereHas('maternal')
                 ->orWhereHas('newborn')
                 ->orWhereHas('family')
+                ->orWhereHas('hypertensive')
                 ->with('consultation', 'user')
                 ->whereIn('appointment_id', function ($query) use ($id) {
                     $query->select(DB::raw('MAX(appointment_id)'))

@@ -163,7 +163,7 @@ class FamilyPlanningController extends Controller
             $familyplanning = FamilyPlanning::whereHas('familyassessment')->with('familyassessment')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
-                'message' => 'Fetch maternal record successfully',
+                'message' => 'Fetch family planning record successfully',
                 'familyplanning' => $familyplanning,
             ]);
         } catch (Exception $e) {
