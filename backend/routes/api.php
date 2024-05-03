@@ -9,6 +9,7 @@ use App\Http\Controllers\API\MaternalRecordController;
 use App\Http\Controllers\API\RecordController;
 use App\Http\Controllers\API\NewBornController;
 use App\Http\Controllers\API\FamilyPlanningController;
+use App\Http\Controllers\API\HypertensiveController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -65,6 +66,11 @@ Route::prefix('family')->group(function () {
     Route::get('/getFamilyPlanningRecord/{user_id}', [FamilyPlanningController::class, 'getFamilyPlanningRecord']);
 });
 
+Route::prefix('hypertensive')->group(function () {
+    Route::post('/createHypertensive', [HypertensiveController::class, 'createHypertensive']);
+    Route::put('/updateHypertensive', [HypertensiveController::class, 'updateHypertensive']);
+    Route::get('/getUserHypertensiveRecord/{user_id}', [HypertensiveController::class, 'getUserHypertensiveRecord']);
+});
 
 //  remove routes
 //  php artisan route:list | Where-Object { $_ -notmatch "/api" } 
