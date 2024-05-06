@@ -36,9 +36,9 @@ class HypertensiveController extends Controller
 
     public function updateHypertensive(Request $request)
     {
-        $hypertensive = Hypertensive::where($request->hypertensiveId)->first();
+        $hypertensive = Hypertensive::where('hypertensiveId', $request->hypertensiveId)->first();
         if ($hypertensive) {
-            $hypertensive->update($hypertensive->input());
+            $hypertensive->update($request->input());
             return response()->json([
                 'status' => 'success',
                 'message' => 'Hypertensive Record Updated Successfully',
@@ -60,6 +60,30 @@ class HypertensiveController extends Controller
                 'message' => 'Fetch hypertensive record successfully',
                 'hypertensive' => $hypertensive,
             ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch hypertensive record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function getHypertensiveData($appointment_id)
+    {
+        try {
+            $hypertensive = Hypertensive::where('appointment_id', $appointment_id)->first();
+            if ($hypertensive) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Fetch hypertensive record successfully',
+                    'hypertensive' => $hypertensive,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Fetch hypertensive record failed: No Hypertensive Record with that ID',
+                ]);
+            }
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failed',

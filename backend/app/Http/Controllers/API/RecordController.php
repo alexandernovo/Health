@@ -17,12 +17,17 @@ class RecordController extends Controller
     public function getUserWithRecord()
     {
         try {
-            $usersWithMaternalRecords = User::whereHas('maternal')->orWhereHas('newborn')->orWhereHas('family')->get();
-            if ($usersWithMaternalRecords->isNotEmpty()) {
+            $usersRecord = User::whereHas('maternal')
+                ->orWhereHas('newborn')
+                ->orWhereHas('family')
+                ->orWhereHas('vaccination')
+                ->orWhereHas('hypertensive')->get();
+
+            if ($usersRecord->isNotEmpty()) {
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Patient records fetched successfully',
-                    'records' => $usersWithMaternalRecords
+                    'records' => $usersRecord
                 ]);
             } else {
                 return response()->json([
@@ -45,6 +50,7 @@ class RecordController extends Controller
                 ->orWhereHas('newborn')
                 ->orWhereHas('family')
                 ->orWhereHas('hypertensive')
+                ->orWhereHas('vaccination')
                 ->with('consultation', 'user')
                 ->whereIn('appointment_id', function ($query) use ($id) {
                     $query->select(DB::raw('MAX(appointment_id)'))
