@@ -12,6 +12,8 @@ use App\Models\Appointment;
 use App\Models\Maternal;
 use App\Models\NewBorn;
 use App\Models\FamilyPlanning;
+use App\Models\Vaccination;
+use App\Models\Hypertensive;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
@@ -99,5 +101,15 @@ class User extends Authenticatable implements JWTSubject
     public function appointment(): HasMany
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function hypertensive(): HasMany
+    {
+        return $this->hasMany(Hypertensive::class);
+    }
+
+    public function vaccination(): HasMany
+    {
+        return $this->hasMany(Vaccination::class);
     }
 }
