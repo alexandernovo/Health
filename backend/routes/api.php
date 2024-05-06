@@ -10,6 +10,7 @@ use App\Http\Controllers\API\RecordController;
 use App\Http\Controllers\API\NewBornController;
 use App\Http\Controllers\API\FamilyPlanningController;
 use App\Http\Controllers\API\HypertensiveController;
+use App\Http\Controllers\API\VaccinationController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -70,8 +71,14 @@ Route::prefix('hypertensive')->group(function () {
     Route::post('/createHypertensive', [HypertensiveController::class, 'createHypertensive']);
     Route::put('/updateHypertensive', [HypertensiveController::class, 'updateHypertensive']);
     Route::get('/getUserHypertensiveRecord/{user_id}', [HypertensiveController::class, 'getUserHypertensiveRecord']);
+    Route::get('/getHypertensiveData/{appointment_id}', [HypertensiveController::class, 'getHypertensiveData']);
 });
 
+Route::prefix('vaccination')->group(function () {
+    Route::post('/createVaccination', [VaccinationController::class, 'createVaccination']);
+    Route::get('/getVaccinationOneRecord/{appointment_id}', [VaccinationController::class, 'getVaccinationOneRecord']);
+    Route::get('/getVaccinationRecord/{user_id}', [VaccinationController::class, 'getVaccinationRecord']);
+});
 //  remove routes
 //  php artisan route:list | Where-Object { $_ -notmatch "/api" } 
 //  add routes
