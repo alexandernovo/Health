@@ -24,47 +24,56 @@ import FamilyPlanningForm from '@pages/FamilyPlanning/FamilyPlanningForm'
 import FamilyPlanningFormUpdate from '@pages/FamilyPlanning/FamilyPlanningFormUpdate'
 import FamilyPlanningRecords from '@pages/FamilyPlanning/FamilyPlanningRecords'
 import FamilyPlanningReportViewer from '@pages/FamilyPlanning/FamilyPlanningReportViewer'
-import HypertensiveForm from './pages/Hypertensive/HypertensiveForm'
-import HypertensiveRecord from './pages/Hypertensive/HypertensiveRecord'
+import HypertensiveForm from '@pages/Hypertensive/HypertensiveForm'
+import HypertensiveRecord from '@pages/Hypertensive/HypertensiveRecord'
+import HypertensiveFormUpdate from '@pages/Hypertensive/HypertensiveFormUpdate'
+import HypertensiveReportViewer from '@pages/Hypertensive/HypertensiveReportViewer'
+import VaccinationForm from '@pages/Vaccination/VaccinationForm'
+import VaccinationRecord from '@pages/Vaccination/VaccinationRecord'
 
 function App() {
   return (
     <Router>
       <MainLayout>
         <Routes>
-          <Route element={<Login />} path='/' ></Route>
-          <Route element={<Register />} path='/register' ></Route>
+          <Route element={<Login />} path='/'></Route>
+          <Route element={<Register />} path='/register'></Route>
           <Route element={<NotFound />} path='*'></Route>
 
-          <Route element={<Home />} path='/home' ></Route>
-          <Route element={<ManageUsers />} path='/manageusers' ></Route>
-          <Route element={<Settings />} path='/settings' ></Route>
-          <Route element={<PatientRecords />} path='/patientrecords' ></Route>
-          <Route element={<Appointments />} path='/appointments' ></Route>
-          <Route element={<Dashboard />} path='/dashboard' ></Route>
-          <Route element={<ManageConsultationType />} path='/manageconsultationtype' ></Route>
-          <Route element={<CreateAppointments />} path='/createappointments' ></Route>
-          <Route element={<ManageRecords />} path='/managerecords' ></Route>
+          <Route element={<Home />} path='/home'></Route>
+          <Route element={<ManageUsers />} path='/manageusers'></Route>
+          <Route element={<Settings />} path='/settings'></Route>
+          <Route element={<PatientRecords />} path='/patientrecords'></Route>
+          <Route element={<Appointments />} path='/appointments'></Route>
+          <Route element={<Dashboard />} path='/dashboard'></Route>
+          <Route element={<ManageConsultationType />} path='/manageconsultationtype'></Route>
+          <Route element={<CreateAppointments />} path='/createappointments'></Route>
+          <Route element={<ManageRecords />} path='/managerecords'></Route>
           {/* maternal */}
-          <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:appointment_id' ></Route>
-          <Route element={<UpdateManageMaternalHealthRecords />} path='/udpatematernal/:appointment_id' ></Route>
-          <Route element={<MaternalHealthRecordReport />} path='/maternal_report/:appointment_id' ></Route>
-          <Route element={<MaternalHealthRecords />} path='/maternal_records/:user_id' ></Route>
+          <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:appointment_id'></Route>
+          <Route element={<UpdateManageMaternalHealthRecords />} path='/udpatematernal/:appointment_id'></Route>
+          <Route element={<MaternalHealthRecordReport />} path='/maternal_report/:appointment_id'></Route>
+          <Route element={<MaternalHealthRecords />} path='/maternal_records/:user_id'></Route>
           {/* patient records */}
-          <Route element={<PatientRecords />} path='/patientRecords/:user_id' ></Route>
+          <Route element={<PatientRecords />} path='/patientRecords/:user_id'></Route>
           {/* newborn delivery record */}
-          <Route element={<NewbornDeliveryRecords />} path='/newborndeliveryform/:appointment_id' ></Route>
-          <Route element={<NewbornDeliveryRecordsUpdate />} path='/newborndeliveryformupdate/:appointment_id' ></Route>
-          <Route element={<ManageNewbornRecord />} path='/newborn_record/:user_id' ></Route>
-          <Route element={<NewbornReportViewer />} path='/newborn_report/:appointment_id' ></Route>
+          <Route element={<NewbornDeliveryRecords />} path='/newborndeliveryform/:appointment_id'></Route>
+          <Route element={<NewbornDeliveryRecordsUpdate />} path='/newborndeliveryformupdate/:appointment_id'></Route>
+          <Route element={<ManageNewbornRecord />} path='/newborn_record/:user_id'></Route>
+          <Route element={<NewbornReportViewer />} path='/newborn_report/:appointment_id'></Route>
           {/* family planning */}
-          <Route element={<FamilyPlanningForm />} path='/familyplanning_form/:appointment_id' ></Route>
+          <Route element={<FamilyPlanningForm />} path='/familyplanning_form/:appointment_id'></Route>
           <Route element={<FamilyPlanningFormUpdate />} path='/familyplanning_form_update/:appointment_id'></Route>
-          <Route element={<FamilyPlanningRecords />} path='/familyPlanning_record/:user_id' ></Route>
-          <Route element={<FamilyPlanningReportViewer />} path='/familyplanning_report/:appointment_id' ></Route>
+          <Route element={<FamilyPlanningRecords />} path='/familyPlanning_record/:user_id'></Route>
+          <Route element={<FamilyPlanningReportViewer />} path='/familyplanning_report/:appointment_id'></Route>
           {/* hypertensive */}
-          <Route element={<HypertensiveForm />} path='/hypertensive_form/:appointment_id' ></Route>
-          <Route element={<HypertensiveRecord />} path='/hypertensive_record/:user_id' ></Route>
+          <Route element={<HypertensiveForm />} path='/hypertensive_form/:appointment_id'></Route>
+          <Route element={<HypertensiveRecord />} path='/hypertensive_record/:user_id'></Route>
+          <Route element={<HypertensiveFormUpdate />} path='/hypertensive_update/:appointment_id'></Route>
+          <Route element={<HypertensiveReportViewer />} path='/hypertensive_report/:appointment_id'></Route>
+          {/* vaccination */}
+          <Route element={<VaccinationForm />} path='/vaccination_form/:appointment_id'></Route>
+          <Route element={<VaccinationRecord />} path='/vaccination_record/:user_id'></Route>
 
         </Routes>
       </MainLayout>

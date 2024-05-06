@@ -30,10 +30,10 @@ export const TimeToString12Hour = (timeString?: string) => {
     return formattedTime;
 }
 
-export const calculateAge = (birthdate?: string): number | undefined => {
+export const calculateAge = (birthdate?: string): number => {
     // Check if the birthdate is provided
     if (!birthdate) {
-        return undefined; // Return null if birthdate is not provided
+        return 0; // Return null if birthdate is not provided
     }
 
     const today = new Date(); // Get the current date
@@ -41,7 +41,7 @@ export const calculateAge = (birthdate?: string): number | undefined => {
 
     // Check if the birthdate is valid
     if (isNaN(birthDate.getTime())) {
-        return undefined; // Return null if birthdate is invalid
+        return 0; // Return null if birthdate is invalid
     }
 
     let age = today.getFullYear() - birthDate.getFullYear(); // Calculate the difference in years

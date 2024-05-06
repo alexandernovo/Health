@@ -1143,7 +1143,7 @@ const FamilyPlanningForm: React.FC = () => {
                         <table className='border-black mb-1 text-black text-[13px]'>
                             <thead>
                                 <tr className='border-black'>
-                                    <th colSpan={5} className='border border-r-1 border-black text-center font-semibold text-black'>
+                                    <th colSpan={6} className='border border-r-1 border-black text-center font-semibold text-black'>
                                         FAMILY PLANNING CLIENT ASSESSMENT RECORD
                                     </th>
 
@@ -1165,7 +1165,7 @@ const FamilyPlanningForm: React.FC = () => {
                                     <th className='border border-r-1 border-black text-black w-[20%] text-center font-semibold'>
                                         DATE OF <br /> FOLLOW-UP<br />VISIT <br /> (MM/DD/YYYY)
                                     </th>
-                                    <th ></th>
+                                    <th className='border border-black'></th>
                                 </tr>
                             </thead>
                             <tbody>
