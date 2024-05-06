@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('metformin')->nullable();
             $table->boolean('insulin')->nullable();
             $table->boolean('others')->nullable();
-            $table->boolean('othersDescription')->nullable();
+            $table->string('othersDescription')->nullable();
             $table->timestamps();
 
             // Define foreign key constraints
