@@ -23,7 +23,13 @@ class ConsultationTypeSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'consultationTypeName' => 'Immunization/Vaccination',
+                'consultationTypeName' => 'Immunization',
+                'consultationTypeStatus' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'consultationTypeName' => 'Vaccination',
                 'consultationTypeStatus' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
