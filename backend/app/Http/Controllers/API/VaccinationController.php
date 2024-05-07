@@ -10,6 +10,8 @@ use App\Models\OtherVaccines;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Validator;
+
 
 class VaccinationController extends Controller
 {
@@ -46,11 +48,50 @@ class VaccinationController extends Controller
             ]);
         }
     }
+    public function updateVaccination(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'appointment_id' => 'required',
+            'user_id' => 'required',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $find_vaccination = Vaccination::where('vaccinationId', $request->vaccinationId)->first();
+        $update = $find_vaccination->update($request->input());
+        if ($update) {
+            foreach ($request->otherVaccines as $othersVaccine) {
+                if ($othersVaccine['otherVaccinesId'] != 0) {
+                    $find_assessment = OtherVaccines::where('otherVaccinesId', $othersVaccine['otherVaccinesId'])->first();
+                    if ($find_assessment) {
+                        $find_assessment->update($othersVaccine);
+                    }
+                } else {
+                    $othersVaccine['vaccinationId'] = $find_vaccination['vaccinationId'];
+                    OtherVaccines::create($othersVaccine);
+                }
+            }
+            foreach ($request->removeotherVaccines as $others) {
+                $find_otherVaccines = OtherVaccines::where('otherVaccinesId', $others['otherVaccinesId'])->first();
+                if ($find_otherVaccines) {
+                    $find_otherVaccines->delete();
+                }
+            }
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Vaccination Record Updated Successfully',
+        ]);
+    }
     public function getVaccinationOneRecord($appointment_id)
     {
         try {
-            $vaccination = Appointment::has('vaccination')->where('appointment_id', $appointment_id)->orderBy('appointmentDate', 'desc')->get();
+            $vaccination = Vaccination::whereHas('othervaccines')->with('othervaccines')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch vaccination record successfully',

@@ -17,6 +17,7 @@ export interface VaccinationModel extends UserModel {
     dateVaccinated65?: string,
     emergencyContact?: string,
     otherVaccines: OtherVaccinesModel[]
+    removeotherVaccines: OtherVaccinesModel[]
 }
 
 export const VaccinationModelInitialValue = () => {
@@ -35,7 +36,8 @@ export const VaccinationModelInitialValue = () => {
         nameOfVaccinator65: "",
         dateVaccinated65: "",
         emergencyContact: "",
-        otherVaccines: []
+        otherVaccines: [],
+        removeotherVaccines: [],
     }
 }
 export const vaccinationTypes = (): { value: string; label: string }[] => {
