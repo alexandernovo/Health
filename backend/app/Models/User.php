@@ -112,4 +112,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Vaccination::class);
     }
+
+    public function immunization(): HasMany
+    {
+        return $this->hasMany(Immunization::class);
+    }
 }

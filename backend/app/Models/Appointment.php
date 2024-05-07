@@ -13,6 +13,7 @@ use App\Models\Newborn;
 use App\Models\FamilyPlanning;
 use App\Models\Hypertensive;
 use App\Models\Vaccination;
+use App\Models\Immunization;
 
 class Appointment extends Model
 {
@@ -57,5 +58,10 @@ class Appointment extends Model
     public function vaccination(): HasMany
     {
         return $this->hasMany(Vaccination::class, 'appointment_id');
+    }
+
+    public function immunization(): HasMany
+    {
+        return $this->hasMany(Immunization::class, 'appointment_id');
     }
 }
