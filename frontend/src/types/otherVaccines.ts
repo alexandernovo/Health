@@ -1,10 +1,10 @@
 export interface OtherVaccinesModel {
     keyId?: string;
-    otherVaccinesId?: number,
-    vaccinationId?: number,
-    otherType?: string,
-    otherDateGiven?: string,
-    otherRemarks?: string,
+    otherVaccinesId?: number;
+    vaccinationId?: number;
+    otherType?: string;
+    otherDateGiven?: string;
+    otherRemarks?: string;
 }
 
 

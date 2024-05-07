@@ -2,21 +2,21 @@ import { UserModel } from "./userType";
 import { OtherVaccinesModel } from "./otherVaccines";
 
 export interface VaccinationModel extends UserModel {
-    vaccinationId?: number,
-    appointment_id?: number,
-    user_id?: number,
-    seniorCitizen?: boolean,
-    Diabetes?: boolean,
-    Hypertension?: boolean,
-    BloodType?: string,
-    Allergies?: string,
-    emergencyName?: string,
-    nameOfVaccinator60?: string,
-    dateVaccinated60?: string,
-    nameOfVaccinator65?: string,
-    dateVaccinated65?: string,
-    emergencyContact?: string,
-    otherVaccines: OtherVaccinesModel[]
+    vaccinationId?: number;
+    appointment_id?: number;
+    user_id?: number;
+    seniorCitizen?: boolean;
+    Diabetes?: boolean;
+    Hypertension?: boolean;
+    BloodType?: string;
+    Allergies?: string;
+    emergencyName?: string;
+    nameOfVaccinator60?: string;
+    dateVaccinated60?: string;
+    nameOfVaccinator65?: string;
+    dateVaccinated65?: string;
+    emergencyContact?: string;
+    otherVaccines: OtherVaccinesModel[];
 }
 
 export const VaccinationModelInitialValue = () => {
