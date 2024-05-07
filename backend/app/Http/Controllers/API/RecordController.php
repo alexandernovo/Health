@@ -21,6 +21,7 @@ class RecordController extends Controller
                 ->orWhereHas('newborn')
                 ->orWhereHas('family')
                 ->orWhereHas('vaccination')
+                ->orWhereHas('immunization')
                 ->orWhereHas('hypertensive')->get();
 
             if ($usersRecord->isNotEmpty()) {
@@ -51,6 +52,7 @@ class RecordController extends Controller
                 ->orWhereHas('family')
                 ->orWhereHas('hypertensive')
                 ->orWhereHas('vaccination')
+                ->orWhereHas('immunization')
                 ->with('consultation', 'user')
                 ->whereIn('appointment_id', function ($query) use ($id) {
                     $query->select(DB::raw('MAX(appointment_id)'))
