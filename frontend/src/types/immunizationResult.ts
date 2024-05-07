@@ -1,4 +1,5 @@
 export interface ImmunizationResult {
+    keyId?: string;
     immunizationResultId?: number;
     immunizationId?: number;
     ageInMos?: number;
