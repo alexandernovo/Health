@@ -48,6 +48,14 @@ const ImmunizationForm: React.FC = () => {
       }));
     }
   };
+
+  const handleInputChangeResult = (e: any) => {
+    const { name, value } = e.target;
+    setImmunizationResult(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+  };
   return (
     <div className='m-3'>
       <div className="card border border-gray-100 rounded-md bg-base-100 shadow-md mb-3">
@@ -427,25 +435,33 @@ const ImmunizationForm: React.FC = () => {
               </thead>
             </table>
           </div>
-          <div className='border p-4 rounded mx-5 mb-5 flex gap-4'>
-            <div className='w-1/3'>
-              <div className='flex flex-col w-full'>
-                <label className='font-semibold text-[14px]'>Age in Months</label>
-                <input name='otherDateGiven' type="number" className="input input-bordered input-xs w-full" />
+          <div className='border p-4 rounded mx-5 mb-5 w-[77.4%]'>
+            <div className='flex gap-4'>
+              <div className='w-1/3'>
+                <div className='flex flex-col w-full'>
+                  <label className='font-semibold text-[14px]'>Age in Months</label>
+                  <input  type="number" name='ageInMos' value={immunizationResult?.ageInMos} onChange={handleInputChangeResult} className="input input-bordered input-xs w-full" />
+                </div>
+              </div>
+              <div className='w-1/3'>
+                <div className='flex flex-col w-full'>
+                  <label className='font-semibold text-[14px]'>Weight A</label>
+                  <input name='weightA' value={immunizationResult?.weightA} onChange={handleInputChangeResult} type="number" className="input input-bordered input-xs w-full" />
+                </div>
+              </div>
+              <div className='w-1/3'>
+                <div className='flex flex-col w-full'>
+                  <label className='font-semibold text-[14px]'>Weight B</label>
+                  <input  type="number" name='weightN' value={immunizationResult?.weightN} onChange={handleInputChangeResult} className="input input-bordered input-xs w-full" />
+                </div>
               </div>
             </div>
-            <div className='w-1/3'>
-              <div className='flex flex-col w-full'>
-                <label className='font-semibold text-[14px]'>Weight A</label>
-                <input name='otherDateGiven' type="number" className="input input-bordered input-xs w-full" />
-              </div>
-            </div>
-            <div className='w-1/3'>
-              <div className='flex flex-col w-full'>
-                <label className='font-semibold text-[14px]'>Weight B</label>
-                <input name='otherDateGiven' type="number" className="input input-bordered input-xs w-full" />
-              </div>
-            </div>
+            <button className="btn btn-sm btn-primary btn-outline mt-4" >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
+              </svg>
+              Add
+            </button>
           </div>
         </div>
       </div>
