@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('immunizationResult', function (Blueprint $table) {
             $table->bigIncrements("immunizationResultId");
             $table->unsignedBigInteger("immunizationId");
-            $table->number('ageInMos')->nullable();
-            $table->number('weightA')->nullable();
-            $table->number('weightN')->nullable();
+            $table->integer('ageInMos')->nullable();
+            $table->integer('weightA')->nullable();
+            $table->integer('weightN')->nullable();
             $table->timestamps();
 
             // Define foreign key constraints

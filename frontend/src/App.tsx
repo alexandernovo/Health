@@ -30,6 +30,8 @@ import HypertensiveFormUpdate from '@pages/Hypertensive/HypertensiveFormUpdate'
 import HypertensiveReportViewer from '@pages/Hypertensive/HypertensiveReportViewer'
 import VaccinationForm from '@pages/Vaccination/VaccinationForm'
 import VaccinationRecord from '@pages/Vaccination/VaccinationRecord'
+import VaccinationFormUpdate from '@pages/Vaccination/VaccinationFormUpdate'
+import VaccinationReportViewer from '@pages/Vaccination/VaccinationReportViewer'
 
 function App() {
   return (
@@ -74,6 +76,8 @@ function App() {
           {/* vaccination */}
           <Route element={<VaccinationForm />} path='/vaccination_form/:appointment_id'></Route>
           <Route element={<VaccinationRecord />} path='/vaccination_record/:user_id'></Route>
+          <Route element={<VaccinationFormUpdate />} path='/vaccination_update/:appointment_id'></Route>
+          <Route element={<VaccinationReportViewer />} path='/vaccination_report/:appointment_id'></Route>
 
         </Routes>
       </MainLayout>

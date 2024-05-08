@@ -79,6 +79,7 @@ Route::prefix('vaccination')->group(function () {
     Route::post('/createVaccination', [VaccinationController::class, 'createVaccination']);
     Route::get('/getVaccinationOneRecord/{appointment_id}', [VaccinationController::class, 'getVaccinationOneRecord']);
     Route::get('/getVaccinationRecord/{user_id}', [VaccinationController::class, 'getVaccinationRecord']);
+    Route::put('/updateVaccination', [VaccinationController::class, 'updateVaccination']);
 });
 
 Route::prefix('immunization')->group(function () {

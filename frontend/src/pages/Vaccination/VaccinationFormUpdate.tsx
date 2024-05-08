@@ -12,11 +12,12 @@ import { StringToDate } from '@/utils/DateFunction';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 
-const VaccinationForm: React.FC = () => {
+const VaccinationFormUpdate: React.FC = () => {
     const { appointment_id } = useParams<{ appointment_id: string }>();
     const [appointment, setAppointment] = useState<AppointmentModel>({});
     const [vaccination, setVaccination] = useState<VaccinationModel>(VaccinationModelInitialValue);
     const [otherVaccinesList, setOtherVaccinesList] = useState<OtherVaccinesModel[]>([]);
+    const [removeotherVaccinesList, setremoveOtherVaccinesList] = useState<OtherVaccinesModel[]>([]);
     const [otherVaccines, setOtherVaccines] = useState<OtherVaccinesModel>(OtherVaccinesModelInitialValue);
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
@@ -24,7 +25,10 @@ const VaccinationForm: React.FC = () => {
 
     useEffect(() => {
         fetchAppointmentDetails();
+        getVaccinationData();
     }, []);
+
+
     const fetchAppointmentDetails = async () => {
         const response = await axios.get(`/api/appointment/getAppointmentById/${appointment_id}`, {
             headers: {
@@ -71,29 +75,45 @@ const VaccinationForm: React.FC = () => {
         }));
     };
 
+    const getVaccinationData = async () => {
+        const response = await axios.get(`/api/vaccination/getVaccinationOneRecord/${appointment_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (response.data.status == "success") {
+            setVaccination(response.data.vaccination);
+            setOtherVaccinesList(response.data.vaccination.othervaccines);
+        }
+    }
+    const removeOtherVaccinesNow = (keyIdToRemove?: string) => {
+        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId === keyIdToRemove);
+        if (indexToRemove !== -1) {
+            const otherVaccinesToRemove = otherVaccinesList[indexToRemove]; // Get the medical model
+            if (otherVaccinesToRemove.otherVaccinesId != 0) {
+                setremoveOtherVaccinesList((prev) => [...prev, otherVaccinesToRemove]); // Add the medical model to remove array
+            }
+            const udpatedOtherVaccines = [...otherVaccinesList]; // Create a copy of the array
+            udpatedOtherVaccines.splice(indexToRemove, 1); // Remove the item
+            setOtherVaccinesList(udpatedOtherVaccines); // Update the state with the new array
+        }
+    };
     const addForm = () => {
         otherVaccines.keyId = generateRandomId();
+        otherVaccines.otherVaccinesId = 0;
         setOtherVaccinesList(prevState => {
             return [...prevState, otherVaccines];
         });
         setOtherVaccines(OtherVaccinesModelInitialValue);
     }
 
-    const removeOtherVaccines = (keyIdToRemove?: string) => {
-        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId === keyIdToRemove);
-        if (indexToRemove !== -1) {
-            const updatedOtherVaccines = [...otherVaccinesList]; // Create a copy of the array
-            updatedOtherVaccines.splice(indexToRemove, 1); // Remove the item
-            setOtherVaccinesList(updatedOtherVaccines); // Update the state with the new array
-        }
-    };
-
-
-    const createVaccination = async () => {
+    const updateVaccination = async () => {
         vaccination.otherVaccines = otherVaccinesList;
+        vaccination.removeotherVaccines = removeotherVaccinesList;
         vaccination.appointment_id = appointment.appointment_id;
         vaccination.user_id = appointment.user_id;
-        const response = await axios.post("/api/vaccination/createVaccination", vaccination,
+        const response = await axios.put("/api/vaccination/updateVaccination", vaccination,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -102,8 +122,8 @@ const VaccinationForm: React.FC = () => {
         )
 
         if (response.data.status == "success") {
-            dispatch(setToastState({ toast: true, toastMessage: "Vaccination Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+            dispatch(setToastState({ toast: true, toastMessage: "Vaccination Record Updated Successfully", toastSuccess: true }));
+            navigate(`/vaccination_record/${appointment.user_id}`);
         }
     }
     return (
@@ -149,13 +169,13 @@ const VaccinationForm: React.FC = () => {
                         <div className='w-1/3'>
                             <div className='flex flex-col w-full'>
                                 <label className='font-semibold text-[14px]'>60 taon (Name of Vaccinator)</label>
-                                <input type="text" name='nameOfVaccinator60' onChange={handleInputChange} value={vaccination.nameOfVaccinator60} disabled={calculateAge(appointment.birthdate) < 60} placeholder="Name of Vaccinator" className="input input-bordered w-full" />
+                                <input type="text" name='nameOfVaccinator60' disabled={calculateAge(appointment.birthdate) < 60} onChange={handleInputChange} value={vaccination.nameOfVaccinator60} placeholder="Name of Vaccinator" className="input input-bordered w-full" />
                             </div>
                         </div>
                         <div className='w-1/3'>
                             <div className='flex flex-col w-full'>
                                 <label className='font-semibold text-[14px]'>65 taon (Name of Vaccinator)</label>
-                                <input type="text" name='nameOfVaccinator65' onChange={handleInputChange} value={vaccination.nameOfVaccinator65} disabled={calculateAge(appointment.birthdate) < 65} placeholder="Name of Vaccinator" className="input input-bordered w-full" />
+                                <input type="text" name='nameOfVaccinator65' disabled={calculateAge(appointment.birthdate) < 65} onChange={handleInputChange} value={vaccination.nameOfVaccinator65} placeholder="Name of Vaccinator" className="input input-bordered w-full" />
                             </div>
                         </div>
                     </div>
@@ -219,7 +239,7 @@ const VaccinationForm: React.FC = () => {
                                             <td className='border-r-[1px] border-black text-black'>{md.otherRemarks}</td>
                                             <td>
                                                 <div className='flex justify-center items-center'>
-                                                    <button onClick={() => removeOtherVaccines(md.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
+                                                    <button onClick={() => removeOtherVaccinesNow(md.keyId)} className='btn btn-ghost rounded-full px-3 active:bg-red-400 hover:bg-red-300'>
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 active:text-white ">
                                                             <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                                                         </svg>
@@ -274,7 +294,7 @@ const VaccinationForm: React.FC = () => {
                         </button>
                     </div>
                     <div className='flex justify-end mr-3 mb-4'>
-                        <button onClick={() => createVaccination()} className="btn btn-sm btn-primary mt-2 text-white">Save Vaccination Record</button>
+                        <button onClick={() => updateVaccination()} className="btn btn-sm btn-primary mt-2 text-white">Save Vaccination Record</button>
                     </div>
                 </div>
             </div>
@@ -282,4 +302,4 @@ const VaccinationForm: React.FC = () => {
     )
 }
 
-export default VaccinationForm
+export default VaccinationFormUpdate
