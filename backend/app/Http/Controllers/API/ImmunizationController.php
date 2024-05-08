@@ -30,12 +30,10 @@ class ImmunizationController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
-        try 
-        {
+        try {
             $immunization = Immunization::create($request->input());
 
-            foreach($request->immunizationResult as $result)
-            {
+            foreach ($request->immunizationResult as $result) {
                 $result['immunizationId'] = $immunization->immunizationId;
                 ImmunizationResult::create($result);
             }
@@ -44,8 +42,7 @@ class ImmunizationController extends Controller
                 'status' => 'success',
                 'message' => 'Create immunization record successfully',
             ]);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Create immunization record failed: ' . $e->getMessage(),

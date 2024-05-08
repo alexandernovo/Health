@@ -6,3 +6,14 @@ export interface ImmunizationResult {
     weightA?: number;
     weightN?: number;
 }
+
+export const ImmunizationResultInitialValue = () => {
+    return {
+        keyId: "",
+        immunizationResultId: undefined,
+        immunizationId: undefined,
+        ageInMos: undefined,
+        weightA: undefined,
+        weightN: undefined,
+    }
+}

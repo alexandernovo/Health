@@ -9,18 +9,20 @@ import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import axios from 'axios';
 
-const ImmunizationForm: React.FC = () => {
+const ImmunizationFormUpdate: React.FC = () => {
   const { appointment_id } = useParams<{ appointment_id: string }>();
   const [appointment, setAppointment] = useState<AppointmentModel>({});
   const token: string | null = localStorage.getItem("token");
   const [immunization, setImmunization] = useState<Immunization>(ImmunizationInitialValue);
   const [immunizationResult, setImmunizationResult] = useState<ImmunizationResult>(ImmunizationResultInitialValue);
   const [immunizationResultList, setImmunizationResultList] = useState<ImmunizationResult[]>([]);
+  const [removeImmunizationResultList, setRemoveImmunizationResultList] = useState<ImmunizationResult[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchAppointmentDetails();
+    fetchImmunizationData();
   }, []);
 
   const fetchAppointmentDetails = async () => {
@@ -64,35 +66,59 @@ const ImmunizationForm: React.FC = () => {
 
   const addForm = () => {
     immunizationResult.keyId = generateRandomId();
+    immunizationResult.immunizationResultId = 0;
+    immunizationResult.immunizationId = immunization.immunizationId;
     setImmunizationResultList(prevState => {
       return [...prevState, immunizationResult];
     });
     setImmunizationResult(ImmunizationResultInitialValue);
   }
 
-  const createImmunization = async () => {
+  const updateImmunization = async () => {
     immunization.immunizationResult = immunizationResultList;
+    immunization.removeImmunizationResult = removeImmunizationResultList;
     immunization.user_id = appointment.user_id;
     if (appointment_id != null) {
       immunization.appointment_id = appointment_id;
     }
-    const response = await axios.post("/api/immunization/createImmunization", immunization, {
+    const response = await axios.put("/api/immunization/updateImmunization", immunization, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
 
     if (response.data.status == "success") {
-      dispatch(setToastState({ toast: true, toastMessage: "Immunization Record Created Successfully", toastSuccess: true }));
-      navigate('/appointments');
+      dispatch(setToastState({ toast: true, toastMessage: "Immunization Record Update Successfully", toastSuccess: true }));
+      navigate(`/immunization_record/${appointment.user_id}`);
     }
   }
+
+  const fetchImmunizationData = async () => {
+    const response = await axios.get(`/api/immunization/getImmunizationOneRecord/${appointment_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (response.data.status = "success") {
+      setImmunization(response.data.immunization);
+      setImmunizationResultList(response.data.immunization.immunization_result);
+    }
+
+  }
+
   const removeResult = (keyIdToRemove?: string) => {
     const indexToRemove = immunizationResultList.findIndex((item) => item.keyId === keyIdToRemove);
     if (indexToRemove !== -1) {
-      const updatedResult = [...immunizationResultList]; // Create a copy of the array
-      updatedResult.splice(indexToRemove, 1); // Remove the item
-      setImmunizationResultList(updatedResult); // Update the state with the new array
+      const resultToremove = immunizationResultList[indexToRemove];
+      if (resultToremove.immunizationId != 0) {
+        setRemoveImmunizationResultList((prev) => [...prev, resultToremove]);
+      }
+      const updatedAssessment = [...immunizationResultList];
+      updatedAssessment.splice(indexToRemove, 1);
+      setImmunizationResultList(updatedAssessment);
     }
   };
   return (
@@ -530,10 +556,10 @@ const ImmunizationForm: React.FC = () => {
           </div>
         </div>
         <div className='flex justify-end mr-3 mb-4'>
-          <button onClick={() => createImmunization()} className="btn btn-sm btn-primary mt-2 text-white">Save Immunization Record</button>
+          <button onClick={() => updateImmunization()} className="btn btn-sm btn-primary mt-2 text-white">Save Immunization Record</button>
         </div>
       </div>
     </div>
   )
 }
-export default ImmunizationForm;
+export default ImmunizationFormUpdate;

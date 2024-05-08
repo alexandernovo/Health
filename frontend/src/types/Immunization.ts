@@ -3,7 +3,7 @@ import { ImmunizationResult } from "./immunizationResult";
 
 export interface Immunization extends UserModel {
     immunizationId?: number;
-    appointment_id?: number;
+    appointment_id: string;
     user_id?: number;
     VitK?: boolean;
     eyeOintment?: boolean;
@@ -62,10 +62,10 @@ export interface Immunization extends UserModel {
 }
 
 
-export const ImmunizationInitialValue = () =>{
+export const ImmunizationInitialValue = () => {
     return {
         immunizationId: 0,
-        appointment_id: 0,
+        appointment_id: "",
         user_id: 0,
         VitK: false,
         eyeOintment: false,

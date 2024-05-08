@@ -32,7 +32,9 @@ import VaccinationForm from '@pages/Vaccination/VaccinationForm'
 import VaccinationRecord from '@pages/Vaccination/VaccinationRecord'
 import VaccinationFormUpdate from '@pages/Vaccination/VaccinationFormUpdate'
 import VaccinationReportViewer from '@pages/Vaccination/VaccinationReportViewer'
-import ImmunizationForm  from '@pages/Immunization/ImmunizationForm'
+import ImmunizationForm from '@pages/Immunization/ImmunizationForm'
+import ImmunizationRecord from '@pages/Immunization/ImmunizationRecord'
+import ImmunizationFormUpdate from '@pages/Immunization/ImmunizationFormUpdate'
 
 function App() {
   return (
@@ -81,6 +83,8 @@ function App() {
           <Route element={<VaccinationReportViewer />} path='/vaccination_report/:appointment_id'></Route>
           {/* immunization */}
           <Route element={<ImmunizationForm />} path='/immunization_form/:appointment_id'></Route>
+          <Route element={<ImmunizationRecord />} path='/immunization_record/:user_id'></Route>
+          <Route element={<ImmunizationFormUpdate />} path='/immunization_update/:appointment_id'></Route>
 
         </Routes>
       </MainLayout>
