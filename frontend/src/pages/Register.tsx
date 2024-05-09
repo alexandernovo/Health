@@ -98,7 +98,7 @@ const Register: React.FC = () => {
                         isSignedIn: true
                     }
                     dispatch(storeUser(userToStore));
-                    navigate('/home');
+                    navigate('/dashboard');
                 }, 2000);
 
             }

@@ -35,7 +35,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
             setTimeout(() => {
                 setLoading(false);
                 if (location.pathname === "/register" || location.pathname === "/") {
-                    navigate('/home');
+                    navigate('/dashboard');
                 }
             }, 2000);
         }
