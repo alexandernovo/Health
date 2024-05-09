@@ -48,7 +48,7 @@ const HypertensiveReport: React.FC<HypertensiveReportProps> = (props: Hypertensi
     }
 
     return (
-        <div >
+        <div>
             <div className='flex justify-center my-3'>
                 <div className='w-[8.5in] flex justify-end'>
                     <ReactToPrint

@@ -35,7 +35,7 @@ import VaccinationReportViewer from '@pages/Vaccination/VaccinationReportViewer'
 import ImmunizationForm from '@pages/Immunization/ImmunizationForm'
 import ImmunizationRecord from '@pages/Immunization/ImmunizationRecord'
 import ImmunizationFormUpdate from '@pages/Immunization/ImmunizationFormUpdate'
-
+import { ImmunizationReportViewer } from '@pages/Immunization/ImmunizationReportViewer'
 function App() {
   return (
     <Router>
@@ -85,6 +85,7 @@ function App() {
           <Route element={<ImmunizationForm />} path='/immunization_form/:appointment_id'></Route>
           <Route element={<ImmunizationRecord />} path='/immunization_record/:user_id'></Route>
           <Route element={<ImmunizationFormUpdate />} path='/immunization_update/:appointment_id'></Route>
+          <Route element={<ImmunizationReportViewer />} path='/immunization_report/:appointment_id'></Route>
 
         </Routes>
       </MainLayout>
