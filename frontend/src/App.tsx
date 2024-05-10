@@ -4,6 +4,7 @@ import Home from '@pages/Home'
 import Login from '@pages/Login'
 import Register from '@pages/Register'
 import NotFound from '@pages/NotFound'
+import Account from '@pages/Settings/Account'
 import ManageUsers from '@pages/ManageUsers'
 import ManageConsultationType from '@pages/ManageConsultationType'
 import Appointments from '@pages/Appointments'
@@ -46,6 +47,7 @@ function App() {
           <Route element={<Login />} path='/'></Route>
           <Route element={<Register />} path='/register'></Route>
           <Route element={<NotFound />} path='*'></Route>
+          <Route element={<Account />} path='/account'></Route>
 
           <Route element={<Home />} path='/home'></Route>
           <Route element={<ManageUsers />} path='/manageusers'></Route>

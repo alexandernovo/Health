@@ -46,6 +46,7 @@ const Login: React.FC = () => {
                         usertype: data.user.usertype,
                         birthdate: data.user.birthdate,
                         civil_status: data.user.civil_status,
+                        gender: data.user.gender,
                         occupation: data.user.occupation,
                         education: data.user.education,
                         religion: data.user.religion,

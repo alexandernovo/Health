@@ -66,10 +66,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                         firstname: data.user.firstname,
                         lastname: data.user.lastname,
                         username: data.user.username,
-                        usertype: data.user.usertype,
                         address: data.user.address,
                         contact_number: data.user.contact_number,
+                        usertype: data.user.usertype,
+                        birthdate: data.user.birthdate,
+                        gender: data.user.gender,
+                        civil_status: data.user.civil_status,
+                        occupation: data.user.occupation,
+                        education: data.user.education,
+                        religion: data.user.religion,
                         isSignedIn: true
+
                     }
 
                     dispatch(storeUser(userToStore));

@@ -41,7 +41,7 @@ export const userInitialValue = () => {
         username: "",
         usertype: undefined,
         civil_status: "",
-        isSignedIn: 0,
+        isSignedIn: true,
         contact_number: "",
         address: "",
         password: "",
