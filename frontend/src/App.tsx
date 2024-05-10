@@ -35,7 +35,9 @@ import VaccinationReportViewer from '@pages/Vaccination/VaccinationReportViewer'
 import ImmunizationForm from '@pages/Immunization/ImmunizationForm'
 import ImmunizationRecord from '@pages/Immunization/ImmunizationRecord'
 import ImmunizationFormUpdate from '@pages/Immunization/ImmunizationFormUpdate'
-import { ImmunizationReportViewer } from '@pages/Immunization/ImmunizationReportViewer'
+import ImmunizationReportViewer from '@pages/Immunization/ImmunizationReportViewer'
+import PatientHistory from '@pages/PatientRecords/PatientHistory'
+
 function App() {
   return (
     <Router>
@@ -54,6 +56,7 @@ function App() {
           <Route element={<ManageConsultationType />} path='/manageconsultationtype'></Route>
           <Route element={<CreateAppointments />} path='/createappointments'></Route>
           <Route element={<ManageRecords />} path='/managerecords'></Route>
+          <Route element={<PatientHistory />} path='/patient_history'></Route>
           {/* maternal */}
           <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:appointment_id'></Route>
           <Route element={<UpdateManageMaternalHealthRecords />} path='/udpatematernal/:appointment_id'></Route>

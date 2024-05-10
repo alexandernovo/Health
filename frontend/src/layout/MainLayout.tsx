@@ -67,6 +67,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                         lastname: data.user.lastname,
                         username: data.user.username,
                         usertype: data.user.usertype,
+                        address: data.user.address,
+                        contact_number: data.user.contact_number,
                         isSignedIn: true
                     }
 

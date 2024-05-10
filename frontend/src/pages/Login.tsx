@@ -41,6 +41,8 @@ const Login: React.FC = () => {
                         firstname: data.user.firstname,
                         lastname: data.user.lastname,
                         username: data.user.username,
+                        address: data.user.address,
+                        contact_number: data.user.contact_number,
                         usertype: data.user.usertype,
                         birthdate: data.user.birthdate,
                         civil_status: data.user.civil_status,

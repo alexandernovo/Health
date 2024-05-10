@@ -4,14 +4,17 @@ import { AppointmentModel } from '@datatypes/appointmentType';
 import { DateToString } from '@/utils/DateFunction';
 import { TimeToString12Hour } from '@/utils/DateFunction';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import DataTable, { TableColumn } from 'react-data-table-component';
+import { RootState } from '@store/store';
+import { UserModel } from '@/types/userType';
 
 const Appointments: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const [appointments, setAppointments] = useState<AppointmentModel[]>([]);
     const [filteredAppointments, setFilteredAppointments] = useState<AppointmentModel[]>([]);
+    const user: UserModel = useSelector((state: RootState) => state.userState);
     const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useDispatch();
 
@@ -32,7 +35,11 @@ const Appointments: React.FC = () => {
             });
             if (response.data.status === "success") {
                 setAppointments(response.data.appointment);
-                setFilteredAppointments(response.data.appointment);
+                const appointmentFilteredByUser: AppointmentModel[] = user.usertype === 0
+                    ? response.data.appointment
+                    : response.data.appointment.filter((appointment: AppointmentModel) => appointment.user_id === user.id);
+
+                setFilteredAppointments(appointmentFilteredByUser);
                 setLoading(false);
             } else {
                 console.log("Fetch Failed");
@@ -127,15 +134,19 @@ const Appointments: React.FC = () => {
             cell: (row: AppointmentModel) => (
                 row.appointmentStatus === 1 ? (
                     <div className='flex items-center gap-1'>
-                        <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
-                            Approve
-                        </button>
+                        {user.usertype == 0 && (
+                            <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
+                                Approve
+                            </button>
+                        )}
                         <button className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
                             Edit
                         </button>
-                        <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 2)}>
-                            Decline
-                        </button>
+                        {user.usertype == 0 && (
+                            <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 2)}>
+                                Decline
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <Link to={ToRedirect(row.consultationTypeName, row.appointment_id)} className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>

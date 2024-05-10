@@ -15,6 +15,9 @@ const CreateAppointments: React.FC = () => {
     const [patients, setPatients] = useState<UserModel[]>([]);
     const [consultationType, setConsultationType] = useState<ConsultationModel[]>([]);
     const isAdmin: number | undefined = useSelector((state: RootState) => state.userState.usertype);
+    const user: UserModel = useSelector((state: RootState) => state.userState);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [appointment, setAppointments] = useState<AppointmentModel>({
         appointment_id: undefined,
@@ -29,8 +32,7 @@ const CreateAppointments: React.FC = () => {
         isActive: undefined,
         user_id: undefined
     });
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const [error, setError] = useState({
         appointmentId: '',
         firstname: '',
@@ -122,7 +124,7 @@ const CreateAppointments: React.FC = () => {
             const response = await axios.post(
                 '/api/appointment/createappointment',
                 {
-                    user_id: appointment.user_id,
+                    user_id: user.userstatus == 0 ? appointment.user_id : user.id,
                     consultationTypeId: appointment.consultationTypeId,
                     appointmentTime: appointment.appointmentTime,
                     appointmentDate: appointment.appointmentDate,
@@ -181,21 +183,32 @@ const CreateAppointments: React.FC = () => {
                     </div>
                     <form onSubmit={handleCreateAppointment} className='w-full'>
                         <div className='flex mb-3'>
-                            <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
-                                <label className='font-semibold text-[14px]'>Patient Name</label>
-                                <Select
-                                    className="basic-single w-full h-[45px]"
-                                    classNamePrefix="select"
-                                    placeholder="Select Patient..."
-                                    onChange={handlePatientChange}
-                                    options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
-                                />
-                                {error.user_id && <p className="text-red-500 text-[13px] mt-[5px]">Patient is required</p>}
-                            </div>
+                            {user.usertype == 0 ?
+                                (
+                                    <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
+                                        <label className='font-semibold text-[14px]'>Patient Name</label>
+                                        <Select
+                                            className="basic-single w-full h-[45px]"
+                                            classNamePrefix="select"
+                                            placeholder="Select Patient..."
+                                            onChange={handlePatientChange}
+                                            options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
+                                        />
+                                        {error.user_id && <p className="text-red-500 text-[13px] mt-[5px]">Patient is required</p>}
+                                    </div>
+                                )
+                                : (
+                                    <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
+                                        <label className='font-semibold text-[14px]'>Patient Name</label>
+                                        <input readOnly type="text" value={`${user.firstname} ${user.lastname}`} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                    </div>
+                                )
+                            }
+
 
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                 <label className='font-semibold text-[14px]'>Address</label>
-                                <input readOnly type="text" value={appointment.address} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                <input readOnly type="text" value={user.usertype == 0 ? appointment.address : user.address} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
                             </div>
                         </div>
                         <div className='flex mb-3'>
@@ -213,7 +226,7 @@ const CreateAppointments: React.FC = () => {
                         <div className='flex'>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                 <label className='font-semibold text-[14px]'>Contact No.</label>
-                                <input readOnly type="text" value={appointment.contact_number} name="contact_number" className="input input-bordered w-full h-[48px]" placeholder="Contact No." />
+                                <input readOnly type="text" value={user.usertype == 0 ? appointment.contact_number : user.contact_number} name="contact_number" className="input input-bordered w-full h-[48px]" placeholder="Contact No." />
                             </div>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                 <label className='font-semibold text-[14px]'>Type of Consultation</label>
