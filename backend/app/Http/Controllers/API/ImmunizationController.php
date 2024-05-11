@@ -37,7 +37,12 @@ class ImmunizationController extends Controller
                 $result['immunizationId'] = $immunization->immunizationId;
                 ImmunizationResult::create($result);
             }
+            $appointment = Appointment::find($request->appointment_id);
 
+            if ($appointment) {
+                $appointment->update(["appointmentStatus" => 4]);
+            }
+            
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create immunization record successfully',
