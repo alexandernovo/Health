@@ -10,3 +10,17 @@ export interface AppointmentModel extends UserModel {
     isActive?: number;
     user_id?: number
 }
+
+
+export const AppointmentModelInitialValuue = () => {
+    return {
+        appointment_id: 0,
+        consultationTypeId: 0,
+        consultationTypeName: "",
+        appointmentDate: "",
+        appointmentTime: "",
+        appointmentStatus: 0,
+        isActive: 0,
+        user_id: 0
+    }
+}
