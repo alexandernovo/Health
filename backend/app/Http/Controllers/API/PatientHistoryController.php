@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Maternal;
+use App\Models\MedicalAssessment;
+use App\Models\Appointment;
+use Exception;
+
+class PatientHistoryController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function getHistory($user_id)
+    {
+        try {
+            $userHistory = Appointment::whereHas('maternal')
+                ->orWhereHas('newborn')
+                ->orWhereHas('family')
+                ->orWhereHas('hypertensive')
+                ->orWhereHas('vaccination')
+                ->orWhereHas('immunization')
+                ->with('consultation', 'user')
+                ->where('user_id', $user_id)
+                ->get();
+
+            if ($userHistory->isNotEmpty()) {
+                $mappedRecords = $userHistory->map(function ($appointment) {
+                    return [
+                        'firstname' => $appointment->user->firstname,
+                        'lastname' => $appointment->user->lastname,
+                        'appointment_id' => $appointment->appointment_id,
+                        'consultationTypeId' => $appointment->consultationTypeId,
+                        'consultationTypeName' => $appointment->consultation->consultationTypeName,
+                        'isActive' => $appointment->isActive,
+                        'user_id' => $appointment->user_id,
+                    ];
+                });
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch History Record Successfully',
+                'history' => $mappedRecords,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch History Record Failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+}

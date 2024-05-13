@@ -12,6 +12,7 @@ use App\Http\Controllers\API\FamilyPlanningController;
 use App\Http\Controllers\API\HypertensiveController;
 use App\Http\Controllers\API\VaccinationController;
 use App\Http\Controllers\API\ImmunizationController;
+use App\Http\Controllers\API\PatientHistoryController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -88,6 +89,10 @@ Route::prefix('immunization')->group(function () {
     Route::put('/updateImmunization', [ImmunizationController::class, 'updateImmunization']);
     Route::get('/getImmunizationOneRecord/{appointment_id}', [ImmunizationController::class, 'getImmunizationOneRecord']);
     Route::get('/getUserImmunizationRecord/{user_id}', [ImmunizationController::class, 'getUserImmunizationRecord']);
+});
+
+Route::prefix('patient')->group(function () {
+    Route::get('/getHistory/{user_id}', [PatientHistoryController::class, 'getHistory']);
 });
 //  remove routes
 //  php artisan route:list | Where-Object { $_ -notmatch "/api" } 
