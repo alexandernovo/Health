@@ -51,7 +51,10 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'address' => 'required|string',
+            'region' => 'required|string',
+            'province' => 'required|string',
+            'municipality' => 'required|string',
+            'brgy' => 'required|string',
             'civil_status' => 'required',
             'gender' => 'required|string',
             'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
@@ -66,24 +69,13 @@ class AuthController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
+        $data = $request->input();
+        $data['usertype'] = $request->usertype != null ? $request->usertype : 1;
+        $data['userstatus'] = 1;
+        $data['password'] = Hash::make($request->password);
+        $data['address'] = $data['region'] . ' ' . $data['province'] . ' ' . $data['municipality'] . ' ' . $data['brgy'];
 
-        $user = User::create([
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-            'contact_number' => $request->contact_number,
-            'gender' => $request->gender,
-            'birthdate' => $request->birthdate,
-            'civil_status' => $request->civil_status,
-            'occupation' => $request->occupation,
-            'religion' => $request->religion,
-            'education' => $request->education,
-            'usertype' => $request->usertype != null ? $request->usertype : 1,
-            'userstatus' => 1
-        ]);
-
+        $user = User::create($data);
         // Generate token for the registered user
         $token = Auth::guard('api')->login($user);
         return response()->json([

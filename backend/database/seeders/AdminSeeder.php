@@ -28,7 +28,6 @@ class AdminSeeder extends Seeder
                 'occupation' => 'Administrator',
                 'civil_status' => 'Single',
                 'contact_number' => '1234567890',
-                'address' => 'Admin Address',
                 'gender' => 'Male',
                 'religion' => 'Roman Catholic',
                 'userstatus' => 1,

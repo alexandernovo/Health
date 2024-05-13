@@ -51,11 +51,13 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-
         $validate = [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'address' => 'required|string',
+            'region' => 'required|string',
+            'province' => 'required|string',
+            'municipality' => 'required|string',
+            'brgy' => 'required|string',
             'gender' => 'required|string',
             'civil_status' => 'required',
             'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
@@ -78,7 +80,14 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'username' => $request->username,
-            'address' => $request->address,
+            'address' => $request->region . ' ' . $request->province . ' ' . $request->municipality . ' ' . $request->brgy,
+            'reg_code' => $request->reg_code,
+            'region' => $request->region,
+            'prov_code' => $request->prov_code,
+            'province' => $request->province,
+            'mun_code' => $request->mun_code,
+            'municipality' => $request->municipality,
+            'brgy' => $request->brgy,
             'gender' => $request->gender,
             'birthdate' => $request->birthdate,
             'occupation' => $request->occupation,
@@ -88,7 +97,6 @@ class UserController extends Controller
             'usertype' => $request->usertype,
             'contact_number' => $request->contact_number,
         ];
-
         // Hash password if provided
         if ($request->password != null) {
             $data['password'] = Hash::make($request->password);

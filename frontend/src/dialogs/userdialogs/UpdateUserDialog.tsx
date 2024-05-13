@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { UserModel } from '@/types/userType';
+import { UserModel, userInitialValue } from '@/types/userType';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
+import { regions, getProvincesByRegion, getCityMunByProvince, getBarangayByMun } from 'phil-reg-prov-mun-brgy'
+import Select from 'react-select';
 
 interface UpdateUserDialogProps {
     Toggle: () => void;
@@ -13,6 +15,9 @@ interface UpdateUserDialogProps {
 const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDialogProps) => {
     const dispatch = useDispatch();
     const token: string | null = localStorage.getItem("token");
+    const [provincesFiltered, setProvincesFiltered] = useState([]);
+    const [municipalityFiltered, setMunicipalityFiltered] = useState([]);
+    const [brgyFiltered, setBrgyFiltered] = useState([]);
 
     const initialData = {
         firstname: "",
@@ -21,6 +26,9 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
         contact_number: "",
         address: "",
         civil_status: "",
+        reg_code: '06',
+        prov_code: '0606',
+        mun_code: '060602',
         gender: "",
         password: "",
         religion: "",
@@ -28,7 +36,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
     }
 
     const [formData, setFormData] = useState<UserModel>(initialData);
-    const [error, setError] = useState<UserModel>(initialData);
+    const [error, setError] = useState<UserModel>(userInitialValue);
 
     useEffect(() => {
         setFormData({
@@ -42,6 +50,13 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
             civil_status: props.Data.civil_status,
             occupation: props.Data.occupation,
             education: props.Data.education,
+            reg_code: props.Data.reg_code,
+            region: props.Data.region,
+            prov_code: props.Data.prov_code,
+            province: props.Data.province,
+            mun_code: props.Data.mun_code,
+            municipality: props.Data.municipality,
+            brgy: props.Data.brgy,
             religion: props.Data.religion,
             birthdate: props.Data.birthdate,
             password: '',
@@ -50,6 +65,77 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
         setError(initialData);
     }, [props.Data.id]);
 
+    useEffect(() => {
+        const filteredProvinces = getProvincesByRegion(props.Data.reg_code);
+        const filteredMunicipalities = getCityMunByProvince(props.Data.prov_code);
+        const filteredBrgy = getBarangayByMun(props.Data.mun_code);
+
+        setProvincesFiltered(filteredProvinces);
+        setMunicipalityFiltered(filteredMunicipalities);
+        setBrgyFiltered(filteredBrgy);
+    }, [props.Data.reg_code, props.Data.prov_code, props.Data.mun_code]);
+
+    useEffect(() => {
+        const selectedProvince: any = provincesFiltered.find((province: any) => province.prov_code === props.Data.prov_code);
+        if (selectedProvince) {
+            setFormData(prevState => ({
+                ...prevState,
+                province: selectedProvince.name,
+            }));
+        }
+    }, [props.Data.prov_code, provincesFiltered]);
+
+    useEffect(() => {
+        const selectedMunicipality: any = municipalityFiltered.find((mun: any) => mun.mun_code === props.Data.mun_code);
+        if (selectedMunicipality) {
+            setFormData(prevState => ({
+                ...prevState,
+                municipality: selectedMunicipality.name,
+            }));
+        }
+    }, [props.Data.mun_code, municipalityFiltered]);
+
+
+    const handleSelectChangeRegion = (selectedOption: any) => {
+        const { label, value } = selectedOption;
+        setFormData(prevState => ({
+            ...prevState,
+            region: label,
+            reg_code: value,
+            prov_code: '',
+            province: '',
+            mun_code: '',
+            municipality: '',
+            brgy: ''
+        }));
+    }
+    const handleSelectChangeProvince = (selectedOption: any) => {
+        const { label, value } = selectedOption;
+        setFormData(prevState => ({
+            ...prevState,
+            province: label,
+            prov_code: value,
+            mun_code: '',
+            municipality: '',
+            brgy: ''
+        }));
+    }
+    const handleSelectChangeMunicipality = (selectedOption: any) => {
+        const { label, value } = selectedOption;
+        setFormData(prevState => ({
+            ...prevState,
+            municipality: label,
+            mun_code: value,
+            brgy: ''
+        }));
+    }
+    const handleSelectChangeBrgy = (selectedOption: any) => {
+        const { label } = selectedOption;
+        setFormData(prevState => ({
+            ...prevState,
+            brgy: label,
+        }));
+    }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -174,14 +260,58 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
                                         </label>
                                         {error.civil_status && <p className="text-red-500 text-[13px]">{error.civil_status}</p>}
 
-                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                        {/* <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                                 <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                                 <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                             </svg>
                                             <input type="text" name="address" value={formData.address} onChange={handleChange} className="grow" placeholder='Address' />
                                         </label>
-                                        {error.address && <p className="text-red-500 text-[13px]">{error.address}</p>}
+                                        {error.address && <p className="text-red-500 text-[13px]">{error.address}</p>} */}
+
+                                        <Select
+                                            className="basic-single w-full h-[45px] mt-2"
+                                            classNamePrefix="select"
+                                            placeholder="Select Region"
+                                            onChange={handleSelectChangeRegion}
+                                            name='region'
+                                            value={{ value: formData.reg_code, label: formData.region }}
+                                            options={regions.map((region: any) => ({ value: region.reg_code, label: region.name }))}
+                                        />
+                                        {error.region && <p className="text-red-500 text-[13px]">{error.region}</p>}
+
+                                        <Select
+                                            className="basic-single w-full h-[45px] mt-3"
+                                            classNamePrefix="select"
+                                            placeholder="Select Province"
+                                            onChange={handleSelectChangeProvince}
+                                            name='province'
+                                            value={{ value: formData.prov_code, label: formData.province }}
+                                            options={provincesFiltered.map((province: any) => ({ value: province.prov_code, label: province.name }))}
+                                        />
+                                        {error.province && <p className="text-red-500 text-[13px]">{error.province}</p>}
+
+                                        <Select
+                                            className="basic-single w-full h-[45px] mt-3"
+                                            classNamePrefix="select"
+                                            placeholder="Select Municipality"
+                                            onChange={handleSelectChangeMunicipality}
+                                            name='province'
+                                            value={{ value: formData.mun_code, label: formData.municipality }}
+                                            options={municipalityFiltered.map((municipality: any) => ({ value: municipality.mun_code, label: municipality.name }))}
+                                        />
+                                        {error.municipality && <p className="text-red-500 text-[13px]">{error.municipality}</p>}
+
+                                        <Select
+                                            className="basic-single w-full h-[45px] mt-3"
+                                            classNamePrefix="select"
+                                            placeholder="Select Baranggay"
+                                            onChange={handleSelectChangeBrgy}
+                                            name='municipality'
+                                            value={{ value: formData.mun_code, label: formData.brgy }}
+                                            options={brgyFiltered.map((brgy: any) => ({ value: brgy.mun_code, label: brgy.name }))}
+                                        />
+                                        {error.brgy && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">

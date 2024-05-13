@@ -38,6 +38,7 @@ import ImmunizationRecord from '@pages/Immunization/ImmunizationRecord'
 import ImmunizationFormUpdate from '@pages/Immunization/ImmunizationFormUpdate'
 import ImmunizationReportViewer from '@pages/Immunization/ImmunizationReportViewer'
 import PatientHistory from '@pages/PatientRecords/PatientHistory'
+import UpdateAppointments from '@pages/UpdateAppointments'
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route element={<Dashboard />} path='/dashboard'></Route>
           <Route element={<ManageConsultationType />} path='/manageconsultationtype'></Route>
           <Route element={<CreateAppointments />} path='/createappointments'></Route>
+          <Route element={<UpdateAppointments />} path='/updateappointments/:appointment_id'></Route>
           <Route element={<ManageRecords />} path='/managerecords'></Route>
           <Route element={<PatientHistory />} path='/patient_history'></Route>
           {/* maternal */}

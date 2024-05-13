@@ -24,7 +24,14 @@ return new class extends Migration
             $table->string('civil_status');
             $table->string('occupation');
             $table->string('contact_number');
-            $table->string('address');
+            $table->string('address')->nullable();
+            $table->string('region')->nullable();
+            $table->string('reg_code')->nullable();
+            $table->string('province')->nullable();
+            $table->string('prov_code')->nullable();
+            $table->string('municipality')->nullable();
+            $table->string('mun_code')->nullable();
+            $table->string('brgy')->nullable();
             $table->string('religion');
             $table->string('gender');
             $table->timestamps();

@@ -67,7 +67,7 @@ const PatientRecords: React.FC = () => {
         record.consultationTypeName?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const RedirectTo = (user_id?: number, consultationTypeId?: number, consultationTypeName?: string) => {
+    const RedirectTo = (consultationTypeName?: string) => {
         if (consultationTypeName == "Maternal Health Records") {
             return `/maternal_records/${user_id}`;
         }
@@ -106,7 +106,7 @@ const PatientRecords: React.FC = () => {
         {
             name: 'Action',
             cell: (row: AppointmentModel) => (
-                <Link to={RedirectTo(row.user_id, row.consultationTypeId, row.consultationTypeName)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
+                <Link to={RedirectTo(row.consultationTypeName)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                         <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                         <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />

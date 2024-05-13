@@ -17,6 +17,13 @@ export interface UserModel {
     isSignedIn?: boolean;
     contact_number?: string;
     address?: string;
+    region?: string;
+    reg_code?: string;
+    province?: string;
+    prov_code?: string;
+    municipality?: string;
+    mun_code?: string;
+    brgy?: string;
     password?: string;
     gender?: string;
     userstatus?: number;
@@ -44,6 +51,12 @@ export const userInitialValue = () => {
         isSignedIn: true,
         contact_number: "",
         address: "",
+        region: "",
+        reg_code: "06",
+        province: "",
+        prov_code: "",
+        municipality: "",
+        brgy: "",
         password: "",
         gender: "",
         userstatus: undefined,

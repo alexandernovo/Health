@@ -47,7 +47,19 @@ class AppointmentController extends Controller
             'appointment' => $appointment,
         ]);
     }
+    public function updateAppointment(Request $request)
+    {
+        $find = Appointment::where('appointment_id', $request->appointment_id)->first();
+        
+        if ($find) {
+            $find->update($request->input());
+        }
 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Appointment updated successfully',
+        ]);
+    }
     public function getAppointments($status)
     {
         try {
@@ -85,7 +97,7 @@ class AppointmentController extends Controller
 
     public function getAppointmentById($id)
     {
-        $appointment = Appointment::with("user")->where('appointment_id', $id)->first();
+        $appointment = Appointment::with("user", "consultation")->where('appointment_id', $id)->first();
 
         if ($appointment == null) {
             return response()->json([
@@ -105,6 +117,7 @@ class AppointmentController extends Controller
             'religion' => $appointment->user->religion,
             'user_id' =>  $appointment->user->id,
             'consultationTypeId' =>  $appointment->consultationTypeId,
+            'consultationTypeName' => $appointment->consultation->consultationTypeName,
             'appointmentDate' =>  $appointment->appointmentDate,
             'appointmentTime' =>  $appointment->appointmentTime,
             'appointmentStatus' =>  $appointment->appointmentStatus,
