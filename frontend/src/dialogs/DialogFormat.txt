@@ -1,59 +1,16 @@
 import React, { useState } from 'react'
-import { OccupationModel } from '@/types/occupationType';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 
-interface OccupationTypeDialogProps {
+interface HypertensivefilterProps {
     Toggle: () => void,
-    OnAdd: (data: OccupationModel) => void;
     Show: boolean;
 }
-const OccupationTypeDialog: React.FC<OccupationTypeDialogProps> = (props: OccupationTypeDialogProps) => {
+const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: HypertensivefilterProps) => {
     const dispatch = useDispatch();
 
-    const [formData, setFormData] = useState<OccupationModel>({
-        consulationTypeName: '',
-        consultationTypeStatus: ''
-    });
 
-    const [error, setError] = useState<OccupationModel>({
-        consulationTypeName: '',
-        consultationTypeStatus: ''
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name as keyof OccupationModel]: value // Type assertion
-        }));
-        if (formData[name as keyof OccupationModel] !== '') { // Type assertion
-            setError(prevState => ({
-                ...prevState,
-                [name as keyof OccupationModel]: ""
-            }));
-        }
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        try {
-            const response = await axios.post('/api/users/register', formData);
-            console.log(response.data);
-            if (response.data.status == 'success') {
-                props.OnAdd(response.data.user); // append data in manage user
-                dispatch(setToastState({ toast: true, toastMessage: "User Registered Successfully", toastSuccess: true }));
-                props.Toggle();
-            }
-            else {
-                setError(response.data.errors);
-            }
-        } catch (error) {
-            console.error('Error occurred:', error);
-        }
-    };
     return (
         <dialog className={`modal ${props.Show && 'modal-open'}`} >
             <div className="modal-box rounded-md p-0 overflow-hidden">
@@ -74,18 +31,7 @@ const OccupationTypeDialog: React.FC<OccupationTypeDialogProps> = (props: Occupa
                     <div className='w-full mx-auto h-full pb-[60px]'>
                         <div className='w-full flex flex-col items-center'>
                             <div className='md:w-full lg:w-full'>
-                                <form onSubmit={handleSubmit} className='w-full'>
-                                    <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between'>
-                                        <div className='md:w-[49%] lg:w-[49%] w-full'>
-                                            <label className="input input-bordered flex items-center mb-1 md:mb-0 lg:mb-0 h-[45px] relative pl-[37px]" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-                                                <input type="text" name="firstname" value={formData.consulationTypeName} onChange={handleChange} className="grow" placeholder="Firstname" />
-                                            </label>
-                                            {error.consulationTypeName && <p className="text-red-500 text-[13px]">{error.consulationTypeName}</p>}
-                                        </div>
-                                    </div>
-                                    <button type="submit" className="btn btn-active btn-primary w-full mt-3 bg-[#219EBC] border-0">Add</button>
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -95,4 +41,4 @@ const OccupationTypeDialog: React.FC<OccupationTypeDialogProps> = (props: Occupa
     )
 }
 
-export default OccupationTypeDialog
+export default Hypertensivefilter

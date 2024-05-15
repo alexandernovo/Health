@@ -73,7 +73,7 @@ class AuthController extends Controller
         $data['usertype'] = $request->usertype != null ? $request->usertype : 1;
         $data['userstatus'] = 1;
         $data['password'] = Hash::make($request->password);
-        $data['address'] = $data['region'] . ' ' . $data['province'] . ' ' . $data['municipality'] . ' ' . $data['brgy'];
+        $data['address'] = $data['province'] . ' ' . $data['municipality'] . ' ' . $data['brgy'];
 
         $user = User::create($data);
         // Generate token for the registered user

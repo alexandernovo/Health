@@ -80,7 +80,7 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'username' => $request->username,
-            'address' => $request->region . ' ' . $request->province . ' ' . $request->municipality . ' ' . $request->brgy,
+            'address' => $request->province . ' ' . $request->municipality . ' ' . $request->brgy,
             'reg_code' => $request->reg_code,
             'region' => $request->region,
             'prov_code' => $request->prov_code,

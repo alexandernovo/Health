@@ -28,6 +28,8 @@ export interface UserModel {
     gender?: string;
     userstatus?: number;
     confirmPassword?: string;
+    dateFrom?: string;
+    dateTo?: string;
     // [key: string]: string | number | boolean | undefined;
     maternal?: MaternalModel[];
     appointment?: AppointmentModel[];
@@ -60,6 +62,8 @@ export const userInitialValue = () => {
         password: "",
         gender: "",
         userstatus: undefined,
+        dateFrom: "",
+        dateTo: "",
         confirmPassword: "",
         maternal: [],
         appointment: [],
