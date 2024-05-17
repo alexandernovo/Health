@@ -29,6 +29,7 @@ import HypertensiveForm from '@pages/Hypertensive/HypertensiveForm'
 import HypertensiveRecord from '@pages/Hypertensive/HypertensiveRecord'
 import HypertensiveFormUpdate from '@pages/Hypertensive/HypertensiveFormUpdate'
 import HypertensiveReportViewer from '@pages/Hypertensive/HypertensiveReportViewer'
+import HypertensiveGroupReport from '@reports/HypertensiveGroupReport'
 import VaccinationForm from '@pages/Vaccination/VaccinationForm'
 import VaccinationRecord from '@pages/Vaccination/VaccinationRecord'
 import VaccinationFormUpdate from '@pages/Vaccination/VaccinationFormUpdate'
@@ -83,6 +84,7 @@ function App() {
           <Route element={<HypertensiveRecord />} path='/hypertensive_record/:user_id'></Route>
           <Route element={<HypertensiveFormUpdate />} path='/hypertensive_update/:appointment_id'></Route>
           <Route element={<HypertensiveReportViewer />} path='/hypertensive_report/:appointment_id'></Route>
+          <Route element={<HypertensiveGroupReport />} path='/hypertensive_group_report'></Route>
           {/* vaccination */}
           <Route element={<VaccinationForm />} path='/vaccination_form/:appointment_id'></Route>
           <Route element={<VaccinationRecord />} path='/vaccination_record/:user_id'></Route>

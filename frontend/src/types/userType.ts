@@ -1,6 +1,6 @@
 import { MaternalModel } from "./MaternalType";
 import { AppointmentModel } from "./appointmentType";
-
+import { HypertensiveModel } from "./hypertensive";
 export interface UserModel {
     id?: number;
     token?: string;
@@ -33,6 +33,7 @@ export interface UserModel {
     // [key: string]: string | number | boolean | undefined;
     maternal?: MaternalModel[];
     appointment?: AppointmentModel[];
+    hypertensive?: HypertensiveModel
 }
 
 

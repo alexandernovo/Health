@@ -75,6 +75,7 @@ Route::prefix('hypertensive')->group(function () {
     Route::put('/updateHypertensive', [HypertensiveController::class, 'updateHypertensive']);
     Route::get('/getUserHypertensiveRecord/{user_id}', [HypertensiveController::class, 'getUserHypertensiveRecord']);
     Route::get('/getHypertensiveData/{appointment_id}', [HypertensiveController::class, 'getHypertensiveData']);
+    Route::post('/getHypertensiveGroup', [HypertensiveController::class, 'getHypertensiveGroup']);
 });
 
 Route::prefix('vaccination')->group(function () {

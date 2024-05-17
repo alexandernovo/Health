@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Hypertensive;
 use App\Models\Appointment;
+use App\Models\User;
 use Exception;
 
 class HypertensiveController extends Controller
@@ -88,6 +89,38 @@ class HypertensiveController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Fetch hypertensive record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function getHypertensiveGroup(Request $parameter)
+    {
+        try {
+            $users = User::where('region', $parameter->region)
+                ->where('province', $parameter->province)
+                ->where('municipality', $parameter->municipality)
+                ->where('brgy', $parameter->brgy)
+                ->get();
+
+            foreach ($users as $user) {
+                $user->hypertensive = $user->hypertensive()->orderBy('created_at')->first();
+                $user->appointment = $user->appointment()
+                    ->where('consultationTypeId', 4)
+                    ->whereBetween('appointmentDate', [$parameter->dateFrom, $parameter->dateTo])
+                    ->orderBy('appointmentDate')
+                    ->first();
+            }
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch hypertensive record successfully',
+                'hypertensive' => $users,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch hypertensive records failed: ' . $e->getMessage(),
             ]);
         }
     }
