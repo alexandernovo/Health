@@ -115,21 +115,21 @@ const HypertensiveGroupReport = () => {
                             <tbody>
                                 {hypertensive.map((hypertense, index) => (
                                     <tr key={hypertense.id} className='border-t-[1px]'>
-                                        <td className='text-center  py-1 border-r-[1px]'>{index + 1}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{hypertense.firstname}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{hypertense.lastname}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{hypertense.gender == 'Male' ? 'M' : 'F'}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{calculateAge(hypertense.birthdate)}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{DateToString(hypertense.birthdate)}</td>
-                                        <td className='text-center  py-1 border-r-[1px]'>{hypertense.address}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.amlodipine ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.losartan ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.metroprolol ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.simvastatin ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.gliclazide ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.metformin ? '✘' : ''}</td>
-                                        <td className='text-center  py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.insulin ? '✘' : ''}</td>
-                                        <td className='text-center  py-1' width={70}>{hypertense?.hypertensive?.others ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{index + 1}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{hypertense.firstname}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{hypertense.lastname}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{hypertense.gender == 'Male' ? 'M' : 'F'}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{calculateAge(hypertense.birthdate)}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{DateToString(hypertense.birthdate)}</td>
+                                        <td className='text-center py-1 border-r-[1px]'>{hypertense.address}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.amlodipine ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.losartan ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.metroprolol ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.simvastatin ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.gliclazide ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.metformin ? '✘' : ''}</td>
+                                        <td className='text-center py-1 border-r-[1px]' width={70}>{hypertense?.hypertensive?.insulin ? '✘' : ''}</td>
+                                        <td className='text-center py-1' width={70}>{hypertense?.hypertensive?.others ? '✘' : ''}</td>
                                     </tr>
                                 ))}
                             </tbody>
