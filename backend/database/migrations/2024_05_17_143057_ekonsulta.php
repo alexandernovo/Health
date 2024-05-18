@@ -55,10 +55,36 @@ return new class extends Migration
             $table->boolean('ifPTB')->default(false);
             $table->string('ifPTBSpecify')->nullable();
             $table->boolean('Others')->default(false);
-
-
-
-
+            $table->string('operation1')->nullable();
+            $table->datetime('operationDate1')->nullable();
+            $table->string('operation2')->nullable();
+            $table->datetime('operationDate2')->nullable();
+            $table->string('operationDate2')->nullable();
+            $table->string('visualAcuity')->nullable();
+            $table->string('basicHearingTest')->nullable();
+            $table->string('cervicalCancerScreeningDone')->nullable();
+            $table->string('prostateCancerScreeningDone')->nullable();
+            $table->string('hivAidsScreeningDone')->nullable();
+            $table->string('developmentalAndMentalEvaluation')->nullable();
+            $table->boolean('expandedNewbornScreening')->default(false);
+            $table->boolean('CBC2')->default(false);
+            $table->boolean('bloodType')->default(false);
+            $table->string('bloodTypeSpecify')->nullable();
+            $table->boolean('FBS')->default(false);
+            $table->boolean('sputumMicroscopy')->default(false);
+            $table->boolean('slitSkinSmear')->default(false);
+            $table->boolean('totalCholesterol')->default(false);
+            $table->boolean('hdlCholesterol')->default(false);
+            $table->boolean('serumandBun')->default(false);
+            $table->boolean('routineUrinalysis')->default(false);
+            $table->boolean('katoKatz')->default(false);
+            $table->boolean('rapidPlasma')->default(false);
+            $table->boolean('igmAndIgG')->default(false);
+            $table->boolean('nonStructure')->default(false);
+            $table->boolean('hepaB')->default(false);
+            $table->boolean('fecalysis')->default(false);
+            $table->boolean('malarialSmear')->default(false);
+            $table->boolean('nucleicAndAmplification')->default(false);
             $table->timestamps();
 
             // Define foreign key constraints
