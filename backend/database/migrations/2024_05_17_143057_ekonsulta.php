@@ -55,10 +55,56 @@ return new class extends Migration
             $table->boolean('ifPTB')->default(false);
             $table->string('ifPTBSpecify')->nullable();
             $table->boolean('Others')->default(false);
-
-
-
-
+            $table->string('allergy')->nullable();
+            $table->string('disability')->nullable();
+            $table->string('drug')->nullable();
+            $table->string('handicap')->nullable();
+            $table->string('impairment')->nullable();
+            $table->string('smoking')->nullable();
+            $table->integer('number_of_sticks')->nullable();
+            $table->string('alcohol')->nullable();
+            $table->integer('number_of_bottles')->nullable();
+            $table->string('illicit_drugs')->nullable();
+            $table->string('no_of_packs')->nullable();
+            $table->boolean('skinPallor')->default("false");
+            $table->boolean('skinRashes')->default("false");
+            $table->boolean('skinJaundice')->default("false");
+            $table->boolean('skinGoodSkinTurgor')->default("false");
+            $table->boolean('heentAnicteric')->default("false");
+            $table->boolean('heentIntactTympanic')->default("false");
+            $table->boolean('heentExudates')->default("false");
+            $table->boolean('heentPupils')->default("false");
+            $table->boolean('heentTonsil')->default("false");
+            $table->boolean('heentAuralDischarge')->default("false");
+            $table->boolean('heentNasalDischarge')->default("false");
+            $table->boolean('heentPalpableMass')->default("false");
+            $table->boolean('chestSymmetrical')->default("false");
+            $table->boolean('chestClearBreath')->default("false");
+            $table->boolean('chestRetractions')->default("false");
+            $table->boolean('chestCrackles')->default("false");
+            $table->boolean('chestWheeze')->default("false");
+            $table->boolean('heartAdynamic')->default("false");
+            $table->boolean('heartMurmurs')->default("false");
+            $table->boolean('heartNormalRate')->default("false");
+            $table->boolean('heartHeaves')->default("false");
+            $table->boolean('abdomenFlat')->default("false");
+            $table->boolean('abdomenGlobular')->default("false");
+            $table->boolean('abdomenFlabby')->default("false");
+            $table->boolean('abdomenMuscleGuarding')->default("false");
+            $table->boolean('abdomenTenderness')->default("false");
+            $table->boolean('abdomenPalpableMass')->default("false");
+            $table->boolean('extremetiesGrossDeformity')->default("false");
+            $table->boolean('extremetiesNormalGait')->default("false");
+            $table->boolean('extremetiesFullEqualPulse')->default("false");
+            $table->boolean('neurologicalNormal')->default("false");
+            $table->boolean('neurologicalDevelopmental')->default("false");
+            $table->boolean('neurologicalSeizures')->default("false");
+            $table->boolean('neurologicalMotorDeficit')->default("false");
+            $table->boolean('neurologicalSensoryDeficit')->default("false");
+            $table->string('diagnosis')->nullable();
+            $table->string('treatment')->nullable();
+            $table->string('healthcareProvider')->nullable();
+            $table->string('administeredBy')->nullable();
             $table->timestamps();
 
             // Define foreign key constraints
