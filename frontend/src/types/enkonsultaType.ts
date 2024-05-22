@@ -1,9 +1,7 @@
-import { UserModel } from "./userType";
-
-export interface EkonsultaModel extends UserModel {
-    ekonsultaId: number;
-    appointment_id: number;
-    user_id: number;
+export interface EkonsultaModel {
+    ekonsultaId?: number;
+    appointment_id?: number;
+    user_id?: number;
     NHTSNo?: string;
     NHTSClass?: string;
     PHICNo?: string;
@@ -44,6 +42,35 @@ export interface EkonsultaModel extends UserModel {
     ifPTB?: boolean;
     ifPTBSpecify?: string;
     Others?: boolean;
+    operation1?: string;
+    operationDate1?: string;
+    operation2?: string;
+    operationDate2?: string;
+    visualAcuity?: string;
+    basicHearingTest?: string;
+    cervicalCancerScreeningDone?: string;
+    prostateCancerScreeningDone?: string;
+    hivAidsScreeningDone?: string;
+    developmentalAndMentalEvaluation?: string;
+    expandedNewbornScreening?: boolean;
+    CBC2?: boolean;
+    bloodType?: boolean;
+    bloodTypeSpecify?: string;
+    FBS?: boolean;
+    sputumMicroscopy?: boolean;
+    slitSkinSmear?: boolean;
+    totalCholesterol?: boolean;
+    hdlCholesterol?: boolean;
+    serumandBun?: boolean;
+    routineUrinalysis?: boolean;
+    katoKatz?: boolean;
+    rapidPlasma?: boolean;
+    igmAndIgG?: boolean;
+    nonStructure?: boolean;
+    hepaB?: boolean;
+    fecalysis?: boolean;
+    malarialSmear?: boolean;
+    nucleicAndAmplification?: boolean;
     allergy?: string;
     disability?: string;
     drug?: string;
@@ -95,3 +122,128 @@ export interface EkonsultaModel extends UserModel {
     healthcareProvider?: string;
     administeredBy?: string;
 }
+
+export const initialEkonsultaModel = (): EkonsultaModel => ({
+    ekonsultaId: 0,
+    appointment_id: 0,
+    user_id: 0,
+    NHTSNo: "",
+    NHTSClass: "",
+    PHICNo: "",
+    PHICClass: "",
+    bodyLength: "",
+    headCircumference: "",
+    skinfoldThickness: "",
+    weight: "",
+    BMI: "",
+    waistCircumference: "",
+    midUpperArmCircumference: "",
+    BP: "",
+    RR: "",
+    HR: "",
+    PR: "",
+    Temp: "",
+    chiefComplaints: "",
+    hospitalization: false,
+    asthma: false,
+    cancer: false,
+    cancerSpecify: "",
+    cerebrovascular: false,
+    coronary: false,
+    diabetes: false,
+    minorsurgeries: false,
+    emphysema: false,
+    epilepsy: false,
+    hepatitis: false,
+    hyperlipidemia: false,
+    hypertension: false,
+    pepticUlcer: false,
+    COPD: false,
+    pneumonia: false,
+    thyroid: false,
+    UTI: false,
+    TB: false,
+    TBSpecify: "",
+    ifPTB: false,
+    ifPTBSpecify: "",
+    Others: false,
+    operation1: "",
+    operationDate1: "",
+    operation2: "",
+    operationDate2: "",
+    visualAcuity: "",
+    basicHearingTest: "",
+    cervicalCancerScreeningDone: "",
+    prostateCancerScreeningDone: "",
+    hivAidsScreeningDone: "",
+    developmentalAndMentalEvaluation: "",
+    expandedNewbornScreening: false,
+    CBC2: false,
+    bloodType: false,
+    bloodTypeSpecify: "",
+    FBS: false,
+    sputumMicroscopy: false,
+    slitSkinSmear: false,
+    totalCholesterol: false,
+    hdlCholesterol: false,
+    serumandBun: false,
+    routineUrinalysis: false,
+    katoKatz: false,
+    rapidPlasma: false,
+    igmAndIgG: false,
+    nonStructure: false,
+    hepaB: false,
+    fecalysis: false,
+    malarialSmear: false,
+    nucleicAndAmplification: false,
+    allergy: "",
+    disability: "",
+    drug: "",
+    handicap: "",
+    impairment: "",
+    smoking: "",
+    number_of_sticks: 0,
+    alcohol: "",
+    number_of_bottles: 0,
+    illicit_drugs: "",
+    no_of_packs: "",
+    skinPallor: false,
+    skinRashes: false,
+    skinJaundice: false,
+    skinGoodSkinTurgor: false,
+    heentAnicteric: false,
+    heentIntactTympanic: false,
+    heentExudates: false,
+    heentPupils: false,
+    heentTonsil: false,
+    heentAuralDischarge: false,
+    heentNasalDischarge: false,
+    heentPalpableMass: false,
+    chestSymmetrical: false,
+    chestClearBreath: false,
+    chestRetractions: false,
+    chestCrackles: false,
+    chestWheeze: false,
+    heartAdynamic: false,
+    heartMurmurs: false,
+    heartNormalRate: false,
+    heartHeaves: false,
+    abdomenFlat: false,
+    abdomenGlobular: false,
+    abdomenFlabby: false,
+    abdomenMuscleGuarding: false,
+    abdomenTenderness: false,
+    abdomenPalpableMass: false,
+    extremetiesGrossDeformity: false,
+    extremetiesNormalGait: false,
+    extremetiesFullEqualPulse: false,
+    neurologicalNormal: false,
+    neurologicalDevelopmental: false,
+    neurologicalSeizures: false,
+    neurologicalMotorDeficit: false,
+    neurologicalSensoryDeficit: false,
+    diagnosis: "",
+    treatment: "",
+    healthcareProvider: "",
+    administeredBy: ""
+});

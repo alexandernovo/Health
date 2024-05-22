@@ -187,6 +187,9 @@ const Appointments: React.FC = () => {
         else if (type == "Immunization") {
             return `/immunization_form/${appointment_id}`
         }
+        else if (type == "E-Konsulta") {
+            return `/ekonsulta_form/${appointment_id}`
+        }
         else {
             return "";
         }
