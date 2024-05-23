@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { EkonsultaModel } from '@/types/enkonsultaType';
 
 const EkonsultaForm: React.FC = () => {
+
+    const [ekonsulta , setEkonsulta] = useState<EkonsultaModel>();
+
     return (
         <div className='m-3'>
             <div className="card border border-gray-100 rounded-md bg-base-100 shadow-md mb-3">
@@ -34,8 +38,8 @@ const EkonsultaForm: React.FC = () => {
                         </div>
                         <div className='border mt-2'>
                             <p className='border-b-[1px] px-2 py-1'>Personal Details</p>
-                            <div className='px-2'>
-                                <p>Last Name</p>
+                            <div className='px-2 mt-5'>
+                                <p>Patient Name</p>
                             </div>
                         </div>
                     </div>
