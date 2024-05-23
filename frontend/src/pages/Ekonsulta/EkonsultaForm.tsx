@@ -3,7 +3,7 @@ import { EkonsultaModel } from '@/types/enkonsultaType';
 
 const EkonsultaForm: React.FC = () => {
 
-    const [ekonsulta , setEkonsulta] = useState<EkonsultaModel>();
+    const [ekonsulta, setEkonsulta] = useState<EkonsultaModel>();
 
     return (
         <div className='m-3'>
@@ -18,9 +18,15 @@ const EkonsultaForm: React.FC = () => {
                         </h1>
                     </div>
                     <div className='px-5'>
-                        <div className='border flex justify-between p-2'>
-                            <p className='w-[50%]'>Date of Consultation:</p>
-                            <p className='w-[50%]'>Family Serial No:</p>
+                        <div className='border flex justify-between p-2 gap-4'>
+                            <div className='flex mt-2 w-[50%]'>
+                                <label className='font-semibold text-[13px] flex-nowrap'>Date of Consultation:</label>
+                                <input type="text" className="input input-bordered input-sm w-full" />
+                            </div>
+                            <div className='flex mt-2 w-[50%] '>
+                                <label className='font-semibold text-[13px] flex-nowrap'>Family Serial No:</label>
+                                <input type="text" className="input input-bordered input-sm w-full" />
+                            </div>
                         </div>
                         <div className='border border-t-0 flex justify-between items-center p-1 px-2'>
                             <label className='w-[50%]'>Time:</label>
@@ -36,10 +42,84 @@ const EkonsultaForm: React.FC = () => {
                                 </label>
                             </div>
                         </div>
-                        <div className='border mt-2'>
+                        <div className='border mt-2 pb-3'>
                             <p className='border-b-[1px] px-2 py-1'>Personal Details</p>
                             <div className='px-2 mt-5'>
-                                <p>Patient Name</p>
+                                <div className='flex flex-col'>
+                                    <label className='font-semibold text-[13px]'>Patient Name</label>
+                                    <input type="text" className="input input-bordered input-sm w-[50%]" />
+                                </div>
+                                <div className='flex w-full gap-4'>
+                                    <div className='flex flex-col mt-2  w-[30%]'>
+                                        <label className='font-semibold text-[13px]'>Birthdate</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label className='font-semibold text-[13px]  w-[10%]'>Age</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2 w-[15%]' >
+                                        <label className='font-semibold text-[13px] '>Gender</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Civil Status</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex w-full gap-4'>
+                                    <div className='flex flex-col mt-2  w-[40%]'>
+                                        <label className='font-semibold text-[13px]'>If married, Maiden Last Name:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2 w-[40%]'>
+                                        <label className='font-semibold text-[13px] '>Maiden Middle Name:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                </div>
+                                <div className='flex w-full gap-4'>
+                                    <div className='flex flex-col mt-2  w-[40%]'>
+                                        <label className='font-semibold text-[13px]'>Mother's Name:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2 w-[40%]'>
+                                        <label className='font-semibold text-[13px] '>Mother's Birthday:</label>
+                                        <input type="date" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                </div>
+                                <div className='flex w-full gap-4'>
+                                    <div className='flex flex-col mt-2  w-[40%]'>
+                                        <label className='font-semibold text-[13px]'>Educational Attainment:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2 w-[40%]'>
+                                        <label className='font-semibold text-[13px] '>Occupation:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                </div>
+                                <div className='flex w-full gap-4'>
+                                    <div className='flex flex-col mt-2  w-[40%]'>
+                                        <label className='font-semibold text-[13px]'>Religion:</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                    <div className='flex flex-col mt-2 w-[40%]'>
+                                        <label className='font-semibold text-[13px] '>Ethnicity (IP Group):</label>
+                                        <input type="text" className="input input-bordered input-sm w-full" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3'>
+                            <p className='border-b-[1px] px-2 py-1'>Address</p>
+                            <div className='flex w-full gap-4'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Purok:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>Barangay:</label>
+                                    <input type="date" className="input input-bordered input-sm w-full" />
+                                </div>
                             </div>
                         </div>
                     </div>
