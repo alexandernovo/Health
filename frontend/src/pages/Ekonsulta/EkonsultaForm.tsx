@@ -24,14 +24,14 @@ const EkonsultaForm: React.FC = () => {
                                 <input type="text" className="input input-bordered input-sm w-full" />
                             </div>
                             <div className='flex mt-2 w-[50%] '>
-                                <label className='font-semibold text-[13px] flex-nowrap'>Family Serial No:</label>
+                                <label className='font-semibold text-[13px] flex-nowrap '>Family Serial No:</label>
                                 <input type="text" className="input input-bordered input-sm w-full" />
                             </div>
                         </div>
                         <div className='border border-t-0 flex justify-between items-center p-1 px-2'>
-                            <label className='w-[50%]'>Time:</label>
+                            <label className='w-[50%] text-[13px] font-bold'>Time:</label>
                             <div className='flex justify-start items-center w-[50%] gap-2'>
-                                <label>Patient Type:</label>
+                                <label className='text-[13px] font-bold'>Patient Type:</label>
                                 <label className="label cursor-pointer flex gap-2">
                                     <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">New</span>
@@ -111,7 +111,7 @@ const EkonsultaForm: React.FC = () => {
                         </div>
                         <div className='border mt-2 pb-3'>
                             <p className='border-b-[1px] px-2 py-1'>Address</p>
-                            <div className='flex w-full gap-4'>
+                            <div className='flex w-full gap-4 px-2'>
                                 <div className='flex flex-col mt-2  w-[40%]'>
                                     <label className='font-semibold text-[13px]'>Purok:</label>
                                     <input type="text" className="input input-bordered input-sm w-full" />
@@ -119,6 +119,225 @@ const EkonsultaForm: React.FC = () => {
                                 <div className='flex flex-col mt-2 w-[40%]'>
                                     <label className='font-semibold text-[13px] '>Barangay:</label>
                                     <input type="date" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 px-2'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Contact Number:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>ZipCode:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3'>
+                            <p className='border-b-[1px] px-2 py-1'>Philhealth</p>
+                            <div className='flex w-full gap-4 px-2 items-end'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>NHTS No.:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Member</span>
+                                </label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Dependent</span>
+                                </label>
+                            </div>
+                            <div className='flex w-full gap-4 px-2 items-end'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>PHIC No.:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Member</span>
+                                </label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Dependent</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3'>
+                            <p className='border-b-[1px] px-2 py-1'>Anthropometrics</p>
+                            <div className='flex w-full gap-4 px-2'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Body Length/Height (cm):</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>Weight(kg):</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>BMI:</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 px-2'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Head Circumference:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>Waist Circumference:</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 px-2'>
+                                <div className='flex flex-col mt-2  w-[40%]'>
+                                    <label className='font-semibold text-[13px]'>Skinfold Thickness:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[40%]'>
+                                    <label className='font-semibold text-[13px] '>Mid Upper Arm Circumference:</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3'>
+                            <p className='border-b-[1px] px-2 py-1'>Anthropometrics</p>
+                            <div className='flex w-full gap-4 px-2'>
+                                <div className='flex flex-col mt-2  w-[20%]'>
+                                    <label className='font-semibold text-[13px]'>BP(mmHg):</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[20%]'>
+                                    <label className='font-semibold text-[13px] '>RR(cpm):</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[20%]'>
+                                    <label className='font-semibold text-[13px] '>HR(bpm):</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[20%]'>
+                                    <label className='font-semibold text-[13px] '>PR(bpm):</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2 w-[20%]'>
+                                    <label className='font-semibold text-[13px] '>Temp(°C):</label>
+                                    <input type="number" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3 px-2 flex gap-3'>
+                            <div className='w-[40%]'>
+                                <label className='font-semibold text-[13px] '>Chief Complaints / History of Present Illness:</label>
+                                <textarea className="textarea textarea-bordered w-full" rows={11} placeholder="Chief Complaints"></textarea>
+                            </div>
+                            <div className='w-[60%] mt-4'>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Hospitalization</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Emphysema</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Pneumonia</span>
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Asthma</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Epilepsy/Seizure Disorder</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Thyroid Diseases</span>
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <div>
+                                        <label className="label cursor-pointer flex gap-2 justify-start">
+                                            <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                            <span className="label-text text-[13px]">Cancer, specify organ</span>
+                                        </label>
+                                        <input type="number" className="input input-bordered input-sm w-[80%]" />
+                                    </div>
+                                    <div>
+                                        <label className="label cursor-pointer flex gap-2 justify-start">
+                                            <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                            <span className="label-text text-[13px]">hepatitis, specify type</span>
+                                        </label>
+                                        <input type="number" className="input input-bordered input-sm w-[80%]" />
+                                    </div>
+
+                                    <label className="label cursor-pointer flex gap-2 mb-[30px]">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Urinary Track Infection</span>
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Cerebrovascular Disease</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Hyperlipidemia</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">TB, specify organ</span>
+                                        <input type="number" className="input input-bordered input-sm w-[50%]" />
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Coronary Artery Disease</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Hypertension, highest Bp</span>
+                                        <input type="number" className="input input-bordered input-sm w-[30%]" />
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">TB, specify organ</span>
+                                        <input type="number" className="input input-bordered input-sm w-[30%]" />
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Diabetes Mellitus</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Peptic Ulcer Disease</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Liver Diseases</span>
+                                    </label>
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Minor Surgeries</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">COPD</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Others</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
