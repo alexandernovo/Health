@@ -341,6 +341,82 @@ const EkonsultaForm: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='border mt-2 pb-3 px-2'>
+                            <p className='border-b-[1px] py-1'>Past Surgical History (Present Illness)</p>
+                            <div className='flex gap-2'>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Operation:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Date:</label>
+                                    <input type="date" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                            <div className='flex gap-2'>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Operation:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Date:</label>
+                                    <input type="date" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border mt-2 pb-3 px-2'>
+                            <p className='border-b-[1px] py-1'>Screening</p>
+                            <div className='flex gap-2 items-end'>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Visual Acuity:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <label className='text-[13px] font-semibold mb-2'>(20/20 vision normal value)</label>
+                            </div>
+                            <div className='flex gap-2 items-end'>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Basic Hearing Test:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                                <div className='flex flex-col mt-2  w-[50%]'>
+                                    <label className='font-semibold text-[13px]'>Newborn Hearing Test:</label>
+                                    <input type="text" className="input input-bordered input-sm w-full" />
+                                </div>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <label className='font-semibold text-[13px]'>Cervical Cancer Screening Done:</label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Yes</span>
+                                </label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">No</span>
+                                </label>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <label className='font-semibold text-[13px]'>HIV/AIDS Screening Done:</label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Yes</span>
+                                </label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">No</span>
+                                </label>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <label className='font-semibold text-[13px]'>HIV/AIDS Screening Done:</label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">Yes</span>
+                                </label>
+                                <label className="label cursor-pointer flex gap-2">
+                                    <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                    <span className="label-text text-[13px]">No</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
