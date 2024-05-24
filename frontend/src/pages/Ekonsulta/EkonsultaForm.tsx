@@ -417,6 +417,73 @@ const EkonsultaForm: React.FC = () => {
                                 </label>
                             </div>
                         </div>
+                        <div className='border mt-2 pb-3 px-2 pt-2'>
+                            <textarea className="textarea textarea-bordered w-full" rows={5} placeholder="Developmental And Mental Health Examination"></textarea>
+                        </div>
+                        <div className='border mt-2 pb-3 px-2'>
+                            <p className='border-b-[1px] py-1'>Laboratory Examinations:</p>
+                            <div className='flex'>
+                                <div className='w-1/3 border border-r-1'>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Expanded Newborn Screening</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">CBC</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Blood Type</span>
+                                        <input type="number" className="input input-bordered input-sm w-[30%]" />
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">FBS</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Sputum Microscopy</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Slit-skin Smear</span>
+                                    </label>
+                                </div>
+                                <div className='w-1/3 border border-r-1'>
+                                    <label className="label cursor-pointer flex justify-start gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Total Cholesterol</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">HDL Cholesterol</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Serum Creatinine and BUN</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Routine Urinalysis</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Kato-Katz for Schistosomiasis</span>
+                                    </label>
+                                    <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Rapid Plasma Reagin For Syphilis</span>
+                                    </label>
+                                </div>
+                                <div className='w-1/3 border'>
+                                    <label className="label cursor-pointer flex justify-start gap-2">
+                                        <input type="checkbox" className="checkbox checkbox-primary checkbox-xs" />
+                                        <span className="label-text text-[13px]">Expanded Newborn Screening</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
