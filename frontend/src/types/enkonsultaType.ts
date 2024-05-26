@@ -1,11 +1,20 @@
 export interface EkonsultaModel {
     ekonsultaId?: number;
-    appointment_id?: number;
+    appointment_id?: string;
     user_id?: number;
+    familySerialNo?: string;
+    patientType?: boolean;
     NHTSNo?: string;
-    NHTSClass?: string;
+    maidenLastname?: string;
+    maidenMiddleName?: string;
+    mothersName?: string;
+    mothersBirthday?: string;
+    ethnicity?: string;
+    purok?: string;
+    zipCode?: string;
+    NHTSClass?: boolean;
     PHICNo?: string;
-    PHICClass?: string;
+    PHICClass?: boolean;
     bodyLength?: string;
     headCircumference?: string;
     skinfoldThickness?: string;
@@ -30,6 +39,7 @@ export interface EkonsultaModel {
     emphysema?: boolean;
     epilepsy?: boolean;
     hepatitis?: boolean;
+    hepatitisSpecify?: string;
     hyperlipidemia?: boolean;
     hypertension?: boolean;
     pepticUlcer?: boolean;
@@ -41,16 +51,24 @@ export interface EkonsultaModel {
     TBSpecify?: string;
     ifPTB?: boolean;
     ifPTBSpecify?: string;
+    allergySpecify?: string;
+    allergyDrugs?: string;
+    Disability?: string;
+    Drug?: string;
+    Handicap?: string;
+    Impairment?: string;
     Others?: boolean;
     operation1?: string;
+    liverDisease?: boolean;
     operationDate1?: string;
     operation2?: string;
     operationDate2?: string;
     visualAcuity?: string;
     basicHearingTest?: string;
-    cervicalCancerScreeningDone?: string;
-    prostateCancerScreeningDone?: string;
-    hivAidsScreeningDone?: string;
+    newbornHearingTest?: string;
+    cervicalCancerScreeningDone?: boolean;
+    prostateCancerScreeningDone?: boolean;
+    hivAidsScreeningDone?: boolean;
     developmentalAndMentalEvaluation?: string;
     expandedNewbornScreening?: boolean;
     CBC2?: boolean;
@@ -71,11 +89,7 @@ export interface EkonsultaModel {
     fecalysis?: boolean;
     malarialSmear?: boolean;
     nucleicAndAmplification?: boolean;
-    allergy?: string;
-    disability?: string;
-    drug?: string;
-    handicap?: string;
-    impairment?: string;
+    allergy?: boolean;
     smoking?: string;
     number_of_sticks?: number;
     alcohol?: string;
@@ -84,6 +98,11 @@ export interface EkonsultaModel {
     no_of_packs?: string;
     skinPallor?: boolean;
     skinRashes?: boolean;
+    allergyDrugsBl?: boolean;
+    DisabilityBl?: boolean;
+    DrugBl?: boolean;
+    HandicapBl?: boolean;
+    ImpairmentBl?: boolean;
     skinJaundice?: boolean;
     skinGoodSkinTurgor?: boolean;
     heentAnicteric?: boolean;
@@ -125,13 +144,24 @@ export interface EkonsultaModel {
 
 export const initialEkonsultaModel = (): EkonsultaModel => ({
     ekonsultaId: 0,
-    appointment_id: 0,
+    appointment_id: "",
     user_id: 0,
+    patientType: false,
+    maidenLastname: "",
+    maidenMiddleName: "",
+    familySerialNo: "",
+    mothersName: "",
+    mothersBirthday: "",
+    ethnicity: "",
+    purok: "",
+    zipCode: "",
     NHTSNo: "",
-    NHTSClass: "",
+    NHTSClass: false,
     PHICNo: "",
-    PHICClass: "",
+    PHICClass: false,
     bodyLength: "",
+    liverDisease: false,
+    newbornHearingTest: "",
     headCircumference: "",
     skinfoldThickness: "",
     weight: "",
@@ -155,6 +185,7 @@ export const initialEkonsultaModel = (): EkonsultaModel => ({
     emphysema: false,
     epilepsy: false,
     hepatitis: false,
+    hepatitisSpecify: "",
     hyperlipidemia: false,
     hypertension: false,
     pepticUlcer: false,
@@ -168,14 +199,20 @@ export const initialEkonsultaModel = (): EkonsultaModel => ({
     ifPTBSpecify: "",
     Others: false,
     operation1: "",
+    allergySpecify: "",
+    allergyDrugs: "",
+    Disability: "",
+    Drug: "",
+    Handicap: "",
+    Impairment: "",
     operationDate1: "",
     operation2: "",
     operationDate2: "",
     visualAcuity: "",
     basicHearingTest: "",
-    cervicalCancerScreeningDone: "",
-    prostateCancerScreeningDone: "",
-    hivAidsScreeningDone: "",
+    cervicalCancerScreeningDone: false,
+    prostateCancerScreeningDone: false,
+    hivAidsScreeningDone: false,
     developmentalAndMentalEvaluation: "",
     expandedNewbornScreening: false,
     CBC2: false,
@@ -196,11 +233,12 @@ export const initialEkonsultaModel = (): EkonsultaModel => ({
     fecalysis: false,
     malarialSmear: false,
     nucleicAndAmplification: false,
-    allergy: "",
-    disability: "",
-    drug: "",
-    handicap: "",
-    impairment: "",
+    allergyDrugsBl: false,
+    DisabilityBl: false,
+    DrugBl: false,
+    HandicapBl: false,
+    ImpairmentBl: false,
+    allergy: false,
     smoking: "",
     number_of_sticks: 0,
     alcohol: "",

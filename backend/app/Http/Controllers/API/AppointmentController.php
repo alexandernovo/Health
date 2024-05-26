@@ -50,7 +50,7 @@ class AppointmentController extends Controller
     public function updateAppointment(Request $request)
     {
         $find = Appointment::where('appointment_id', $request->appointment_id)->first();
-        
+
         if ($find) {
             $find->update($request->input());
         }
@@ -78,7 +78,8 @@ class AppointmentController extends Controller
                     'appointmentTime' => $appointment->appointmentTime,
                     'appointmentStatus' => $appointment->appointmentStatus,
                     'isActive' => $appointment->isActive,
-                    'user_id' => $appointment->user_id
+                    'user_id' => $appointment->user_id,
+                    'brgy' => $appointment->user->brgy
                 ];
             });
 
@@ -122,6 +123,8 @@ class AppointmentController extends Controller
             'appointmentTime' =>  $appointment->appointmentTime,
             'appointmentStatus' =>  $appointment->appointmentStatus,
             'isActive' =>  $appointment->isActive,
+            'brgy' => $appointment->user->brgy,
+            'gender' => $appointment->user->gender
         ];
 
         return response()->json([

@@ -173,4 +173,20 @@ class FamilyPlanningController extends Controller
             ]);
         }
     }
+    public function getFamilyPlanningRecord($user_id)
+    {
+        try {
+            $familyplanning = Appointment::has('familyplanning')->where('user_id', $user_id)->orderBy('appointmentDate', 'desc')->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Fetch familyplanning record successfully',
+                'familyplanning' => $familyplanning,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Fetch familyplanning record failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
 }

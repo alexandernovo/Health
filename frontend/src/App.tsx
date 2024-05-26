@@ -41,6 +41,8 @@ import ImmunizationReportViewer from '@pages/Immunization/ImmunizationReportView
 import PatientHistory from '@pages/PatientRecords/PatientHistory'
 import UpdateAppointments from '@pages/UpdateAppointments'
 import EkonsultaForm from '@pages/Ekonsulta/EkonsultaForm'
+import EkonsultaRecords from './pages/Ekonsulta/EkonsultaRecords'
+import EkonsultaFormUpdate from '@pages/Ekonsulta/EkonsultaFormUpdate'
 
 function App() {
   return (
@@ -98,6 +100,8 @@ function App() {
           <Route element={<ImmunizationReportViewer />} path='/immunization_report/:appointment_id'></Route>
           {/* Ekonsulta */}
           <Route element={<EkonsultaForm />} path='/ekonsulta_form/:appointment_id'></Route>
+          <Route element={<EkonsultaFormUpdate />} path='/ekonsulta_form_update/:appointment_id'></Route>
+          <Route element={<EkonsultaRecords />} path='/ekonsulta_records/:user_id'></Route>
         </Routes>
       </MainLayout>
     </Router>

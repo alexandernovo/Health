@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { DateToString, TimeToString12Hour, calculateAge } from '@/utils/DateFunction';
 
-const EkonsultaForm: React.FC = () => {
+const EkonsultaFormUpdate: React.FC = () => {
 
     const { appointment_id } = useParams<{ appointment_id: string }>();
     const [ekonsulta, setEkonsulta] = useState<EkonsultaModel>(initialEkonsultaModel);
@@ -18,6 +18,7 @@ const EkonsultaForm: React.FC = () => {
 
     useEffect(() => {
         fetchAppointmentDetails();
+        fetEkonsulta();
     }, [])
 
     const assign = () => {
@@ -43,6 +44,19 @@ const EkonsultaForm: React.FC = () => {
         }
     };
 
+    const fetEkonsulta = async () => {
+        const response = await axios.get(`/api/ekonsulta/getEkonsultaOne/${appointment_id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        if (response.data.status == 'success') {
+            setEkonsulta(response.data.ekonsulta);
+            console.log(response.data.ekonsulta)
+        }
+    }
+
     const handleInputChangeCheck = (e: any) => {
         const { name, value, type } = e.target;
         setEkonsulta(prevState => ({
@@ -65,14 +79,14 @@ const EkonsultaForm: React.FC = () => {
 
     const saveEkonsulta = async () => {
         assign();
-        const response = await axios.post("/api/ekonsulta/createEkonsulta", ekonsulta, {
+        const response = await axios.put("/api/ekonsulta/updateEkonsulta", ekonsulta, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
         if (response.data.status == "success") {
-            dispatch(setToastState({ toast: true, toastMessage: "Ekonsulta Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+            dispatch(setToastState({ toast: true, toastMessage: "Ekonsulta Record Updated Successfully", toastSuccess: true }));
+            navigate(`/ekonsulta_records/${appointment.user_id}`);
         }
     }
     return (
@@ -973,4 +987,4 @@ Administering RHU staff should fill up an NCD Risk Assessment Form if the client
     )
 }
 
-export default EkonsultaForm
+export default EkonsultaFormUpdate

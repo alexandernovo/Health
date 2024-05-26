@@ -52,10 +52,10 @@ class HypertensiveController extends Controller
         }
     }
 
-    public function getUserHypertensiveRecord($appointment_id)
+    public function getUserHypertensiveRecord($user_id)
     {
         try {
-            $hypertensive = Appointment::has('hypertensive')->where('appointment_id', $appointment_id)->orderBy('appointmentDate', 'desc')->get();
+            $hypertensive = Appointment::has('hypertensive')->where('user_id', $user_id)->orderBy('appointmentDate', 'desc')->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch hypertensive record successfully',

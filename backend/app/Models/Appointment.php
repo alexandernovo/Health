@@ -14,6 +14,7 @@ use App\Models\FamilyPlanning;
 use App\Models\Hypertensive;
 use App\Models\Vaccination;
 use App\Models\Immunization;
+use App\Models\Ekonsulta;
 
 class Appointment extends Model
 {
@@ -63,5 +64,15 @@ class Appointment extends Model
     public function immunization(): HasMany
     {
         return $this->hasMany(Immunization::class, 'appointment_id');
+    }
+
+    public function ekonsulta(): HasMany
+    {
+        return $this->hasMany(Ekonsulta::class, 'appointment_id');
+    }
+
+    public function familyplanning(): HasMany
+    {
+        return $this->hasMany(FamilyPlanning::class, 'appointment_id');
     }
 }
