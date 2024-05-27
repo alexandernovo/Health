@@ -21,7 +21,7 @@ const Register: React.FC = () => {
         firstname: '',
         lastname: '',
         username: '',
-        contact_number: '',
+        contact_number: '+63',
         address: '',
         birthdate: '',
         occupation: '',

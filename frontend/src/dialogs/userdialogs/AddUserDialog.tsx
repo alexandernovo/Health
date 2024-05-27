@@ -21,7 +21,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         firstname: '',
         lastname: '',
         username: '',
-        contact_number: '',
+        contact_number: '+63',
         address: '',
         reg_code: '06',
         region: regions

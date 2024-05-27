@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Api\SMSController;
 
 class AppointmentController extends Controller
 {
@@ -139,6 +140,10 @@ class AppointmentController extends Controller
         try {
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => $status]);
+
+                $sms = new SMSController();
+                $sms->settings($appointment->user_id, $status);
+
                 return response()->json([
                     'message' => 'Status Change Successfully',
                     'appointment' => $appointment,
