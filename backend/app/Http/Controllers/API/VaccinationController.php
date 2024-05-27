@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Api\SMSController;
 
 
 class VaccinationController extends Controller
@@ -36,7 +37,8 @@ class VaccinationController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
-
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create Vaccination Record Successfully',

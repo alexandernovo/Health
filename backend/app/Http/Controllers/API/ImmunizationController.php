@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Appointment;
 use App\Models\Immunization;
 use App\Models\ImmunizationResult;
+use App\Http\Controllers\Api\SMSController;
 use Exception;
 
 class ImmunizationController extends Controller
@@ -42,7 +43,10 @@ class ImmunizationController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
-            
+
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create immunization record successfully',

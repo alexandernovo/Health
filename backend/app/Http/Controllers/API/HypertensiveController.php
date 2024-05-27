@@ -8,6 +8,7 @@ use App\Models\Hypertensive;
 use App\Models\Appointment;
 use App\Models\User;
 use Exception;
+use App\Http\Controllers\Api\SMSController;
 
 class HypertensiveController extends Controller
 {
@@ -23,6 +24,8 @@ class HypertensiveController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Hypertensive Record Updated Successfully',

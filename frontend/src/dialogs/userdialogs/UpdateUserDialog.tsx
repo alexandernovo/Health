@@ -233,7 +233,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                                 <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
                                             </svg>
-                                            <input type="number" name="contact_number" value={formData.contact_number} onChange={handleChange} className="grow" placeholder='Contact number' />
+                                            <input name="contact_number" value={formData.contact_number} onChange={handleChange} className="grow" placeholder='Contact number' />
                                         </label>
                                         {error.contact_number && <p className="text-red-500 text-[13px]">{error.contact_number}</p>}
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">

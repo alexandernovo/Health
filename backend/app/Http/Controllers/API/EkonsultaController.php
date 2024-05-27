@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Api\SMSController;
 
 class EkonsultaController extends Controller
 {
@@ -22,6 +23,14 @@ class EkonsultaController extends Controller
     {
         try {
             $ekonsulta = Ekonsulta::create($request->input());
+
+            $appointment = Appointment::find($request->appointment_id);
+            if ($appointment) {
+                $appointment->update(["appointmentStatus" => 4]);
+            }
+
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
 
             return response()->json([
                 'status' => 'success',

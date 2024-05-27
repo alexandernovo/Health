@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\FamilyPlanning;
 use App\Models\FamilyAssessment;
 use App\Models\Appointment;
+use App\Http\Controllers\Api\SMSController;
 use Exception;
 
 class FamilyPlanningController extends Controller
@@ -102,7 +103,8 @@ class FamilyPlanningController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
-
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create family planning record Successfully',

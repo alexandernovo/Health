@@ -136,18 +136,24 @@ class AppointmentController extends Controller
     public function changeAppointmentStatus($id, $status)
     {
         $appointment = Appointment::find($id);
-
-        if ($appointment) {
-            $appointment->update(["appointmentStatus" => $status]);
+        try {
+            if ($appointment) {
+                $appointment->update(["appointmentStatus" => $status]);
+                return response()->json([
+                    'message' => 'Status Change Successfully',
+                    'appointment' => $appointment,
+                    'status' => 'success',
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Cannot find appointment',
+                ], 404);
+            }
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'Status Change Successfully',
-                'appointment' => $appointment,
-                'status' => 'success',
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Cannot find appointment',
-            ], 404);
+                'message' => 'SMS failed',
+                'errors' => $e->getMessage(),
+            ], 500);
         }
     }
 }

@@ -60,7 +60,7 @@ class UserController extends Controller
             'brgy' => 'required|string',
             'gender' => 'required|string',
             'civil_status' => 'required',
-            'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
+            'contact_number' => ['required', 'string', 'regex:/^\+?63\d{10}$/']
         ];
 
         // If username is being updated, add unique validation rule

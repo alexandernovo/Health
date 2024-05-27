@@ -57,7 +57,7 @@ class AuthController extends Controller
             'brgy' => 'required|string',
             'civil_status' => 'required',
             'gender' => 'required|string',
-            'contact_number' => ['required', 'string', 'regex:/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/']
+            'contact_number' => ['required', 'string', 'regex:/^\+?63\d{10}$/']
         ], [
             'contact_number.regex' => 'The contact number is invalid.'
         ]);

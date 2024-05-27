@@ -9,6 +9,7 @@ use App\Models\Maternal;
 use App\Models\MedicalAssessment;
 use App\Models\Appointment;
 use Exception;
+use App\Http\Controllers\Api\SMSController;
 
 class MaternalRecordController extends Controller
 {
@@ -56,7 +57,8 @@ class MaternalRecordController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
-
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create maternal record Successfully',

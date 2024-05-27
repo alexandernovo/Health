@@ -11,6 +11,8 @@ use App\Models\NewBorn;
 use App\Models\PostPartrum;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Http\Controllers\Api\SMSController;
+
 
 class NewBornController extends Controller
 {
@@ -74,7 +76,8 @@ class NewBornController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
-
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 4);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create Newborn Delivery Record Successfully',
