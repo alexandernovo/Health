@@ -58,7 +58,7 @@ const EkonsultaFormUpdate: React.FC = () => {
     }
 
     const handleInputChangeCheck = (e: any) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         setEkonsulta(prevState => ({
             ...prevState,
             [name]: value
