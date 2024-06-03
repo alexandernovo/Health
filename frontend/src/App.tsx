@@ -43,6 +43,7 @@ import UpdateAppointments from '@pages/UpdateAppointments'
 import EkonsultaForm from '@pages/Ekonsulta/EkonsultaForm'
 import EkonsultaRecords from './pages/Ekonsulta/EkonsultaRecords'
 import EkonsultaFormUpdate from '@pages/Ekonsulta/EkonsultaFormUpdate'
+import { EkonsultaReportViewer } from '@pages/Ekonsulta/EkonsultaReportViewer'
 
 function App() {
   return (
@@ -102,6 +103,8 @@ function App() {
           <Route element={<EkonsultaForm />} path='/ekonsulta_form/:appointment_id'></Route>
           <Route element={<EkonsultaFormUpdate />} path='/ekonsulta_form_update/:appointment_id'></Route>
           <Route element={<EkonsultaRecords />} path='/ekonsulta_records/:user_id'></Route>
+          <Route element={<EkonsultaReportViewer />} path='/ekonsulta_report/:appointment_id'></Route>
+
         </Routes>
       </MainLayout>
     </Router>
