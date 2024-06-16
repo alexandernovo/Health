@@ -80,7 +80,8 @@ class AppointmentController extends Controller
                     'appointmentStatus' => $appointment->appointmentStatus,
                     'isActive' => $appointment->isActive,
                     'user_id' => $appointment->user_id,
-                    'brgy' => $appointment->user->brgy
+                    'brgy' => $appointment->user->brgy,
+                    'municipality' => $appointment->user->municipality,
                 ];
             });
 
@@ -125,6 +126,7 @@ class AppointmentController extends Controller
             'appointmentStatus' =>  $appointment->appointmentStatus,
             'isActive' =>  $appointment->isActive,
             'brgy' => $appointment->user->brgy,
+            'municipality' => $appointment->user->municipality,
             'gender' => $appointment->user->gender
         ];
 

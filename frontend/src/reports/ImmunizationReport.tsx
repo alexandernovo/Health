@@ -66,8 +66,8 @@ export const ImmunizationReport: React.FC<ImmunizationReportProps> = ({ appointm
           />
         </div>
       </div>
-      <div className='flex justify-center my-3'>
-        <div className='report-card border-[0.5px] w-[8.5in] bg-white p-5 pt-[30px] px-[40px] rounded-[4px] shadow-sm' ref={contentToPrint}>
+      <div className='flex justify-center my-3 mb-5'>
+        <div className='report-card border-[0.5px] w-[8.5in] bg-white p-5 pt-[30px] px-[40px] rounded-[4px] shadow-sm mb-3' ref={contentToPrint}>
           <div className='flex justify-center items-center gap-5'>
             <img src={logoMaternal} className='w-[70px] h-[70px]' />
             <div className='text-center font-semibold'>
