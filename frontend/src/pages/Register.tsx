@@ -16,6 +16,15 @@ const Register: React.FC = () => {
     const [provincesFiltered, setProvincesFiltered] = useState([]);
     const [municipalityFiltered, setMunicipalityFiltered] = useState([]);
     const [brgyFiltered, setBrgyFiltered] = useState([]);
+    const [inputType, setInputType] = useState('password');
+    const [inputType2, setInputType2] = useState('password');
+
+    const toggleInputType = () => {
+        setInputType(prevType => (prevType === 'password' ? 'text' : 'password'));
+    };
+    const toggleInputType2 = () => {
+        setInputType2(prevType => (prevType === 'password' ? 'text' : 'password'));
+    };
 
     const [formData, setFormData] = useState<UserModel>({
         firstname: '',
@@ -258,7 +267,6 @@ const Register: React.FC = () => {
                                                 <option value="" disabled>Civil Status</option>
                                                 <option value="Single">Single</option>
                                                 <option value="Married">Married</option>
-                                                <option value="Divorced">Divorced</option>
                                                 <option value="Widowed">Widowed</option>
                                                 <option value="Separated">Separated</option>
                                                 <option value="Other">Other</option>
@@ -275,7 +283,7 @@ const Register: React.FC = () => {
                                         </label>
                                         {error.address && <p className="text-red-500 text-[13px]">{error.address}</p>} */}
                                         <Select
-                                            className="basic-single w-full h-[45px] mt-2"
+                                            className="basic-single w-full h-[45px] mt-2 hidden"
                                             classNamePrefix="select"
                                             placeholder="Select Region"
                                             onChange={handleSelectChangeRegion}
@@ -286,7 +294,7 @@ const Register: React.FC = () => {
                                         {error.region && <p className="text-red-500 text-[13px]">{error.region}</p>}
 
                                         <Select
-                                            className="basic-single w-full h-[45px] mt-3"
+                                            className="basic-single w-full h-[45px] mt-3 hidden"
                                             classNamePrefix="select"
                                             placeholder="Select Province"
                                             onChange={handleSelectChangeProvince}
@@ -297,7 +305,7 @@ const Register: React.FC = () => {
                                         {error.province && <p className="text-red-500 text-[13px]">{error.province}</p>}
 
                                         <Select
-                                            className="basic-single w-full h-[45px] mt-3"
+                                            className="basic-single w-full h-[45px] mt-3 hidden"
                                             classNamePrefix="select"
                                             placeholder="Select Municipality"
                                             onChange={handleSelectChangeMunicipality}
@@ -307,14 +315,20 @@ const Register: React.FC = () => {
                                         />
                                         {error.municipality && <p className="text-red-500 text-[13px]">{error.municipality}</p>}
 
-                                        <Select
+                                        {/* <Select
                                             className="basic-single w-full h-[45px] mt-3"
                                             classNamePrefix="select"
                                             placeholder="Select Baranggay"
                                             onChange={handleSelectChangeBrgy}
                                             name='municipality'
                                             options={brgyFiltered.map((brgy: any) => ({ value: brgy.mun_code, label: brgy.name }))}
-                                        />
+                                        /> */}
+                                        <label className='text-[13px] font-semibold mb-0 mt-3 text-white'>Baranggay</label>
+                                        <select name="brgy" value={formData.brgy} onChange={handleChange} className="select select-bordered select-md w-full ">
+                                            <option value="Capoyuan" selected={formData.brgy === "Capoyuan"}>Capoyuan</option>
+                                            <option value="Palma" selected={formData.brgy === "Palma"}>Palma</option>
+                                            <option value="Igpalge" selected={formData.brgy === "Igpalge"}>Igpalge</option>
+                                        </select>
                                         {error.brgy && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
@@ -325,7 +339,8 @@ const Register: React.FC = () => {
                                             <input type="text" name="education" value={formData.education} onChange={handleChange} className="grow" placeholder='Education' />
                                         </label>
 
-                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                        <label className='text-[13px] font-semibold mb-0 mt-3 text-white'>Birthdate</label>
+                                        <label className="h-[45px] input input-bordered flex items-center w-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                                 <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                                 <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
@@ -350,12 +365,20 @@ const Register: React.FC = () => {
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                                 className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
-                                            <input type="password" name="password" value={formData.password} onChange={handleChange} className="grow" placeholder='Password' />
+                                            <input type={inputType} name="password" value={formData.password} onChange={handleChange} className="grow" placeholder='Password' />
+                                            <svg onClick={toggleInputType} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 cursor-pointer">
+                                                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                                <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />
+                                            </svg>
                                         </label>
                                         {error.password && <p className="text-red-500 text-[13px]">{error.password}</p>}
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
-                                            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="grow" placeholder='Confirm Password' />
+                                            <input type={inputType2} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="grow" placeholder='Confirm Password' />
+                                            <svg onClick={toggleInputType2} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 cursor-pointer">
+                                                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                                <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />
+                                            </svg>
                                         </label>
                                     </div>
                                     <button type="submit" className="btn btn-active btn-primary w-full mt-3">REGISTER</button>

@@ -54,9 +54,6 @@ class UserController extends Controller
         $validate = [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'region' => 'required|string',
-            'province' => 'required|string',
-            'municipality' => 'required|string',
             'brgy' => 'required|string',
             'gender' => 'required|string',
             'civil_status' => 'required',

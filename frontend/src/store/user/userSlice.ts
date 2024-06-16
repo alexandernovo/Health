@@ -13,6 +13,7 @@ const userInitialState: UserModel = {
     education: "",
     religion: "",
     civil_status: "",
+    brgy: "",
     gender: "",
     isSignedIn: false
 }

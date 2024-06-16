@@ -37,7 +37,7 @@ const HypertensiveGroupReport = () => {
     }
 
     return (
-        <div>
+        <>
             <div className='flex justify-center my-3'>
                 <div className='w-[13in] gap-2 flex justify-end'>
                     <button className='btn btn-primary btn-sm' onClick={setToggle}>
@@ -138,7 +138,7 @@ const HypertensiveGroupReport = () => {
                 </div>
             </div>
             <Hypertensivefilter Filter={Filter} Toggle={setToggle} Show={toggle} />
-        </div>
+        </>
     )
 }
 
