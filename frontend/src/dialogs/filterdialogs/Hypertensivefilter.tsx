@@ -120,7 +120,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                         <div className='w-full flex flex-col items-center'>
                             <div className='md:w-full lg:w-full'>
                                 <Select
-                                    className="basic-single w-full h-[45px] mt-2"
+                                    className="basic-single w-full h-[45px] mt-2 hidden"
                                     classNamePrefix="select"
                                     placeholder="Select Region"
                                     onChange={handleSelectChangeRegion}
@@ -130,7 +130,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                                 />
 
                                 <Select
-                                    className="basic-single w-full h-[45px] mt-3"
+                                    className="basic-single w-full h-[45px] mt-3 hidden"
                                     classNamePrefix="select"
                                     placeholder="Select Province"
                                     onChange={handleSelectChangeProvince}
@@ -140,7 +140,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                                 />
 
                                 <Select
-                                    className="basic-single w-full h-[45px] mt-3"
+                                    className="basic-single w-full h-[45px] mt-3 hidden"
                                     classNamePrefix="select"
                                     placeholder="Select Municipality"
                                     onChange={handleSelectChangeMunicipality}
@@ -149,14 +149,20 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                                     options={municipalityFiltered.map((municipality: any) => ({ value: municipality.mun_code, label: municipality.name }))}
                                 />
 
-                                <Select
+                                {/* <Select
                                     className="basic-single w-full h-[45px] mt-3"
                                     classNamePrefix="select"
                                     placeholder="Select Baranggay"
                                     onChange={handleSelectChangeBrgy}
                                     name='municipality'
                                     options={brgyFiltered.map((brgy: any) => ({ value: brgy.mun_code, label: brgy.name }))}
-                                />
+                                /> */}
+                                <label className='text-[13px] font-semibold mb-0 mt-3'>Baranggay</label>
+                                <select name="brgy" value={filter.brgy} onChange={handleChange} className="select select-bordered select-md w-full ">
+                                    <option value="Capoyuan" selected={filter.brgy === "Capoyuan"}>Capoyuan</option>
+                                    <option value="Palma" selected={filter.brgy === "Palma"}>Palma</option>
+                                    <option value="Igpalge" selected={filter.brgy === "Igpalge"}>Igpalge</option>
+                                </select>
                                 <div className='w-full mt-3'>
                                     <div className='flex flex-col w-full'>
                                         <label className='font-semibold text-[14px]'>Date From:</label>

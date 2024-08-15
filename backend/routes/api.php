@@ -25,6 +25,7 @@ Route::prefix('users')->group(function () {
     Route::get('/getUserById/{id}', [UserController::class, 'getUserById']);
     Route::put('/updateUser/{id}', [UserController::class, 'updateUser']);
     Route::put('/activation/{id}/{status}', [UserController::class, 'activation']);
+    Route::get('/getAvailableStaff', [UserController::class, 'getAvailableStaff']);
 });
 
 Route::prefix('consultation')->group(function () {

@@ -43,6 +43,7 @@ import UpdateAppointments from '@pages/UpdateAppointments'
 import EkonsultaForm from '@pages/Ekonsulta/EkonsultaForm'
 import EkonsultaRecords from './pages/Ekonsulta/EkonsultaRecords'
 import EkonsultaFormUpdate from '@pages/Ekonsulta/EkonsultaFormUpdate'
+import AvailableStaff from '@pages/AvailableStaff'
 import { EkonsultaReportViewer } from '@pages/Ekonsulta/EkonsultaReportViewer'
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
           <Route element={<UpdateAppointments />} path='/updateappointments/:appointment_id'></Route>
           <Route element={<ManageRecords />} path='/managerecords'></Route>
           <Route element={<PatientHistory />} path='/patient_history'></Route>
+          <Route element={<AvailableStaff />} path='/available_staff'></Route>
           {/* maternal */}
           <Route element={<ManageMaternalHealthRecords />} path='/managematernal/:appointment_id'></Route>
           <Route element={<UpdateManageMaternalHealthRecords />} path='/udpatematernal/:appointment_id'></Route>

@@ -347,6 +347,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
                                                 <option value="" disabled>Role</option>
                                                 <option value="1">Patient</option>
                                                 <option value="0">Admin</option>
+                                                <option value="2">Staff</option>
                                             </select>
                                         </label>
 

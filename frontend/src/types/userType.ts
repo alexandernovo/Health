@@ -59,7 +59,7 @@ export const userInitialValue = () => {
         province: "",
         prov_code: "",
         municipality: "",
-        brgy: "",
+        brgy: "Igpalge",
         password: "",
         gender: "",
         userstatus: undefined,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,8 @@ class AuthController extends Controller
         }
 
         $user = Auth::guard('api')->user();
+        UserLog::insert(['user_id' => $user['id'], 'logstatus' => 'login', 'created_at' => date('Y-m-d H:i:s')]);
+
         return response()->json([
             'status' => 'success',
             'user' => $user,
@@ -90,12 +93,17 @@ class AuthController extends Controller
     }
     public function logout()
     {
+        $user = Auth::guard('api')->user();
+        UserLog::insert(['user_id' => $user['id'], 'logstatus' => 'logout', 'created_at' => date('Y-m-d H:i:s')]);
+
         Auth::guard('api')->logout();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
         ]);
     }
+
     public function refresh()
     {
         return response()->json([

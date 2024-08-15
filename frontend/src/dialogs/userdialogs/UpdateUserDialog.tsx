@@ -363,6 +363,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
                                                 <option value="" disabled>Role</option>
                                                 <option value="1">Patient</option>
                                                 <option value="0">Admin</option>
+                                                <option value="2">Staff</option>
                                             </select>
                                         </label>
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">

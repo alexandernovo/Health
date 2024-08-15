@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -114,5 +115,26 @@ class UserController extends Controller
         $user->update($data);
 
         return response()->json(['status' => 'success', 'message' => 'User activation successfully', 'user' => $user]);
+    }
+
+    public function getAvailableStaff()
+    {
+        $staff = DB::select('
+            SELECT users.*, userlog.*
+            FROM users
+            INNER JOIN userlog ON users.id = userlog.user_id
+            WHERE users.usertype = 2
+            AND userlog.userlog_id = (
+                SELECT ul.userlog_id
+                FROM userlog ul
+                WHERE ul.user_id = users.id
+                ORDER BY ul.userlog_id DESC
+                LIMIT 1
+            )
+            AND userlog.logstatus != "logout"
+        ');
+
+
+        return response()->json(['status' => 'success', 'message' => 'Staff Fetch Successfully', 'staff' => $staff]);
     }
 }
