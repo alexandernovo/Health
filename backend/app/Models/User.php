@@ -125,6 +125,6 @@ class User extends Authenticatable implements JWTSubject
     }
     public function ekonsulta(): HasMany
     {
-        return $this->hasMany(Ekonsulta::class, 'appointment_id');
+        return $this->hasMany(Ekonsulta::class);
     }
 }

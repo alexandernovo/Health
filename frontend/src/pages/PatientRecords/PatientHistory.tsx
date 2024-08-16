@@ -67,6 +67,9 @@ const PatientHistory: React.FC = () => {
         else if (consultationTypeName == "Immunization") {
             return `/immunization_report/${appointment_id}`
         }
+        else if (consultationTypeName == "Ekonsulta") {
+            return `/ekonsulta_report/${appointment_id}`;
+        }
         else {
             return "";
         }

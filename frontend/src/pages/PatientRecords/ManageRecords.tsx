@@ -3,13 +3,46 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { UserModel } from '@/types/userType';
+import ReportFilter from '@/dialogs/filterdialogs/ReportFilter';
+import { ReportFilterParam, initialReportFilter } from '@/types/reportfilter';
+import { useNavigate } from 'react-router-dom';
 
 const ManageRecords: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const [users, setUsers] = useState<UserModel[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<UserModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [toggle, setToggles] = useState<boolean>(false);
+    const navigate = useNavigate();
 
+    const Filter = (filter: ReportFilterParam) => {
+        const url = redirectToReport(filter); // Get the URL from the redirect function
+        console.log(url);
+        if (url) {
+            navigate(url); // Navigate directly to the URL
+        }
+    };
+
+    const redirectToReport = (filter: ReportFilterParam): string => {
+        switch (filter.reportType) {
+            case "Maternal Health Records":
+                return `/maternal_records/${filter.user_id}`;
+            case "Newborn Delivery Record":
+                return `/newborn_record/${filter.user_id}`;
+            case "Family Planning":
+                return `/familyPlanning_record/${filter.user_id}`;
+            case "Hypertensive/Diabetic":
+                return `/hypertensive_record/${filter.user_id}`;
+            case "Vaccination":
+                return `/vaccination_record/${filter.user_id}`;
+            case "Immunization":
+                return `/immunization_record/${filter.user_id}`;
+            case "Ekonsulta":
+                return `/ekonsulta_records/${filter.user_id}`;
+            default:
+                return ""; // Return an empty string if no valid reportType
+        }
+    }
 
     useEffect(() => {
         getRecords();
@@ -18,7 +51,6 @@ const ManageRecords: React.FC = () => {
     const handleRefresh = () => {
         getRecords();
     }
-
 
     const getRecords = async () => {
         setLoading(true);
@@ -33,6 +65,14 @@ const ManageRecords: React.FC = () => {
             setFilteredUsers(response.data.records);
         }
         setLoading(false);
+    }
+
+    const setToggle = () => {
+        setToggles(!toggle);
+    }
+
+    const setToggleReportFilter = () => {
+
     }
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +145,12 @@ const ManageRecords: React.FC = () => {
                                     </svg>
                                     Generate Hypertensive / Diabetic Records
                                 </Link>
+                                <button className='btn btn-primary btn-sm' onClick={() => setToggle()}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                                        <path fillRule="evenodd" d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z" clipRule="evenodd" />
+                                    </svg>
+                                    Report Filter
+                                </button>
                                 <button className='btn btn-ghost btn-sm' onClick={() => handleRefresh()}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                         <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clipRule="evenodd" />
@@ -137,6 +183,8 @@ const ManageRecords: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            <ReportFilter Toggle={setToggle} Show={toggle} Filter={Filter} />
         </>
     );
 }

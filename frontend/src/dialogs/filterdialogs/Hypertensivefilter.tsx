@@ -181,6 +181,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                                     </svg>
                                     Generate Hypertensive / Diabetic Records
                                 </button>
+
                             </div>
                         </div>
                     </div>

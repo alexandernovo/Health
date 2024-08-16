@@ -48,20 +48,23 @@ class RecordController extends Controller
     public function getUserRecord($id)
     {
         try {
-            $userRecords = Appointment::whereHas('maternal')
-                ->orWhereHas('newborn')
-                ->orWhereHas('family')
-                ->orWhereHas('hypertensive')
-                ->orWhereHas('vaccination')
-                ->orWhereHas('immunization')
-                ->orWhereHas('ekonsulta')
-                ->with('consultation', 'user')
-                ->whereIn('appointment_id', function ($query) use ($id) {
-                    $query->select(DB::raw('MAX(appointment_id)'))
+            $userRecords = Appointment::where('user_id', $id)
+                ->where(function ($query) {
+                    $query->whereHas('maternal')
+                        ->orWhereHas('newborn')
+                        ->orWhereHas('family')
+                        ->orWhereHas('hypertensive')
+                        ->orWhereHas('vaccination')
+                        ->orWhereHas('immunization')
+                        ->orWhereHas('ekonsulta');
+                })
+                ->whereIn('appointment_id', function ($subQuery) use ($id) {
+                    $subQuery->select(DB::raw('MAX(appointment_id)'))
                         ->from('appointments')
                         ->where('user_id', $id)
                         ->groupBy('consultationTypeId');
                 })
+                ->with('consultation', 'user')
                 ->get();
 
             // Remove duplicates based on consultationTypeId

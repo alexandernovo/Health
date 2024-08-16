@@ -26,6 +26,7 @@ class PatientHistoryController extends Controller
                 ->orWhereHas('hypertensive')
                 ->orWhereHas('vaccination')
                 ->orWhereHas('immunization')
+                ->orWhereHas('ekonsulta')
                 ->with('consultation', 'user')
                 ->where('user_id', $user_id)
                 ->get();
