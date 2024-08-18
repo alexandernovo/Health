@@ -43,6 +43,7 @@ const Register: React.FC = () => {
         civil_status: '',
         education: '',
         religion: '',
+        brgy: "Igpalge",
         gender: '',
         password: '',
         confirmPassword: ''

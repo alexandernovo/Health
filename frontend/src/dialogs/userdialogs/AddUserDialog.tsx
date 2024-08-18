@@ -37,6 +37,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
             .map((region: any) => region.name)[0],
         prov_code: '0606',
         mun_code: '060602',
+        brgy: "Igpalge",
         gender: '',
         usertype: 1,
         password: '',

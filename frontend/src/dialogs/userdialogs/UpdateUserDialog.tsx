@@ -37,6 +37,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
         reg_code: '06',
         prov_code: '0606',
         mun_code: '060602',
+        brgy: "Igpalge",
         gender: "",
         password: "",
         religion: "",
