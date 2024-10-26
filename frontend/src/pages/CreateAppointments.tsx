@@ -183,7 +183,7 @@ const CreateAppointments: React.FC = () => {
                     </div>
                     <form onSubmit={handleCreateAppointment} className='w-full'>
                         <div className='flex mb-3'>
-                            {user.usertype == 0 ?
+                            {user.usertype == 0 || user.usertype == 2 ?
                                 (
                                     <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                         <label className='font-semibold text-[14px]'>Patient Name</label>

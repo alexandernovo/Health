@@ -35,7 +35,7 @@ const Appointments: React.FC = () => {
             });
             if (response.data.status === "success") {
                 setAppointments(response.data.appointment);
-                const appointmentFilteredByUser: AppointmentModel[] = user.usertype === 0
+                const appointmentFilteredByUser: AppointmentModel[] = user.usertype === 0 || user.usertype === 2
                     ? response.data.appointment
                     : response.data.appointment.filter((appointment: AppointmentModel) => appointment.user_id === user.id);
 
@@ -134,7 +134,7 @@ const Appointments: React.FC = () => {
             cell: (row: AppointmentModel) => (
                 row.appointmentStatus === 1 ? (
                     <div className='flex items-center gap-1'>
-                        {user.usertype == 0 && (
+                        {user.usertype == 0 || user.usertype == 2 && (
                             <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
                                 Approve
                             </button>
@@ -142,7 +142,7 @@ const Appointments: React.FC = () => {
                         <Link to={`/updateappointments/${row.appointment_id}`} className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' >
                             Edit
                         </Link>
-                        {user.usertype == 0 && (
+                        {user.usertype == 0 || user.usertype == 2 && (
                             <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 2)}>
                                 Decline
                             </button>
