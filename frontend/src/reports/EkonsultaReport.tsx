@@ -647,15 +647,15 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1'>Smoking</div>
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1 flex justify-between'>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Yes" checked={ekonsulta.smoking == "Yes"} name='smoking' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Yes" checked={ekonsulta.smoking == "Yes"} name='smoking' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Yes</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="No" checked={ekonsulta.smoking == "No"} name='smoking' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="No" checked={ekonsulta.smoking == "No"} name='smoking' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">No</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Quit" checked={ekonsulta.smoking == "Quit"} name='smoking' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Quit" checked={ekonsulta.smoking == "Quit"} name='smoking' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Quit</span>
                                         </label>
                                     </div>
@@ -667,15 +667,15 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1'>Alcohol</div>
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1 flex justify-between'>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Yes" checked={ekonsulta.alcohol == "Yes"} name='alcohol' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Yes" checked={ekonsulta.alcohol == "Yes"} name='alcohol' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Yes</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="No" checked={ekonsulta.alcohol == "No"} name='alcohol' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="No" checked={ekonsulta.alcohol == "No"} name='alcohol' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">No</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Quit" checked={ekonsulta.alcohol == "Quit"} name='alcohol' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Quit" checked={ekonsulta.alcohol == "Quit"} name='alcohol' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Quit</span>
                                         </label>
                                     </div>
@@ -687,15 +687,15 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1'>Illicit Drugs</div>
                                     <div className='w-1/3 border-r-[1px] border-black text-[13px] px-1 flex justify-between'>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Yes" checked={ekonsulta.illicit_drugs == "Yes"} name='illicit_drugs' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Yes" checked={ekonsulta.illicit_drugs == "Yes"} name='illicit_drugs' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Yes</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="No" checked={ekonsulta.illicit_drugs == "No"} name='illicit_drugs' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="No" checked={ekonsulta.illicit_drugs == "No"} name='illicit_drugs' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">No</span>
                                         </label>
                                         <label className="label cursor-pointer flex justify-start items-center gap-2">
-                                            <input type="checkbox" value="Quit" checked={ekonsulta.illicit_drugs == "Quit"} name='illicit_drugs' className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" value="Quit" checked={ekonsulta.illicit_drugs == "Quit"} name='illicit_drugs' className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Quit</span>
                                         </label>
                                     </div>
@@ -720,19 +720,19 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Skin</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.skinPallor} name='skinPallor' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.skinPallor} name='skinPallor' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Pallor</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.skinRashes} name='skinRashes' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.skinRashes} name='skinRashes' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Rashes</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.skinJaundice} name='skinJaundice' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.skinJaundice} name='skinJaundice' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Jaundice</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.skinGoodSkinTurgor} name='skinGoodSkinTurgor' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.skinGoodSkinTurgor} name='skinGoodSkinTurgor' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Good Skin Turgor</span>
                                     </div>
                                 </div>
@@ -742,35 +742,35 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border w-[30%] text-[13px] flex items-center px-1'>Heent</div>
                                 <div className='border p-1 flex-1 flex flex-wrap justify-between gap-2'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentAnicteric} name='heentAnicteric' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentAnicteric} name='heentAnicteric' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Ancient Sclera</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentIntactTympanic} name='heentIntactTympanic' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentIntactTympanic} name='heentIntactTympanic' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Intact Tympanic Membrane</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentExudates} name='heentExudates' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentExudates} name='heentExudates' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Exudates</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentPupils} name='heentPupils' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentPupils} name='heentPupils' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Pupils brisky reactive to light</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentTonsil} name='heentTonsil' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentTonsil} name='heentTonsil' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Tonsil Pharyngeal Congestion</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentAuralDischarge} name='heentAuralDischarge' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentAuralDischarge} name='heentAuralDischarge' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Aural Discharge</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentNasalDischarge} name='heentNasalDischarge' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentNasalDischarge} name='heentNasalDischarge' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Nasal Discharge</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heentPalpableMass} name='heentPalpableMass' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heentPalpableMass} name='heentPalpableMass' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Palpable Mass</span>
                                     </div>
                                 </div>
@@ -779,23 +779,23 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Chest/Lungs</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.chestSymmetrical} name='chestSymmetrical' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.chestSymmetrical} name='chestSymmetrical' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Symmetrical Chest Expansion</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.chestClearBreath} name='chestClearBreath' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.chestClearBreath} name='chestClearBreath' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Clear Breath Sounds</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.chestRetractions} name='chestRetractions' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.chestRetractions} name='chestRetractions' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Retractions</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.chestCrackles} name='chestCrackles' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.chestCrackles} name='chestCrackles' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Crackles/rales</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.chestWheeze} name='chestWheeze' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.chestWheeze} name='chestWheeze' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Wheeze</span>
                                     </div>
                                 </div>
@@ -804,19 +804,19 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Heart</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heartAdynamic} name='heartAdynamic' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heartAdynamic} name='heartAdynamic' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Adymanic Precordium</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heartMurmurs} name='heartMurmurs' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heartMurmurs} name='heartMurmurs' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Mumurs</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heartNormalRate} name='heartNormalRate' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heartNormalRate} name='heartNormalRate' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Normal Rate Regular Rhythm</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.heartHeaves} name='heartHeaves' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.heartHeaves} name='heartHeaves' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">heavey/Thrils</span>
                                     </div>
                                 </div>
@@ -825,27 +825,27 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Abdomen</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenFlat} name='abdomenFlat' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenFlat} name='abdomenFlat' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Flat</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenGlobular} name='abdomenGlobular' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenGlobular} name='abdomenGlobular' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Globular</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenFlabby} name='abdomenFlabby' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenFlabby} name='abdomenFlabby' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Flabby</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenMuscleGuarding} name='abdomenMuscleGuarding' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenMuscleGuarding} name='abdomenMuscleGuarding' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Muscle Guarding</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenTenderness} name='abdomenTenderness' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenTenderness} name='abdomenTenderness' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Tenderness</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.abdomenPalpableMass} name='abdomenPalpableMass' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.abdomenPalpableMass} name='abdomenPalpableMass' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Palpable Mass</span>
                                     </div>
                                 </div>
@@ -854,15 +854,15 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Extremities</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.extremetiesGrossDeformity} name='extremetiesGrossDeformity' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.extremetiesGrossDeformity} name='extremetiesGrossDeformity' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Gross Deformity</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.extremetiesNormalGait} name='extremetiesNormalGait' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.extremetiesNormalGait} name='extremetiesNormalGait' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Normal Gait</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.extremetiesFullEqualPulse} name='extremetiesFullEqualPulse' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.extremetiesFullEqualPulse} name='extremetiesFullEqualPulse' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Full Equal pulses</span>
                                     </div>
                                 </div>
@@ -871,23 +871,23 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                 <div className='border p-1 w-[30%] text-[13px]'>Neurological</div>
                                 <div className='border p-1 flex-1 flex flex-wrap gap-3'>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.neurologicalNormal} name='neurologicalNormal' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.neurologicalNormal} name='neurologicalNormal' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Normal</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.neurologicalDevelopmental} name='neurologicalDevelopmental' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.neurologicalDevelopmental} name='neurologicalDevelopmental' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Development Delay</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.neurologicalSeizures} name='neurologicalSeizures' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.neurologicalSeizures} name='neurologicalSeizures' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Seizures</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.neurologicalMotorDeficit} name='neurologicalMotorDeficit' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.neurologicalMotorDeficit} name='neurologicalMotorDeficit' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Motor Deficit</span>
                                     </div>
                                     <div className="flex justify-start gap-2">
-                                        <input type="checkbox" checked={ekonsulta.neurologicalSensoryDeficit} name='neurologicalSensoryDeficit' className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" checked={ekonsulta.neurologicalSensoryDeficit} name='neurologicalSensoryDeficit' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[7px]">Sensory Deficit</span>
                                     </div>
                                 </div>

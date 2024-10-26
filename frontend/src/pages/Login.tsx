@@ -58,7 +58,12 @@ const Login: React.FC = () => {
                         isSignedIn: true
                     }
                     dispatch(storeUser(userToStore));
-                    navigate('/dashboard');
+                    if (data.user.usertype == 1) {
+                        navigate('/appointments');
+                    }
+                    else {
+                        navigate('/dashboard');
+                    }
                 }, 2000);
             }
             else {
