@@ -207,3 +207,7 @@
   height: 49px !important;
   border-radius: 9px !important;
 }
+
+.active-route {
+  background-color: #134e4a !important;
+}

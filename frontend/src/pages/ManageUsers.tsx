@@ -13,6 +13,7 @@ const ManageUsers: React.FC = () => {
     const [originalUsers, setOriginalUsers] = useState<UserModel[]>([]);
     const [users, setUsers] = useState<UserModel[]>([]);
     const [addUserModal, setAddUserModal] = useState<boolean>(false);
+    const [addPatientModal, setAddPatientModal] = useState<boolean>(false);
     const [updateUserModal, setUpdateUserModal] = useState<boolean>(false);
     const [activateUserModal, setActivateUserModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
@@ -192,15 +193,24 @@ const ManageUsers: React.FC = () => {
         },
         {
             name: (
-                <button onClick={() => toggleAddUser()} className='btn btn-success btn-outline btn-xs px-4'>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
-                    </svg>
-                    User
-                </button>
+                <div className='flex gap-2 justify-center w-100'>
+                    <button onClick={() => toggleAddUser()} className='btn btn-success btn-outline btn-xs px-4'>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
+                        </svg>
+                        User
+                    </button>
+                    <button onClick={() => setAddPatientModal(!addPatientModal)} className='btn btn-success btn-outline btn-xs px-4'>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
+                        </svg>
+                        Patient
+                    </button>
+                </div>
+
             ),
             cell: (row: UserModel) => (
-                <button onClick={() => ConfirmationModal(row)} className={`btn btn-outline w-full btn-xs flex gap-1 ${row.userstatus == 0 ? 'btn-success' : 'btn-error'}`}>
+                <button onClick={() => ConfirmationModal(row)} className={`btn btn-outline w-[80%] btn-xs flex gap-1 ${row.userstatus == 0 ? 'btn-success' : 'btn-error'}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                         <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd" />
                     </svg>
@@ -208,6 +218,7 @@ const ManageUsers: React.FC = () => {
                 </button>
             ),
             sortable: false,
+            minWidth: "240px",
         },
     ];
 
@@ -248,6 +259,7 @@ const ManageUsers: React.FC = () => {
             </div>
 
             <AddUserDialog Toggle={toggleAddUser} OnAdd={AddUserData} Show={addUserModal} />
+            <AddUserDialog Toggle={() => setAddPatientModal(!addPatientModal)} OnAdd={AddUserData} Show={addPatientModal} IsPatient={true} />
             <UpdateUserDialog Toggle={toggleUpdateUser} OnUpdate={UpdateUserData} Data={toUpdate} Show={updateUserModal} />
             <ConfirmationDialog Toggle={toggleActivateUser} Show={activateUserModal} OnConfirm={HandleActivation} Message={confirmData.message} ConfirmButton={confirmData.buttonText} ButtonColor={confirmData.buttonColor} />
         </div>

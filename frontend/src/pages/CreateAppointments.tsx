@@ -213,12 +213,12 @@ const CreateAppointments: React.FC = () => {
                         </div>
                         <div className='flex mb-3'>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
-                                <label className='font-semibold text-[14px]'>Appointment Date</label>
+                                <label className='font-semibold text-[14px]'>Appointment Date*</label>
                                 <input type="date" name="appointment_date" value={appointment.appointmentDate} onChange={handleDateChange} className="input input-bordered w-full h-[48px]" placeholder="Address" />
                                 {error.appointmentDate && <p className="text-red-500 text-[13px]">Appointment Date is required</p>}
                             </div>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
-                                <label className='font-semibold text-[14px]'>Appointment Time</label>
+                                <label className='font-semibold text-[14px]'>Appointment Time*</label>
                                 <input type="time" name="appointment_time" value={appointment.appointmentTime} onChange={handleTimeChange} className="input input-bordered w-full h-[48px]" placeholder="Address" />
                                 {error.appointmentTime && <p className="text-red-500 text-[13px]">Appointment Time is required</p>}
                             </div>
@@ -229,7 +229,7 @@ const CreateAppointments: React.FC = () => {
                                 <input readOnly type="text" value={user.usertype == 0 ? appointment.contact_number : user.contact_number} name="contact_number" className="input input-bordered w-full h-[48px]" placeholder="Contact No." />
                             </div>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
-                                <label className='font-semibold text-[14px]'>Type of Consultation</label>
+                                <label className='font-semibold text-[14px]'>Type of Consultation*</label>
                                 <Select
                                     className="basic-single w-full h-[45px]"
                                     classNamePrefix="select"
