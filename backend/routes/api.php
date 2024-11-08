@@ -14,6 +14,7 @@ use App\Http\Controllers\API\VaccinationController;
 use App\Http\Controllers\API\ImmunizationController;
 use App\Http\Controllers\API\PatientHistoryController;
 use App\Http\Controllers\API\EkonsultaController;
+use App\Http\Controllers\API\NotificationController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -103,6 +104,10 @@ Route::prefix('ekonsulta')->group(function () {
     Route::put('/updateEkonsulta', [EkonsultaController::class, 'updateEkonsulta']);
     Route::get('/getEkonsultaRecord/{user_id}', [EkonsultaController::class, 'getEkonsultaRecord']);
     Route::get('/getEkonsultaOne/{appointment_id}', [EkonsultaController::class, 'getEkonsultaOne']);
+});
+
+Route::prefix('notification')->group(function () {
+    Route::get('/getNotification', [NotificationController::class, 'getNotification']);
 });
 
 //  remove routes
