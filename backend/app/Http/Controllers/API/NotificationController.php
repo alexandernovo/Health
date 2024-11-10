@@ -23,10 +23,16 @@ class NotificationController extends Controller
             FROM notification 
             LEFT JOIN users AS u1 ON u1.id = notification.sender
             LEFT JOIN users AS u2 ON u2.id = notification.receiver
-            WHERE notification.receiver = ?
+            WHERE 1=1
         ";
 
-        $data = DB::select($query, [$user['id']]);
+        if ($user['usertype'] == 0 || $user['usertype'] == 2) {
+            $query .= " AND notification.receiver = 0";
+        } else {
+            $query .= " AND notification.receiver = " . $user['id'];
+        }
+
+        $data = DB::select($query,);
 
         return response()->json([
             'status' => 'success',

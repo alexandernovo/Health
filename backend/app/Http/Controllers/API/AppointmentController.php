@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Models\Appointment;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\SMSController;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -32,7 +34,25 @@ class AppointmentController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
+        $userNow = Auth::guard('api')->user();
+        $user = User::find($request->user_id) ?? null;
 
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        if ($user->id == $userNow['id']) {
+            Notification::create([
+                "sender" => $request->user_id,
+                "receiver" => 0,
+                "notif_type" => "appointment",
+                "id_redirect" => 0,
+                "message" => $user->firstname . ' ' . $user->lastname . ' created an appointment at ' .
+                    date("F d, Y", strtotime($request->appointmentDate)) . ' at ' .
+                    date('H:i a', strtotime($request->appointmentTime))
+
+            ]);
+        }
         $appointment = Appointment::create([
             'user_id' => $request->user_id,
             'consultationTypeId' => $request->consultationTypeId,
@@ -142,6 +162,19 @@ class AppointmentController extends Controller
         try {
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => $status]);
+                $status_text = $status == 1 ? "Pending" : ($status == 2 ? "Declined" : ($status == 3 ? "Approved" : "Mark as Done"));
+
+                $userNow = Auth::guard('api')->user();
+                $name = $userNow->firstname == "Admin" ? $userNow->firstname :  $userNow->firstname . ' ' . $userNow->lastname;
+                Notification::create([
+                    "sender" => $userNow['id'],
+                    "receiver" => $appointment->user_id,
+                    "notif_type" => "appointment",
+                    "id_redirect" => 0,
+                    "message" => $name . ' ' . $status_text . ' your appointment at ' .
+                        date("F d, Y") . ' at ' .
+                        date('H:i a')
+                ]);
 
                 $sms = new SMSController();
                 $sms->settings($appointment->user_id, $status);

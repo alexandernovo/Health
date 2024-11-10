@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements("notification_id");
             $table->integer("sender");
             $table->integer("receiver");
-            $table->integer("notif_type");
+            $table->string("notif_type");
             $table->integer("id_redirect");
             $table->string('message')->nullable();
             $table->timestamps();
