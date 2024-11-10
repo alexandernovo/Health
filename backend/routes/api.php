@@ -39,6 +39,7 @@ Route::prefix('consultation')->group(function () {
 
 Route::prefix('appointment')->group(function () {
     Route::post('/createappointment', [AppointmentController::class, 'createAppointment']);
+    Route::post('/declineAppointment', [AppointmentController::class, 'declineAppointment']);
     Route::put('/updateAppointment', [AppointmentController::class, 'updateAppointment']);
     Route::get('/getAppointments/{status}', [AppointmentController::class, 'getAppointments']);
     Route::get('/getAppointmentById/{id}', [AppointmentController::class, 'getAppointmentById']);

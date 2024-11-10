@@ -18,6 +18,10 @@ const CreateAppointments: React.FC = () => {
     const user: UserModel = useSelector((state: RootState) => state.userState);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const currentDate = new Date();
+
+    const currentDateString = currentDate.toISOString().split('T')[0];  // 'YYYY-MM-DD' format
+    const currentTimeString = currentDate.toTimeString().slice(0, 5);
 
     const [appointment, setAppointments] = useState<AppointmentModel>({
         appointment_id: undefined,
@@ -26,8 +30,8 @@ const CreateAppointments: React.FC = () => {
         contact_number: '',
         address: '',
         consultationTypeId: undefined,
-        appointmentDate: undefined,
-        appointmentTime: '',
+        appointmentDate: currentDateString,
+        appointmentTime: currentTimeString,
         appointmentStatus: isAdmin == 0 ? 3 : 1,
         isActive: undefined,
         user_id: undefined

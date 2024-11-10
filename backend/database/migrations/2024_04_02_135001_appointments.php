@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('appointmentTime');
             $table->integer('appointmentStatus');
             $table->integer('isActive');
+            $table->string('appointmentRemarks')->nullable();
             $table->timestamps();
 
             $table->foreign('consultationTypeId')->references('consultationTypeId')->on('consultationtype');
@@ -37,4 +38,3 @@ return new class extends Migration
 
 //php artisan migrate --path=database/migrations/2024_04_02_135001_appointments.php
 // php artisan migrate:rollback --path=database/migrations/2024_04_02_135001_appointments.php
-

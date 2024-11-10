@@ -26,7 +26,8 @@ class Appointment extends Model
         'appointmentDate',
         'appointmentTime',
         'appointmentStatus',
-        'isActive'
+        'isActive',
+        'appointmentRemarks'
     ];
 
     public function user(): BelongsTo

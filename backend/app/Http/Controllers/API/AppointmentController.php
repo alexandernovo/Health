@@ -90,6 +90,7 @@ class AppointmentController extends Controller
                 return [
                     'appointment_id' => $appointment->appointment_id,
                     'firstname' => $appointment->user->firstname,
+                    'remarks' => $appointment->appointmentRemarks,
                     'lastname' => $appointment->user->lastname,
                     'contact_number' => $appointment->user->contact_number,
                     'address' => $appointment->user->address,
@@ -129,6 +130,7 @@ class AppointmentController extends Controller
         }
         $data = [
             'appointment_id' => $appointment->appointment_id,
+            'remarks' => $appointment->appointmentRemarks,
             'firstname' => $appointment->user->firstname,
             'lastname' => $appointment->user->lastname,
             'birthdate' => $appointment->user->birthdate,
@@ -188,6 +190,42 @@ class AppointmentController extends Controller
                 return response()->json([
                     'message' => 'Cannot find appointment',
                 ], 404);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'SMS failed',
+                'errors' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function declineAppointment(Request $request)
+    {
+        try {
+            $appointment = Appointment::find($request->id);
+            if ($appointment) {
+                $appointment->update(["appointmentStatus" => 2, "appointmentRemarks" => $request->remarks]);
+                $userNow = Auth::guard('api')->user();
+                $name = $userNow->firstname == "Admin" ? $userNow->firstname :  $userNow->firstname . ' ' . $userNow->lastname;
+
+                Notification::create([
+                    "sender" => $userNow['id'],
+                    "receiver" => $appointment->user_id,
+                    "notif_type" => "appointment",
+                    "id_redirect" => 0,
+                    "message" => $name . ' Declined your appointment at ' .
+                        date("F d, Y") . ' at ' .
+                        date('H:i a')
+                ]);
+
+                $sms = new SMSController();
+                $sms->settings($appointment->user_id, 2);
+
+                return response()->json([
+                    'message' => 'Appointment Decline Successfully',
+                    'appointment' => $appointment,
+                    'status' => 'success',
+                ], 200);
             }
         } catch (Exception $e) {
             return response()->json([

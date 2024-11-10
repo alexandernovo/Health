@@ -9,6 +9,8 @@ import { setToastState } from '@/store/common/global';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { RootState } from '@store/store';
 import { UserModel } from '@/types/userType';
+import DeclineDialog from '@/dialogs/userdialogs/DeclineDialog';
+import RemarksDialog from '@/dialogs/userdialogs/RemarksDialog';
 
 const Appointments: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
@@ -16,6 +18,11 @@ const Appointments: React.FC = () => {
     const [filteredAppointments, setFilteredAppointments] = useState<AppointmentModel[]>([]);
     const user: UserModel = useSelector((state: RootState) => state.userState);
     const [loading, setLoading] = useState<boolean>(true);
+    const [declineDialog, setDeclineDialog] = useState<boolean>(false);
+    const [remarksDialog, setRemarksDialog] = useState<boolean>(false);
+    const [declineId, setDeclineId] = useState<number>(0);
+    const [declineLoad, setDeclineLoad] = useState<boolean>(false);
+    const [remark, setRemarks] = useState<string>("");
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,6 +32,32 @@ const Appointments: React.FC = () => {
     const handleRefresh = () => {
         fetchActiveAppointments();
     }
+
+    const handleDeclineDialog = (id?: number) => {
+        setDeclineDialog(true);
+        id && setDeclineId(id);
+    }
+
+    const handleDecline = async (remarks: string) => {
+        setDeclineLoad(true)
+
+        let data = {
+            id: declineId,
+            remarks: remarks
+        };
+        const response = await axios.post("/api/appointment/declineAppointment", data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (response.data.status == "success") {
+            dispatch(setToastState({ toast: true, toastMessage: "Appointment Decline Successfully", toastSuccess: true }));
+            updateStatus(response.data.appointment);
+            setDeclineLoad(false)
+            setDeclineDialog(false);
+        }
+    }
+
     const fetchActiveAppointments = async () => {
         try {
             setLoading(true);
@@ -143,26 +176,34 @@ const Appointments: React.FC = () => {
                             Edit
                         </Link>
                         {(user.usertype == 0 || user.usertype == 2) && (
-                            <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => changeStatusAppointment(row.appointment_id, 2)}>
+                            // 2
+                            <button className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]' onClick={() => handleDeclineDialog(row.appointment_id)}>
                                 Decline
                             </button>
                         )}
                     </div>
-                ) : (
+                ) : row.appointmentStatus === 2 ? (
                     <>
-                        {
-                            row.appointmentStatus != 2 && (
-                                <Link to={ToRedirect(row.consultationTypeName, row.appointment_id, row.appointmentStatus)} className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    </svg>
-                                    View
-                                </Link>
-                            )
-                        }
+                        <button onClick={() => { setRemarksDialog(true), setRemarks(row.remarks ?? "") }} className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>
+                            View Remarks
+                        </button>
                     </>
-                )
+                ) :
+                    (
+                        <>
+                            {
+                                row.appointmentStatus != 2 && (
+                                    <Link to={ToRedirect(row.consultationTypeName, row.appointment_id, row.appointmentStatus)} className=' btn btn-primary btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                        View
+                                    </Link>
+                                )
+                            }
+                        </>
+                    )
             ),
             sortable: false,
         }
@@ -266,6 +307,9 @@ const Appointments: React.FC = () => {
                     />
                 </div>
             </div>
+
+            <DeclineDialog isOpen={declineDialog} onDecline={handleDecline} isLoad={declineLoad} setDeclineDialog={() => setDeclineDialog(!declineDialog)} />
+            <RemarksDialog isOpen={remarksDialog} setRemarkDialog={() => setRemarksDialog(!remarksDialog)} remarks={remark} />
         </div >
     )
 }
