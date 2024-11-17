@@ -1,0 +1,87 @@
+import { AppointmentModel } from '@/types/appointmentType';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+
+interface TimeDialogProps {
+    appointmentDate?: string;
+    Toggle: boolean;
+    SetToggle: () => void;
+    SetTime: (time: string) => void;
+}
+
+const TimeDialog: React.FC<TimeDialogProps> = (props: TimeDialogProps) => {
+    const token: string | null = localStorage.getItem("token");
+    const [timeAvail, setTimeAvail] = useState<AppointmentModel[]>([])
+    const [selectedTime, setSelectedTime] = useState<string>("");
+    const [showError, setShowError] = useState<boolean>(false);
+
+    useEffect(() => {
+        const getAppointmentDate = async () => {
+            const response = await axios.post("/api/appointment/getAppointmentSchedByDate", { appointmentDate: props.appointmentDate }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.data.status == "success") {
+                setTimeAvail(response.data.time);
+            }
+        }
+        setSelectedTime("");
+        getAppointmentDate();
+    }, []);
+
+    const handleSelectedTime = (time: string) => {
+        setSelectedTime(time);
+    }
+
+    const handleTimeSubmit = () => {
+        if (selectedTime == "") {
+            setShowError(true);
+        }
+        else {
+            setShowError(false);
+            props.SetTime(selectedTime);
+        }
+    }
+    const findTimeDisabled = (time: string) => {
+        const isDisabled = timeAvail.find(x => x.appointmentTime == `${time}:00`)
+        return isDisabled ? true : false;
+    }
+
+    return (
+        <>
+            <div tabIndex={-1} aria-hidden="true" className={`${!props.Toggle ? 'hidden' : ''} overflow-y-auto flex justify-center items-center overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+                <div className="relative p-4 w-full max-w-2xl max-h-full ">
+                    <div className="relative bg-white rounded-lg shadow border">
+                        <p className='px-[30px] pt-[30px] font-semibold text-[17px]'>Select Time <span className='italic text-[14px]'>(disabled time is already taken)</span></p>
+                        <div className="flex items-center justify-between p-[30px] pb-0 rounded-t">
+                            <div className="flex items-center mb-4">
+                                <input type="radio" disabled={findTimeDisabled("08:30")} id='timeRadio1' checked={selectedTime == "08:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="08:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <label htmlFor="timeRadio1" className="ms-2 text-sm font-medium text-gray-400">8:30 - 9:30</label>
+                            </div>
+                            <div className="flex items-center mb-4">
+                                <input type="radio" disabled={findTimeDisabled("09:30")} id='timeRadio2' checked={selectedTime == "09:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="09:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <label htmlFor="timeRadio2" className="ms-2 text-sm font-medium text-gray-400">9:30 - 10:30</label>
+                            </div>
+                            <div className="flex items-center mb-4">
+                                <input type="radio" disabled={findTimeDisabled("10:30")} id='timeRadio3' checked={selectedTime == "10:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="10:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <label htmlFor="timeRadio3" className="ms-2 text-sm font-medium text-gray-400">10:30 - 11:30</label>
+                            </div>
+                        </div>
+
+                        {showError && (
+                            <p className='mb-0 px-[30px] pt-1 pb-1 text-red-500 text-[14px]'>Please select a time!</p>
+                        )}
+
+                        <div className="flex items-center gap-2 justify-end p-4 md:p-5 border-t border-gray-200 rounded-b">
+                            <button type="button" onClick={props.SetToggle} className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Cancel</button>
+                            <button type="button" onClick={handleTimeSubmit} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default TimeDialog

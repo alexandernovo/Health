@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { RootState } from '@store/store';
 import { useSelector } from 'react-redux';
+import TimeDialog from '@/dialogs/userdialogs/TimeDialog';
+
 
 const CreateAppointments: React.FC = () => {
     const token: string | null = localStorage.getItem('token');
@@ -16,6 +18,7 @@ const CreateAppointments: React.FC = () => {
     const [consultationType, setConsultationType] = useState<ConsultationModel[]>([]);
     const isAdmin: number | undefined = useSelector((state: RootState) => state.userState.usertype);
     const user: UserModel = useSelector((state: RootState) => state.userState);
+    const [toggleTime, setToggleTime] = useState<boolean>(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentDate = new Date();
@@ -31,7 +34,7 @@ const CreateAppointments: React.FC = () => {
         address: '',
         consultationTypeId: undefined,
         appointmentDate: currentDateString,
-        appointmentTime: currentTimeString,
+        appointmentTime: undefined,
         appointmentStatus: isAdmin == 0 ? 3 : 1,
         isActive: undefined,
         user_id: undefined
@@ -151,6 +154,30 @@ const CreateAppointments: React.FC = () => {
         }
     };
 
+    const handleTime = (time: string) => {
+        if (time != "") {
+            setToggleTime(false);
+            setAppointments((prevState: any) => ({
+                ...prevState,
+                appointmentTime: time
+            }));
+        }
+    }
+
+    const timeDisplay = (time: string) => {
+        console.log(time);
+        if (time == "08:30") {
+            return "08:30 - 09:30";
+        }
+        if (time == "09:30") {
+            return "09:30 - 10:30";
+        }
+        if (time == "10:30") {
+            return "10:30 - 11:30";
+        }
+        return "";
+    }
+
     return (
         <div className="m-3">
             <div className="text-sm breadcrumbs">
@@ -223,9 +250,14 @@ const CreateAppointments: React.FC = () => {
                             </div>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                 <label className='font-semibold text-[14px]'>Appointment Time*</label>
-                                <input type="time" name="appointment_time" value={appointment.appointmentTime} onChange={handleTimeChange} className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                <input type="text" readOnly onClick={() => setToggleTime(!toggleTime)} name="appointment_time" value={appointment.appointmentTime == undefined ? 'NA' : timeDisplay(appointment.appointmentTime)} onChange={handleTimeChange} className="input input-bordered w-full h-[48px]" placeholder="Time" />
                                 {error.appointmentTime && <p className="text-red-500 text-[13px]">Appointment Time is required</p>}
                             </div>
+                            {/* <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
+                                <label className='font-semibold text-[14px]'>Appointment Time*</label>
+                                <input type="time" name="appointment_time" value={appointment.appointmentTime} onChange={handleTimeChange} className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                {error.appointmentTime && <p className="text-red-500 text-[13px]">Appointment Time is required</p>}
+                            </div> */}
                         </div>
                         <div className='flex'>
                             <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
@@ -256,6 +288,7 @@ const CreateAppointments: React.FC = () => {
                     </form>
                 </div>
             </div>
+            <TimeDialog appointmentDate={appointment.appointmentDate} Toggle={toggleTime} SetToggle={() => setToggleTime(!toggleTime)} SetTime={handleTime} />
         </div >
     );
 }

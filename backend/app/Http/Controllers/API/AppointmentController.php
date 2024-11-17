@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\SMSController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -233,5 +234,19 @@ class AppointmentController extends Controller
                 'errors' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function getAppointmentSchedByDate(Request $request)
+    {
+        $date = date('Y-m-d', strtotime($request->post('appointmentDate')));
+        $data = Appointment::where("appointmentDate", $date)
+            ->where("appointmentStatus", 3)
+            ->get();
+
+        return response()->json([
+            'message' => 'Date Fetch Successfully',
+            'time' => $data,
+            'status' => 'success',
+        ], 200);
     }
 }
