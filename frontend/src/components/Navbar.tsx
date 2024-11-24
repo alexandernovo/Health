@@ -49,11 +49,12 @@ const Navbar: React.FC = () => {
             }
         };
 
-        // Set interval to fetch appointments every 5000ms
-        const intervalId = setInterval(fetchAppointments, 5000);
+        if(isAuthenticated)
+        {
+            const intervalId = setInterval(fetchAppointments, 5000);
+            return () => clearInterval(intervalId);
+        }
 
-        // Clean up the interval when the component unmounts
-        return () => clearInterval(intervalId);
     }, [token]); // Ensure token is included as dependency
 
     return (
