@@ -60,7 +60,8 @@ class AppointmentController extends Controller
             'appointmentDate' => $request->appointmentDate,
             'appointmentTime' => date('H:i:s', strtotime($request->appointmentTime)),
             'appointmentStatus' => $request->appointmentStatus,
-            'isActive'  => 1
+            'isActive'  => 1,
+            'appointmentType' => $request->appointmentType
         ]);
 
         return response()->json([
@@ -85,7 +86,7 @@ class AppointmentController extends Controller
     public function getAppointments($status)
     {
         try {
-            $appointments = Appointment::with('user', 'consultation')->where("isActive", $status)->orderBy('appointment_id', 'desc')->get();
+            $appointments = Appointment::with('user', 'consultation')->where("isActive", $status)->where('appointmentType',  null)->orderBy('appointment_id', 'desc')->get();
 
             $mappedAppointments = $appointments->map(function ($appointment) {
                 return [
@@ -147,6 +148,7 @@ class AppointmentController extends Controller
             'appointmentDate' =>  $appointment->appointmentDate,
             'appointmentTime' =>  $appointment->appointmentTime,
             'appointmentStatus' =>  $appointment->appointmentStatus,
+            'appointmentType' =>  $appointment->appointmentType,
             'isActive' =>  $appointment->isActive,
             'brgy' => $appointment->user->brgy,
             'municipality' => $appointment->user->municipality,

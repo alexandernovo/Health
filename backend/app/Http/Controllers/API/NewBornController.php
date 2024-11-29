@@ -110,7 +110,7 @@ class NewBornController extends Controller
     public function getNewbornOneRecord($appointment_id)
     {
         try {
-            $newborn = Newborn::whereHas('postpartrum')->with('postpartrum')->where('appointment_id', $appointment_id)->first();
+            $newborn = Newborn::with('postpartrum')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch newborn record successfully',

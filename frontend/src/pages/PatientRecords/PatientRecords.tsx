@@ -49,11 +49,13 @@ const PatientRecords: React.FC = () => {
             });
             if (response.data.status === "success") {
                 setRecord(Object.values(response.data.record));
-                setLoading(false);
             }
         }
         catch (error) {
             console.log(error);
+        }
+        finally{
+            setLoading(false);
         }
     };
 
@@ -86,7 +88,7 @@ const PatientRecords: React.FC = () => {
         else if (consultationTypeName == "Immunization") {
             return `/immunization_record/${user_id}`
         }
-        else if (consultationTypeName == "E-Konsulta") {
+        else if (consultationTypeName == "Check-up") {
             return `/ekonsulta_records/${user_id}`
         }
         else {

@@ -121,7 +121,7 @@ class ImmunizationController extends Controller
     public function getImmunizationOneRecord($appointment_id)
     {
         try {
-            $immunization = Immunization::whereHas('immunization_result')->with('immunization_result')->where('appointment_id', $appointment_id)->first();
+            $immunization = Immunization::with('immunization_result')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch immunization record successfully',

@@ -5,7 +5,9 @@ import axios from 'axios';
 import { UserModel } from '@/types/userType';
 import ReportFilter from '@/dialogs/filterdialogs/ReportFilter';
 import { ReportFilterParam, initialReportFilter } from '@/types/reportfilter';
+import PatientRecordDialog from '@/dialogs/patientrecordsdialog/PatientRecordDialog';
 import { useNavigate } from 'react-router-dom';
+import { AppointmentModel } from '@/types/appointmentType';
 
 const ManageRecords: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
@@ -13,6 +15,25 @@ const ManageRecords: React.FC = () => {
     const [filteredUsers, setFilteredUsers] = useState<UserModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [toggle, setToggles] = useState<boolean>(false);
+    const [togglePatientModal, setTogglePatientModal] = useState<boolean>(false);
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0];  // 'YYYY-MM-DD' format
+    const currentTimeString = currentDate.toTimeString().slice(0, 5);
+
+    const [appointment, setAppointments] = useState<AppointmentModel>({
+        appointment_id: undefined,
+        firstname: undefined,
+        lastname: undefined,
+        contact_number: '',
+        address: '',
+        consultationTypeId: undefined,
+        appointmentDate: currentDateString,
+        appointmentTime: undefined,
+        appointmentStatus: 3,
+        isActive: undefined,
+        user_id: undefined,
+        appointmentType : null
+    });
     const navigate = useNavigate();
 
     const Filter = (filter: ReportFilterParam) => {
@@ -23,7 +44,20 @@ const ManageRecords: React.FC = () => {
         }
     };
 
+    const PatientForm = async (filter: ReportFilterParam) => {
+        // Wait for the URL to be resolved from the redirectToForm function
+        const url = await redirectToForm(filter);
+        
+        console.log(url);  // You can check what URL is returned
+    
+        if (url) {
+            navigate(url);  // Navigate to the returned URL if it's valid
+        }
+    };
+    
+
     const redirectToReport = (filter: ReportFilterParam): string => {
+
         switch (filter.reportType) {
             case "Maternal Health Records":
                 return `/maternal_records/${filter.user_id}`;
@@ -37,12 +71,75 @@ const ManageRecords: React.FC = () => {
                 return `/vaccination_record/${filter.user_id}`;
             case "Immunization":
                 return `/immunization_record/${filter.user_id}`;
-            case "Ekonsulta":
+            case "Check-up":
                 return `/ekonsulta_records/${filter.user_id}`;
             default:
                 return ""; // Return an empty string if no valid reportType
         }
     }
+
+    const redirectToForm = (filter: ReportFilterParam): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            saveAppointment(filter, (appointmentData) => {
+                console.log(filter.reportType);
+                let redirectUrl = ''; // Default empty string
+    
+                switch (filter.reportType) {
+                    case "Maternal Health Records":
+                        redirectUrl = `/managematernal/${appointmentData.appointment_id}`;
+                        break;
+                    case "Newborn Delivery Record":
+                        redirectUrl = `/newborndeliveryform/${appointmentData.appointment_id}`;
+                        break;
+                    case "Family Planning":
+                        redirectUrl = `/familyplanning_form/${appointmentData.appointment_id}`;
+                        break;
+                    case "Hypertensive/Diabetic":
+                        redirectUrl = `/hypertensive_form/${appointmentData.appointment_id}`;
+                        break;
+                    case "Vaccination":
+                        redirectUrl = `/vaccination_form/${appointmentData.appointment_id}`;
+                        break;
+                    case "Immunization":
+                        redirectUrl = `/immunization_form/${appointmentData.appointment_id}`;
+                        break;
+                    case "Check-up":
+                        redirectUrl = `/ekonsulta_form/${appointmentData.appointment_id}`;
+                        break;
+                    default:
+                        break; // Leave redirectUrl as empty string
+                }
+    
+                resolve(redirectUrl); // Resolve with the correct URL
+            });
+        });
+    }
+    
+    const saveAppointment = async (filter: ReportFilterParam, callback: (appointmentData: AppointmentModel) => void) => {
+        try {
+            const response = await axios.post(
+                '/api/appointment/createappointment',
+                {
+                    user_id: filter.user_id,
+                    consultationTypeId: filter.consultationTypeId,
+                    appointmentTime: currentTimeString,
+                    appointmentDate: appointment.appointmentDate,
+                    appointmentStatus: appointment.appointmentStatus,
+                    appointmentType: 1
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (response.data.status === 'success') {
+                callback(response.data.appointment);
+            } 
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         getRecords();
@@ -139,6 +236,12 @@ const ManageRecords: React.FC = () => {
                                 Manage Records
                             </h1>
                             <div className='flex gap-1'>
+                                <button className='btn btn-primary btn-sm' onClick={() => setTogglePatientModal(true)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                    Add Patient Records
+                                </button>
                                 <Link to='/hypertensive_group_report' className='btn btn-primary btn-sm' >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                         <path fillRule="evenodd" d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z" clipRule="evenodd" />
@@ -185,6 +288,7 @@ const ManageRecords: React.FC = () => {
             </div>
 
             <ReportFilter Toggle={setToggle} Show={toggle} Filter={Filter} />
+            <PatientRecordDialog Toggle={() => setTogglePatientModal(!togglePatientModal)} Show={togglePatientModal} Filter={PatientForm} />
         </>
     );
 }

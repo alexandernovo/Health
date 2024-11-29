@@ -17,7 +17,7 @@ class ConsultationTypeSeeder extends Seeder
     {
         DB::table('consultationtype')->insert([
             [
-                'consultationTypeName' => 'E-Konsulta',
+                'consultationTypeName' => 'Check-up',
                 'consultationTypeStatus' => 1,
                 'created_at' => now(),
                 'updated_at' => now()

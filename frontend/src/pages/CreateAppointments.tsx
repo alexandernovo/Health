@@ -37,7 +37,8 @@ const CreateAppointments: React.FC = () => {
         appointmentTime: undefined,
         appointmentStatus: isAdmin == 0 ? 3 : 1,
         isActive: undefined,
-        user_id: undefined
+        user_id: undefined,
+        appointmentType : null
     });
 
     const [error, setError] = useState({
@@ -135,7 +136,8 @@ const CreateAppointments: React.FC = () => {
                     consultationTypeId: appointment.consultationTypeId,
                     appointmentTime: appointment.appointmentTime,
                     appointmentDate: appointment.appointmentDate,
-                    appointmentStatus: appointment.appointmentStatus
+                    appointmentStatus: appointment.appointmentStatus,
+                    appointmentType: appointment.appointmentType
                 },
                 {
                     headers: {

@@ -229,7 +229,7 @@ const Appointments: React.FC = () => {
             else if (type == "Immunization") {
                 return `/immunization_form/${appointment_id}`
             }
-            else if (type == "E-Konsulta") {
+            else if (type == "Check-up") {
                 return `/ekonsulta_form/${appointment_id}`
             }
             else {
@@ -255,7 +255,7 @@ const Appointments: React.FC = () => {
             else if (type == "Immunization") {
                 return `/immunization_report/${appointment_id}`
             }
-            else if (type == "E-Konsulta") {
+            else if (type == "Check-up") {
                 return `/ekonsulta_report/${appointment_id}`
             }
             else {

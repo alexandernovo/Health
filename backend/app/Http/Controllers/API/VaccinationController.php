@@ -93,7 +93,7 @@ class VaccinationController extends Controller
     public function getVaccinationOneRecord($appointment_id)
     {
         try {
-            $vaccination = Vaccination::whereHas('othervaccines')->with('othervaccines')->where('appointment_id', $appointment_id)->first();
+            $vaccination = Vaccination::with('othervaccines')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch vaccination record successfully',

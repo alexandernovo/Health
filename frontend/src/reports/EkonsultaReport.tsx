@@ -31,7 +31,6 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
             })
         if (response.data.status == 'success') {
             setEkonsulta(response.data.ekonsulta);
-            console.log(response.data.ekonsulta)
         }
     }
 

@@ -162,7 +162,7 @@ class FamilyPlanningController extends Controller
     public function getFamilyPlanningOne($appointment_id)
     {
         try {
-            $familyplanning = FamilyPlanning::whereHas('familyassessment')->with('familyassessment')->where('appointment_id', $appointment_id)->first();
+            $familyplanning = FamilyPlanning::with('familyassessment')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch family planning record successfully',

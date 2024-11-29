@@ -155,7 +155,7 @@ class MaternalRecordController extends Controller
     public function getMaternalOneRecord($appointment_id)
     {
         try {
-            $maternal = Maternal::whereHas('medical')->with('medical')->where('appointment_id', $appointment_id)->first();
+            $maternal = Maternal::with('medical')->where('appointment_id', $appointment_id)->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Fetch maternal record successfully',

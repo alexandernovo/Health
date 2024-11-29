@@ -8,8 +8,9 @@ export interface AppointmentModel extends UserModel {
     appointmentTime?: string;
     appointmentStatus?: number;
     isActive?: number;
-    user_id?: number
-    remarks?: string
+    user_id?: number;
+    remarks?: string;
+    appointmentType? : number | null
 }
 
 
@@ -23,6 +24,7 @@ export const AppointmentModelInitialValuue = () => {
         appointmentStatus: 0,
         isActive: 0,
         user_id: 0,
-        remarks: ""
+        remarks: "",
+        appointmentType: null
     }
 }

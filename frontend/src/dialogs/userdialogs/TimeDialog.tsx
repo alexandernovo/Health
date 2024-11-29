@@ -28,7 +28,7 @@ const TimeDialog: React.FC<TimeDialogProps> = (props: TimeDialogProps) => {
         }
         setSelectedTime("");
         getAppointmentDate();
-    }, []);
+    }, [props.appointmentDate]);
 
     const handleSelectedTime = (time: string) => {
         setSelectedTime(time);
