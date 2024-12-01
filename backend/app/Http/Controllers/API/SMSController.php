@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\User;
 use Vonage\Client\Credentials\Basic;
 use Vonage\Client;
@@ -40,17 +41,17 @@ class SMSController extends Controller
         }
     }
 
-    public function settings($user_id, $status)
+    public function settings($user_id, $status, $appointment_id)
     {
         // Map status codes to text
         $status_text = $status == 1 ? "Pending" : ($status == 2 ? "Declined" : ($status == 3 ? "Approved" : "Mark as Done"));
         
         // Retrieve the user's details from the database
         $user = User::where('id', $user_id)->first();
-
+        $appointment = Appointment::where('appointment_id', $appointment_id)->first();
         // Prepare the data to send
         $data_text = [
-            'message' => 'Dear ' . $user['firstname'] . ' ' . $user['lastname'] . ",\nYour Appointment has been " .  $status_text,
+            'message' => 'Dear ' . $user['firstname'] . ' ' . $user['lastname'] . ",\nYour Appointment on ".date('F d Y', strtotime($appointment->appointmentDate))." at ". $appointment->appointmentTime ." has been " .  $status_text,
             'contact_number' => $user['contact_number']
         ];
 

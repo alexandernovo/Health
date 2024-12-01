@@ -30,7 +30,7 @@ class EkonsultaController extends Controller
             }
 
             $sms = new SMSController();
-            $sms->settings($request->user_id, 4);
+            $sms->settings($request->user_id, 4, $request->appointment_id);
 
             return response()->json([
                 'status' => 'success',

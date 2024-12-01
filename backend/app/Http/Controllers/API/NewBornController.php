@@ -77,7 +77,7 @@ class NewBornController extends Controller
                 $appointment->update(["appointmentStatus" => 4]);
             }
             $sms = new SMSController();
-            $sms->settings($request->user_id, 4);
+            $sms->settings($request->user_id, 4, $request->appointment_id);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Create Newborn Delivery Record Successfully',

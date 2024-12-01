@@ -182,7 +182,7 @@ class AppointmentController extends Controller
                 ]);
 
                 $sms = new SMSController();
-                $sms->settings($appointment->user_id, $status);
+                $sms->settings($appointment->user_id, $status, $id);
 
                 return response()->json([
                     'message' => 'Status Change Successfully',
@@ -222,7 +222,7 @@ class AppointmentController extends Controller
                 ]);
 
                 $sms = new SMSController();
-                $sms->settings($appointment->user_id, 2);
+                $sms->settings($appointment->user_id, 2, $request->id);
 
                 return response()->json([
                     'message' => 'Appointment Decline Successfully',
