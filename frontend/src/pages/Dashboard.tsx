@@ -170,19 +170,19 @@ const Dashboard: React.FC = () => {
             <div className="flex justify-between">
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
-                        <h6 className='font-semibold ml-[90px]'>CAPOYUAN</h6>
+                        <h6 className='font-semibold ml-[55px]'>CAPOYUAN</h6>
                         <ReactApexChart options={option} series={option.series} type="polarArea" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
-                        <h6 className='font-semibold ml-[110px]'>PALMA</h6>
+                        <h6 className='font-semibold ml-[78px]'>PALMA</h6>
                         <ReactApexChart options={options2} series={options2.series} type="polarArea" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
-                        <h6 className='font-semibold ml-[105px]'>IGPALGE</h6>
+                        <h6 className='font-semibold ml-[70px]'>IGPALGE</h6>
                         <ReactApexChart options={options3} series={options3.series} type="polarArea" />
                     </div>
                 </div>
