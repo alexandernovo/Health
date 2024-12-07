@@ -48,6 +48,7 @@ class ImmunizationController extends Controller
             $sms->settings($request->user_id, 4, $request->appointment_id);
 
             return response()->json([
+                'immunization' => $immunization,
                 'status' => 'success',
                 'message' => 'Create immunization record successfully',
             ]);

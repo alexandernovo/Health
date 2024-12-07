@@ -15,6 +15,7 @@ use App\Http\Controllers\API\ImmunizationController;
 use App\Http\Controllers\API\PatientHistoryController;
 use App\Http\Controllers\API\EkonsultaController;
 use App\Http\Controllers\API\NotificationController;
+use App\Http\Controllers\API\DashboardController;
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -112,6 +113,9 @@ Route::prefix('notification')->group(function () {
     Route::get('/getNotification', [NotificationController::class, 'getNotification']);
 });
 
+Route::prefix('dashboard')->group(function () {
+    Route::get('/getDashboardData', [DashboardController::class, 'getDashboardData']);
+});
 //  remove routes
 //  php artisan route:list | Where-Object { $_ -notmatch "/api" } 
 //  add routes
