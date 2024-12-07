@@ -6,7 +6,7 @@ import { generateRandomId } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { StringToDate } from '@/utils/DateFunction';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { DateToString } from '@/utils/DateFunction';
 import axios from 'axios';
@@ -43,6 +43,9 @@ const NewbornDeliveryRecords: React.FC = () => {
     const navigate = useNavigate();
     const [postPartrum, setPostPartrum] = useState<PostPartrumModel[]>([]);
     const token: string | null = localStorage.getItem("token");
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isWalkin = queryParams.get('isWalkin');
 
     const fetchAppointmentDetails = async () => {
         const response = await axios.get(`/api/appointment/getAppointmentById/${appointment_id}`, {
@@ -133,7 +136,12 @@ const NewbornDeliveryRecords: React.FC = () => {
 
         if (response.data.status == "success") {
             dispatch(setToastState({ toast: true, toastMessage: "Newborn Delivery Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+            if (isWalkin) {
+                navigate(`/newborn_report/${appointment_id}`);
+            }
+            else {
+                navigate('/appointments');
+            }
         }
         else {
             setError(response.data.errors);

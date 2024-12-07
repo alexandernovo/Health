@@ -147,7 +147,7 @@ const Account: React.FC = () => {
                                 <option value="Palma" selected={userModel.brgy === "Palma"}>Palma</option>
                                 <option value="Igpalge" selected={userModel.brgy === "Igpalge"}>Igpalge</option>
                             </select>
-                            {error.brgy && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
+                            {error.brgy && error.brgy != "Igpalge" && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 
                             <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">

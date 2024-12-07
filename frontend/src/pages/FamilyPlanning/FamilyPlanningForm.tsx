@@ -7,7 +7,7 @@ import { generateRandomId } from '@/utils/CommonFunctions';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const FamilyPlanningForm: React.FC = () => {
 
@@ -20,6 +20,9 @@ const FamilyPlanningForm: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isWalkin = queryParams.get('isWalkin');
 
     useEffect(() => {
         fetchAppointmentDetails();
@@ -190,7 +193,13 @@ const FamilyPlanningForm: React.FC = () => {
 
             if (response.data.status == "success") {
                 dispatch(setToastState({ toast: true, toastMessage: "Family Planning Record Created Successfully", toastSuccess: true }));
-                navigate('/appointments');
+
+                if (isWalkin) {
+                    navigate(`/familyplanning_report/${appointment_id}`);
+                }
+                else {
+                    navigate('/appointments');
+                }
             }
         }
         catch (error) {

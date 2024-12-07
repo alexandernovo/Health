@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { HypertensiveModel, HypertensiveModelInitialValue } from '@/types/hypertensive';
 import { AppointmentModel } from '@/types/appointmentType';
 import axios from 'axios';
@@ -16,6 +16,9 @@ const HypertensiveForm: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isWalkin = queryParams.get('isWalkin');
 
     useEffect(() => {
         fetchAppointmentDetails();
@@ -67,7 +70,14 @@ const HypertensiveForm: React.FC = () => {
 
         if (response.data.status == "success") {
             dispatch(setToastState({ toast: true, toastMessage: "Hypertensive/Diabetic Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+           
+            if (isWalkin) {
+                navigate(`/hypertensive_report/${appointment_id}`);
+            }
+            else
+            {
+                navigate('/appointments');
+            }
         }
     }
 

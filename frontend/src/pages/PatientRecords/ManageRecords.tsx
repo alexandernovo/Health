@@ -46,8 +46,8 @@ const ManageRecords: React.FC = () => {
 
     const PatientForm = async (filter: ReportFilterParam) => {
         // Wait for the URL to be resolved from the redirectToForm function
-        const url = await redirectToForm(filter);
-        
+        let url = await redirectToForm(filter);
+        url += "?isWalkin=true";
         console.log(url);  // You can check what URL is returned
     
         if (url) {

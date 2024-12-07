@@ -6,7 +6,7 @@ import { generateRandomId } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AppointmentModel } from '@/types/appointmentType';
 
@@ -18,6 +18,9 @@ const ManageMaternalHealthRecords: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isWalkin = queryParams.get('isWalkin');
 
     useEffect(() => {
         fetchAppointmentDetails();
@@ -223,7 +226,14 @@ const ManageMaternalHealthRecords: React.FC = () => {
             );
             if (response.data.status == "success") {
                 dispatch(setToastState({ toast: true, toastMessage: "Maternal Health Record Created Successfully", toastSuccess: true }));
-                navigate('/appointments');
+                if(isWalkin)
+                {
+                    navigate(`/maternal_report/${appointment_id}`);
+                }
+                else
+                {
+                    navigate('/appointments');
+                }
             }
             else {
                 setError(response.data.errors);

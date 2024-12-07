@@ -75,7 +75,7 @@ const VaccinationRecord: React.FC = () => {
             width: '40%'
         },
         {
-            name: 'Date of Appointment',
+            name: 'Date of Appointment / Record',
             selector: (row: AppointmentModel) => `${DateToString(row.appointmentDate)} ${TimeToString12Hour(row.appointmentTime)}` || '',
             sortable: true,
         },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AppointmentModel } from '@/types/appointmentType';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { vaccinationTypes } from '@/types/vaccination';
 import { DateToString, calculateAge } from '@/utils/DateFunction';
 import { VaccinationModel, VaccinationModelInitialValue } from '@/types/vaccination';
@@ -21,6 +21,9 @@ const VaccinationForm: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isWalkin = queryParams.get('isWalkin');
 
     useEffect(() => {
         fetchAppointmentDetails();
@@ -103,7 +106,14 @@ const VaccinationForm: React.FC = () => {
 
         if (response.data.status == "success") {
             dispatch(setToastState({ toast: true, toastMessage: "Vaccination Record Created Successfully", toastSuccess: true }));
-            navigate('/appointments');
+            if(isWalkin)
+            {
+                navigate(`/vaccination_report/${appointment_id}`);
+            }
+            else
+            {
+                navigate('/appointments');
+            }
         }
     }
     return (

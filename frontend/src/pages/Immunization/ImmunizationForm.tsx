@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { AppointmentModel } from '@/types/appointmentType';
 import { DateToString, calculateAge } from '@/utils/DateFunction';
 import { Immunization, ImmunizationInitialValue } from '@/types/Immunization';
@@ -18,6 +18,9 @@ const ImmunizationForm: React.FC = () => {
   const [immunizationResultList, setImmunizationResultList] = useState<ImmunizationResult[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isWalkin = queryParams.get('isWalkin');
 
   useEffect(() => {
     fetchAppointmentDetails();
@@ -84,7 +87,12 @@ const ImmunizationForm: React.FC = () => {
 
     if (response.data.status == "success") {
       dispatch(setToastState({ toast: true, toastMessage: "Immunization Record Created Successfully", toastSuccess: true }));
-      navigate('/appointments');
+      if (isWalkin) {
+        navigate(`/immunization_report/${appointment_id}`);
+      }
+      else {
+        navigate('/appointments');
+      }
     }
   }
   const removeResult = (keyIdToRemove?: string) => {
