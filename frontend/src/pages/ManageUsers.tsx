@@ -160,7 +160,7 @@ const ManageUsers: React.FC = () => {
         },
         {
             name: 'Role',
-            selector: (row: UserModel) => (row.usertype === 0 ? 'Admin' : 'Patient'),
+            selector: (row: UserModel) => (row.usertype === 0 ? 'Admin' : row.usertype === 2 ? 'Staff' : 'Patient'),
             sortable: true,
         },
         {
