@@ -119,6 +119,7 @@ class UserController extends Controller
 
     public function getAvailableStaff()
     {
+
         $staff = DB::select('
             SELECT users.*, userlog.*
             FROM users
@@ -134,7 +135,38 @@ class UserController extends Controller
             AND userlog.logstatus != "logout"
         ');
 
+        // Loop through each staff and check their log status based on created_at
+        foreach ($staff as $key => $user) {
+            try {
+                // Parse the 'created_at' field from userlog to a Carbon instance
+                $logCreatedAt = date('Y-m-d', strtotime($user->created_at));
 
-        return response()->json(['status' => 'success', 'message' => 'Staff Fetch Successfully', 'staff' => $staff]);
+                // Check if the 'created_at' timestamp is before the start of yesterday
+                if ($logCreatedAt < date('Y-m-d')) {
+                    // Update logstatus to 'logout' if created_at is before the start of yesterday
+                    DB::table('userlog')
+                        ->where('user_id', $user->user_id)
+                        ->update(['logstatus' => 'logout']);
+
+                    // Exclude this user from the results
+                    unset($staff[$key]);
+                }
+            } catch (\Exception $e) {
+                // Ensure we mark them as logged out in case of error
+                DB::table('userlog')
+                    ->where('user_id', $user->user_id)
+                    ->update(['logstatus' => 'logout']);
+
+                // Exclude this user from the results
+                unset($staff[$key]);
+            }
+        }
+
+        // Return the filtered staff data
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Staff fetched successfully',
+            'staff' => array_values($staff), // Reindex the array
+        ]);
     }
 }

@@ -42,18 +42,6 @@ class AppointmentController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        if ($user->id == $userNow['id']) {
-            Notification::create([
-                "sender" => $request->user_id,
-                "receiver" => 0,
-                "notif_type" => "appointment",
-                "id_redirect" => 0,
-                "message" => $user->firstname . ' ' . $user->lastname . ' created an appointment at ' .
-                    date("F d, Y", strtotime($request->appointmentDate)) . ' at ' .
-                    date('H:i a', strtotime($request->appointmentTime))
-
-            ]);
-        }
         $appointment = Appointment::create([
             'user_id' => $request->user_id,
             'consultationTypeId' => $request->consultationTypeId,
@@ -63,6 +51,31 @@ class AppointmentController extends Controller
             'isActive'  => 1,
             'appointmentType' => $request->appointmentType
         ]);
+
+        if ($user->id == $userNow['id']) {
+            Notification::create([
+                "sender" => $request->user_id,
+                "receiver" => 0,
+                "notif_type" => "appointment",
+                "id_redirect" => 0,
+                "message" => $user->firstname . ' ' . $user->lastname . ' created an appointment at ' .
+                    date("F d, Y", strtotime($request->appointmentDate)) . ' at ' .
+                    date('H:i a', strtotime($request->appointmentTime))
+            ]);
+        } else {
+            $userNow = Auth::guard('api')->user();
+            Notification::create([
+                "sender" => $userNow['id'],
+                "receiver" => $request->user_id,
+                "notif_type" => "appointment",
+                "id_redirect" => 0,
+                "message" => 'ALIGTOS BARANGAY HEALTH STATION created an appointment for you at ' .
+                    date("F d, Y", strtotime($request->appointmentDate)) . ' at ' .
+                    date('H:i a', strtotime($request->appointmentTime))
+            ]);
+            $sms = new SMSController();
+            $sms->settings($request->user_id, 5, $appointment->appointment_id);
+        }
 
         return response()->json([
             'status' => 'success',

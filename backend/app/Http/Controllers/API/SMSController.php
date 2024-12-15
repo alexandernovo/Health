@@ -35,8 +35,6 @@ class SMSController extends Controller
                 return false;
             }
         } catch (Exception $e) {
-            // Log or handle the exception appropriately
-            \Log::error('SMS sending failed: ' . $e->getMessage());
             return false;
         }
     }
@@ -44,20 +42,26 @@ class SMSController extends Controller
     public function settings($user_id, $status, $appointment_id)
     {
         // Map status codes to text
-        $status_text = $status == 1 ? "Pending" : ($status == 2 ? "Declined" : ($status == 3 ? "Approved" : "Mark as Done"));
-        
+        $status_text = $status == 1 ? "Pending" : ($status == 2 ? "Declined" : ($status == 3 ? "Approved" : ($status == 5 ? "Created" : "Mark as Done")));
+
         // Retrieve the user's details from the database
         $user = User::where('id', $user_id)->first();
         $appointment = Appointment::where('appointment_id', $appointment_id)->first();
+        $message = "";
+        if ($status != 5) {
+            $message =  'Dear ' . $user['firstname'] . ' ' . $user['lastname'] . ",\nYour Appointment on " . date('F d Y', strtotime($appointment->appointmentDate)) . " at " . $appointment->appointmentTime . " has been " .  $status_text;
+        } else {
+            $message = 'Dear ' . $user['firstname'] . ' ' . $user['lastname'] . ",\nALIGTOS BARANGAY HEALTH STATION created an appointment for you on " . date('F d Y', strtotime($appointment->appointmentDate)) . " at " . $appointment->appointmentTime;
+        }
         // Prepare the data to send
         $data_text = [
-            'message' => 'Dear ' . $user['firstname'] . ' ' . $user['lastname'] . ",\nYour Appointment on ".date('F d Y', strtotime($appointment->appointmentDate))." at ". $appointment->appointmentTime ." has been " .  $status_text,
+            'message' => $message,
             'contact_number' => $user['contact_number']
         ];
 
         // Send the SMS using the prepared data
         $sendSMS = $this->sendSMS($data_text);
-        
+
         // Return a response or handle accordingly
         return true;
     }

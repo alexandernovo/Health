@@ -31,8 +31,8 @@ class NotificationController extends Controller
         } else {
             $query .= " AND notification.receiver = " . $user['id'];
         }
-
-        $data = DB::select($query,);
+        $query .= " ORDER BY notification.created_at DESC";
+        $data = DB::select($query);
 
         return response()->json([
             'status' => 'success',
