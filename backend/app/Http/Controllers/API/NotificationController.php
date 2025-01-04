@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\SMSController;
 use Exception;
 
 
@@ -37,6 +39,31 @@ class NotificationController extends Controller
         return response()->json([
             'status' => 'success',
             'notification' => $data,
+        ]);
+    }
+
+    public function reminders()
+    {
+        $reminders = DB::table('appointments')
+            ->leftJoin('users', 'users.id', 'appointments.user_id')
+            ->where('appointments.appointmentStatus', 3)
+            ->where('reminded', 0)->get();
+        $sms = new SMSController();
+        $messageArray = [];
+
+        foreach ($reminders as $reminder) {
+            if (date('Y-m-d', strtotime($reminder->appointmentDate)) == date('Y-m-d')) {
+                $dateToday = date('F d, Y');
+                $formattedTime = date('h:i A', strtotime($reminder->appointmentTime));
+                $message = "Dear $reminder->firstname $reminder->lastname,\nYour appointment is today ($dateToday) at $formattedTime.";
+                $sms->reminders($message, $reminder->contact_number);
+                $messageArray[] = $message;
+                Appointment::where('appointment_id', $reminder->appointment_id)->update(['reminded' => 1]);
+            }
+        }
+        return response()->json([
+            'status' => 'success',
+            'successfullReminder' => $messageArray,
         ]);
     }
 }

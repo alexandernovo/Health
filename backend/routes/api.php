@@ -111,6 +111,7 @@ Route::prefix('ekonsulta')->group(function () {
 
 Route::prefix('notification')->group(function () {
     Route::get('/getNotification', [NotificationController::class, 'getNotification']);
+    Route::get('/reminders', [NotificationController::class, 'reminders']);
 });
 
 Route::prefix('dashboard')->group(function () {

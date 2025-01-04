@@ -39,6 +39,17 @@ class SMSController extends Controller
         }
     }
 
+    public function reminders($message, $number)
+    {
+        $data_text = [
+            'message' => $message,
+            'contact_number' => $number
+        ];
+
+        $sendSMS = $this->sendSMS($data_text);
+        return true;
+    }
+
     public function settings($user_id, $status, $appointment_id)
     {
         // Map status codes to text

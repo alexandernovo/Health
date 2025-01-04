@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('isActive');
             $table->string('appointmentRemarks')->nullable();
             $table->integer('appointmentType')->nullable();
+            $table->integer('reminded')->nullable();
             $table->timestamps();
 
             $table->foreign('consultationTypeId')->references('consultationTypeId')->on('consultationtype');
