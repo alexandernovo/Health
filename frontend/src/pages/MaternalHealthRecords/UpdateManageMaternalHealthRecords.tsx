@@ -170,7 +170,7 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
 
 
     const removeMedicalAssessment = (keyIdToRemove?: string) => {
-        const indexToRemove = medical.findIndex((item) => item.keyId === keyIdToRemove);
+        const indexToRemove = medical.findIndex((item) => item.keyId == keyIdToRemove);
         if (indexToRemove !== -1) {
             const medicalToRemove = medical[indexToRemove]; // Get the medical model
             if (medicalToRemove.medicalAssessmentID != 0) {
@@ -539,25 +539,25 @@ const UpdateManageMaternalHealthRecords: React.FC = () => {
                                 <label className='text-[12px]'>OB SCORE</label>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="F" checked={maternal.OBScore === 'F'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="F" checked={maternal.OBScore == 'F'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">F</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="P" checked={maternal.OBScore === 'P'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="P" checked={maternal.OBScore == 'P'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">P</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="A" checked={maternal.OBScore === 'A'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="A" checked={maternal.OBScore == 'A'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">A</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="L" checked={maternal.OBScore === 'L'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="L" checked={maternal.OBScore == 'L'} onChange={handleCheckboxChangeOBScore} className="checkbox checkbox-primary checkbox-xs" />
                                         <span className="label-text text-[13px]">L</span>
                                     </label>
                                 </div>

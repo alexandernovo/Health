@@ -32,7 +32,7 @@ const ImmunizationRecord: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === "success") {
+            if (response.data.status == "success") {
                 setUser(response.data.user);
             }
         }

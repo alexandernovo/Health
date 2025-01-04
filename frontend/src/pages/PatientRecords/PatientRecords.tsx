@@ -30,7 +30,7 @@ const PatientRecords: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === "success") {
+            if (response.data.status == "success") {
                 setUser(response.data.user);
             }
         }
@@ -47,7 +47,7 @@ const PatientRecords: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === "success") {
+            if (response.data.status == "success") {
                 setRecord(Object.values(response.data.record));
             }
         }

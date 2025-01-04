@@ -72,7 +72,7 @@ const UpdateAppointments: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setPatients(response.data.patients);
             }
         } catch (error) {
@@ -101,7 +101,7 @@ const UpdateAppointments: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setConsultationType(response.data.consultations);
             }
         } catch (error) {
@@ -110,7 +110,7 @@ const UpdateAppointments: React.FC = () => {
     };
 
     const handlePatientChange = (selectedOption: any) => {
-        const selectedPatient = patients.find(patient => patient.id === selectedOption.value);
+        const selectedPatient = patients.find(patient => patient.id == selectedOption.value);
         setAppointments((prevState: any) => ({
             ...prevState,
             firstname: selectedPatient?.firstname,
@@ -124,7 +124,7 @@ const UpdateAppointments: React.FC = () => {
 
     const handleConsultationChange = (selectedOption: any) => {
         const selectedConsultationType = consultationType.find(
-            consultation => consultation.consultationTypeId === selectedOption.value
+            consultation => consultation.consultationTypeId == selectedOption.value
         );
         setAppointments((prevState: any) => ({
             ...prevState,
@@ -151,7 +151,7 @@ const UpdateAppointments: React.FC = () => {
                     }
                 }
             );
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 dispatch(setToastState({ toast: true, toastMessage: 'Appointment Updated Successfully', toastSuccess: true }));
                 navigate('/appointments');
             } else {

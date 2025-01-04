@@ -151,7 +151,7 @@ const FamilyPlanningFormUpdate: React.FC = () => {
     };
 
     const removeAssessment = (keyIdToRemove?: string) => {
-        const indexToRemove = familyAssessmentModelList.findIndex((item) => item.keyId === keyIdToRemove);
+        const indexToRemove = familyAssessmentModelList.findIndex((item) => item.keyId == keyIdToRemove);
         if (indexToRemove !== -1) {
             const familyAssementToRemove = familyAssessmentModelList[indexToRemove];
             if (familyAssementToRemove.familyAssessmentId != 0) {

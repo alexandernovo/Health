@@ -66,13 +66,15 @@ const Appointments: React.FC = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === "success") {
+            if (response.data.status == "success") {
                 setAppointments(response.data.appointment);
-                const appointmentFilteredByUser: AppointmentModel[] = user.usertype === 0 || user.usertype === 2
+                const appointmentFilteredByUser: AppointmentModel[] = (user.usertype == 0 || user.usertype == 2)
                     ? response.data.appointment
-                    : response.data.appointment.filter((appointment: AppointmentModel) => appointment.user_id === user.id);
-
+                    : response.data.appointment.filter((appointment: AppointmentModel) => appointment.user_id == user.id);
                 setFilteredAppointments(appointmentFilteredByUser);
+                console.log(user.usertype, appointmentFilteredByUser);
+                console.log(user.usertype, response.data.appointment);
+
                 setLoading(false);
             } else {
                 console.log("Fetch Failed");
@@ -102,9 +104,9 @@ const Appointments: React.FC = () => {
                     }
                 }
             );
-            if (response.data.status === "success") {
+            if (response.data.status == "success") {
                 updateStatus(response.data.appointment);
-                const message: string = status === 3 ? "Approved Successfully" : "Cancelled Successfully";
+                const message: string = status == 3 ? "Approved Successfully" : "Cancelled Successfully";
                 dispatch(setToastState({ toast: true, toastMessage: message, toastSuccess: true }));
             }
         } catch (error) {
@@ -116,7 +118,7 @@ const Appointments: React.FC = () => {
     const updateStatus = (updatedAppointment: AppointmentModel) => {
         setFilteredAppointments(prevAppointments => {
             return prevAppointments.map(appointment => {
-                if (appointment.appointment_id === updatedAppointment.appointment_id) {
+                if (appointment.appointment_id == updatedAppointment.appointment_id) {
                     return { ...appointment, appointmentStatus: updatedAppointment.appointmentStatus };
                 }
                 return appointment;
@@ -165,7 +167,7 @@ const Appointments: React.FC = () => {
                 </Link>
             ),
             cell: (row: AppointmentModel) => (
-                row.appointmentStatus === 1 ? (
+                row.appointmentStatus == 1 ? (
                     <div className='flex items-center gap-1'>
                         {(user.usertype == 0 || user.usertype == 2) && (
                             <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
@@ -182,7 +184,7 @@ const Appointments: React.FC = () => {
                             </button>
                         )}
                     </div>
-                ) : row.appointmentStatus === 2 ? (
+                ) : row.appointmentStatus == 2 ? (
                     <>
                         <button onClick={() => { setRemarksDialog(true), setRemarks(row.remarks ?? "") }} className=' btn btn-error btn-xs px-3 text-white btn-outline active:text-white hover:text-white  text-[13px]'>
                             View Remarks

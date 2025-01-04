@@ -37,7 +37,7 @@ const ReportFilter: React.FC<ReportFilterProps> = (props: ReportFilterProps) => 
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setPatients(response.data.patients);
             }
         } catch (error) {
@@ -64,7 +64,7 @@ const ReportFilter: React.FC<ReportFilterProps> = (props: ReportFilterProps) => 
     }
 
     const handlePatientChange = (selectedOption: any) => {
-        const selectedPatient = patients.find(patient => patient.id === selectedOption.value);
+        const selectedPatient = patients.find(patient => patient.id == selectedOption.value);
         setFilter((prevState: any) => ({
             ...prevState,
             user_id: selectedPatient?.id

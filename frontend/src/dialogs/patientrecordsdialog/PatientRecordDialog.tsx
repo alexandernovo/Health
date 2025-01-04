@@ -40,7 +40,7 @@ const PatientRecordDialog: React.FC<PatientRecordDialogProps> = (props: PatientR
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setPatients(response.data.patients);
             }
         } catch (error) {
@@ -54,7 +54,7 @@ const PatientRecordDialog: React.FC<PatientRecordDialogProps> = (props: PatientR
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setConsultationType(response.data.consultations);
             }
         } catch (error) {
@@ -79,7 +79,7 @@ const PatientRecordDialog: React.FC<PatientRecordDialogProps> = (props: PatientR
         }));
     }
     const handlePatientChange = (selectedOption: any) => {
-        const selectedPatient = patients.find(patient => patient.id === selectedOption.value);
+        const selectedPatient = patients.find(patient => patient.id == selectedOption.value);
         setFilter((prevState: any) => ({
             ...prevState,
             user_id: selectedPatient?.id

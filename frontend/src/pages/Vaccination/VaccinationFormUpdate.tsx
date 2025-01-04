@@ -88,7 +88,7 @@ const VaccinationFormUpdate: React.FC = () => {
         }
     }
     const removeOtherVaccinesNow = (keyIdToRemove?: string) => {
-        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId === keyIdToRemove);
+        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId == keyIdToRemove);
         if (indexToRemove !== -1) {
             const otherVaccinesToRemove = otherVaccinesList[indexToRemove]; // Get the medical model
             if (otherVaccinesToRemove.otherVaccinesId != 0) {

@@ -96,7 +96,7 @@ const ImmunizationForm: React.FC = () => {
     }
   }
   const removeResult = (keyIdToRemove?: string) => {
-    const indexToRemove = immunizationResultList.findIndex((item) => item.keyId === keyIdToRemove);
+    const indexToRemove = immunizationResultList.findIndex((item) => item.keyId == keyIdToRemove);
     if (indexToRemove !== -1) {
       const updatedResult = [...immunizationResultList]; // Create a copy of the array
       updatedResult.splice(indexToRemove, 1); // Remove the item

@@ -13,7 +13,7 @@ const Sidebar: React.FC = () => {
 
     const isActiveRoute = (routes: string[]): string => {
         let location_string: string = location.pathname;
-        const exactMatch = routes.find(route => route === location_string);
+        const exactMatch = routes.find(route => route == location_string);
         const dynamicMatch = routes.some(route => location_string.startsWith(route));
         return exactMatch || dynamicMatch ? "active-route" : "";
     };

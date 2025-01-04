@@ -50,7 +50,7 @@ const ManageConsultationType: React.FC = () => {
 
     const HandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value.trim().toLowerCase();
-        if (searchValue === '') {
+        if (searchValue == '') {
             // If search input is empty, revert to original list
             setConsultationType(originalConsultation);
         } else {
@@ -74,7 +74,7 @@ const ManageConsultationType: React.FC = () => {
 
     const UpdateConsultation = (data: ConsultationModel) => {
         setConsultationType((prevconsultations) => {
-            const index = prevconsultations.findIndex((consultation) => consultation.consultationTypeId === data.consultationTypeId);
+            const index = prevconsultations.findIndex((consultation) => consultation.consultationTypeId == data.consultationTypeId);
             if (index !== -1) {
                 const updatedconsultations = [...prevconsultations];
                 updatedconsultations[index] = data;

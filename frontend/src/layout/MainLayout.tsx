@@ -34,7 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
         if (result) {
             setTimeout(() => {
                 setLoading(false);
-                if (location.pathname === "/register" || location.pathname === "/") {
+                if (location.pathname == "/register" || location.pathname == "/") {
                     navigate('/dashboard');
                 }
             }, 2000);
@@ -42,7 +42,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
         else {
             setTimeout(() => {
                 setLoading(false);
-                navigate(location.pathname === '/register' ? '/register' : '/');
+                navigate(location.pathname == '/register' ? '/register' : '/');
             }, 2000);
         }
     }
@@ -55,7 +55,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                if (response.data.status === 'success') {
+                if (response.data.status == 'success') {
 
                     const data = response.data;
                     localStorage.setItem('token', data.authorization.token);

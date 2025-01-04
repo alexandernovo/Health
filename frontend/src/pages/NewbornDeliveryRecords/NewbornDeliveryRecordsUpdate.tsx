@@ -127,7 +127,7 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
         });
     };
     const removePostPartrum = (keyIdToRemove?: string) => {
-        const indexToRemove = postPartrum.findIndex((item) => item.keyId === keyIdToRemove);
+        const indexToRemove = postPartrum.findIndex((item) => item.keyId == keyIdToRemove);
         if (indexToRemove !== -1) {
             const postPartrumToRemove = postPartrum[indexToRemove];
             if (postPartrumToRemove.newBornId != 0) {
@@ -340,15 +340,15 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                             <p className='font-semibold'>UTERUS POSITION</p>
                             <div className='flex gap-5 mt-2'>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="uterusPosition" value="ANTEFLEXED" checked={newborn.uterusPosition === 'ANTEFLEXED'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="uterusPosition" value="ANTEFLEXED" checked={newborn.uterusPosition == 'ANTEFLEXED'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">ANTEFLEXED</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="uterusPosition" value="RETROFLEXED" checked={newborn.uterusPosition === 'RETROFLEXED'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="uterusPosition" value="RETROFLEXED" checked={newborn.uterusPosition == 'RETROFLEXED'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">RETROFLEXED</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="uterusPosition" value="MIDPOSITION" checked={newborn.uterusPosition === 'MIDPOSITION'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="uterusPosition" value="MIDPOSITION" checked={newborn.uterusPosition == 'MIDPOSITION'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">MIDPOSITION</span>
                                 </label>
                             </div>
@@ -358,15 +358,15 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                             <p className='font-semibold mt-3'>SIZE</p>
                             <div className='flex gap-5 mt-2'>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="size" value="SMALL" checked={newborn.size === 'SMALL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="size" value="SMALL" checked={newborn.size == 'SMALL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">SMALL</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="size" value="NORMAL" checked={newborn.size === 'NORMAL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="size" value="NORMAL" checked={newborn.size == 'NORMAL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">NORMAL</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="size" value="LARGE" checked={newborn.size === 'LARGE'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="size" value="LARGE" checked={newborn.size == 'LARGE'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">LARGE</span>
                                 </label>
                             </div>
@@ -375,15 +375,15 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                             <p className='font-semibold mt-3'>SHAPE</p>
                             <div className='flex gap-5 mt-2'>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="shape" value="REGULAR" checked={newborn.shape === 'REGULAR'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="shape" value="REGULAR" checked={newborn.shape == 'REGULAR'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">REGULAR</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="shape" value="IRREGULAR" checked={newborn.shape === 'IRREGULAR'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="shape" value="IRREGULAR" checked={newborn.shape == 'IRREGULAR'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">IRREGULAR</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="shape" value="FIBROID" checked={newborn.shape === 'FIBROID'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="shape" value="FIBROID" checked={newborn.shape == 'FIBROID'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">FIBROID</span>
                                 </label>
                             </div>
@@ -392,15 +392,15 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                             <p className='font-semibold mt-3'>ADNEXAE</p>
                             <div className='flex gap-5 mt-2'>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="adnexae" value="NORMAL" checked={newborn.adnexae === 'NORMAL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="adnexae" value="NORMAL" checked={newborn.adnexae == 'NORMAL'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">NORMAL</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="adnexae" value="ENLARGE" checked={newborn.adnexae === 'ENLARGE'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="adnexae" value="ENLARGE" checked={newborn.adnexae == 'ENLARGE'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">ENLARGE</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="adnexae" value="TENDER" checked={newborn.adnexae === 'TENDER'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="adnexae" value="TENDER" checked={newborn.adnexae == 'TENDER'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">TENDER</span>
                                 </label>
                             </div>
@@ -409,11 +409,11 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                             <p className='font-semibold mt-3'>LACERATION</p>
                             <div className='flex gap-5 mt-2'>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="laceration" value="YES" checked={newborn.laceration === 'YES'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="laceration" value="YES" checked={newborn.laceration == 'YES'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">YES</span>
                                 </label>
                                 <label className="items-center cursor-pointer flex gap-2">
-                                    <input type="checkbox" name="laceration" value="NO" checked={newborn.laceration === 'NO'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                    <input type="checkbox" name="laceration" value="NO" checked={newborn.laceration == 'NO'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                     <span className="label-text text-[13px]">NO</span>
                                 </label>
                             </div>
@@ -424,11 +424,11 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                                 <div className='flex flex-col'>
                                     <div className='flex gap-5'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="discharge" value="YES" checked={newborn.discharge === 'YES'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="discharge" value="YES" checked={newborn.discharge == 'YES'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">YES</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="discharge" value="NO" checked={newborn.discharge === 'NO'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
+                                            <input type="checkbox" name="discharge" value="NO" checked={newborn.discharge == 'NO'} onChange={handleCheckboxChange} className="checkbox checkbox-primary checkbox-xs" />
                                             <span className="label-text text-[13px]">NO</span>
                                         </label>
                                     </div>
@@ -436,7 +436,7 @@ const NewbornDeliveryRecordsUpdate: React.FC = () => {
                                 </div>
                                 <div className='flex w-[60%] flex-cp; items-center gap-2'>
                                     <label className='font-semibold text-[13px]'>If Yes, please specify:</label>
-                                    <input type="text" placeholder="If Yes, please specify:" required={newborn.discharge === 'YES'} disabled={newborn.discharge === 'NO' || newborn.discharge === '' || newborn.discharge === null || newborn.discharge === undefined} name='specify' value={newborn.specify} onChange={handleInputChange} className="input input-bordered input-sm flex-1" />
+                                    <input type="text" placeholder="If Yes, please specify:" required={newborn.discharge == 'YES'} disabled={newborn.discharge == 'NO' || newborn.discharge == '' || newborn.discharge == null || newborn.discharge == undefined} name='specify' value={newborn.specify} onChange={handleInputChange} className="input input-bordered input-sm flex-1" />
                                 </div>
                                 {error?.specify && <p className="text-red-500 text-[13px]">{error?.specify}</p>}
                             </div>

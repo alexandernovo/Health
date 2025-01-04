@@ -110,7 +110,7 @@ const ImmunizationFormUpdate: React.FC = () => {
   }
 
   const removeResult = (keyIdToRemove?: string) => {
-    const indexToRemove = immunizationResultList.findIndex((item) => item.keyId === keyIdToRemove);
+    const indexToRemove = immunizationResultList.findIndex((item) => item.keyId == keyIdToRemove);
     if (indexToRemove !== -1) {
       const resultToremove = immunizationResultList[indexToRemove];
       if (resultToremove.immunizationId != 0) {

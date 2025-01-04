@@ -25,7 +25,7 @@ const AvailableStaff: React.FC = () => {
             }
         });
 
-        if (response.data.status === "success") {
+        if (response.data.status == "success") {
             setAvailableStaff(response.data.staff);
             setFilteredAvailableStaff(response.data.staff);
         }

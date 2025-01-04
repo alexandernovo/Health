@@ -130,7 +130,7 @@ const Dashboard: React.FC = () => {
                 }
             });
 
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 setIgpalge(response.data.data.Igpalge);
                 setCapoyuan(response.data.data.Capoyuan);
                 setPalma(response.data.data.Palma);

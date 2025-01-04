@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                if (response.data.status === "success") {
+                if (response.data.status == "success") {
                     setNotification(response.data.notification);
                     console.log(response.data.notification);
                 }
@@ -69,7 +69,29 @@ const Navbar: React.FC = () => {
             const intervalId = setInterval(fetchNotifications, 5000);
             return () => clearInterval(intervalId);
         }
-    }, [token]); // Ensure token is included as dependency
+    }, [token]);
+
+    useEffect(() => {
+        const remindAppointment = async () => {
+            try {
+                const response = await axios.get("/api/notification/reminders", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data.status == "success") {
+                    console.log(response.data.successfullReminder);
+                }
+            } catch (error) {
+                console.error("Error fetching reminders:", error);
+            }
+        };
+
+        if (isAuthenticated) {
+            const intervalId = setInterval(remindAppointment, 10000);
+            return () => clearInterval(intervalId);
+        }
+    }, [token]);
 
     // Handle notification read and update state
     const handleRead = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, location: string, notif_id: number) => {
@@ -82,7 +104,7 @@ const Navbar: React.FC = () => {
             setReadNotifications(updatedReadNotifications); // Update local state
 
             // Store the updated list of read notifications in localStorage
-            localStorage.setItem("notif", JSON.stringify(updatedReadNotifications)); 
+            localStorage.setItem("notif", JSON.stringify(updatedReadNotifications));
         }
 
         navigate(location); // Navigate to the desired location (appointment or elsewhere)
@@ -126,7 +148,7 @@ const Navbar: React.FC = () => {
                                 {
                                     notification && notification.length > 0 ? (
                                         notification.map((notif, index) => {
-                                            const destination = notif.notif_type === "appointment" ? '/appointments' : '';
+                                            const destination = notif.notif_type == "appointment" ? '/appointments' : '';
                                             const isRead = readNotifications.includes(notif.notification_id.toString());
                                             return (
                                                 <Link onClick={(event) => handleRead(event, destination, notif.notification_id)} to={destination} key={index}>

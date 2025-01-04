@@ -22,10 +22,10 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
     const [inputType2, setInputType2] = useState('password');
 
     const toggleInputType = () => {
-        setInputType(prevType => (prevType === 'password' ? 'text' : 'password'));
+        setInputType(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     const toggleInputType2 = () => {
-        setInputType2(prevType => (prevType === 'password' ? 'text' : 'password'));
+        setInputType2(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     const userInitialData = {
         firstname: '',
@@ -35,7 +35,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         address: '',
         reg_code: '06',
         region: regions
-            .filter((region: any) => region.reg_code === '06')
+            .filter((region: any) => region.reg_code == '06')
             .map((region: any) => region.name)[0],
         prov_code: '0606',
         mun_code: '060602',
@@ -83,7 +83,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
     }, [formData.reg_code, formData.prov_code, formData.mun_code]);
 
     useEffect(() => {
-        const selectedProvince: any = provincesFiltered.find((province: any) => province.prov_code === formData.prov_code);
+        const selectedProvince: any = provincesFiltered.find((province: any) => province.prov_code == formData.prov_code);
         if (selectedProvince) {
             setFormData(prevState => ({
                 ...prevState,
@@ -93,7 +93,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
     }, [formData.prov_code, provincesFiltered]);
 
     useEffect(() => {
-        const selectedMunicipality: any = municipalityFiltered.find((mun: any) => mun.mun_code === formData.mun_code);
+        const selectedMunicipality: any = municipalityFiltered.find((mun: any) => mun.mun_code == formData.mun_code);
         if (selectedMunicipality) {
             setFormData(prevState => ({
                 ...prevState,
@@ -309,9 +309,9 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
                                         /> */}
                                         <label className='text-[13px] font-semibold mb-0 mt-3'>Baranggay*</label>
                                         <select name="brgy" value={formData.brgy} onChange={handleChange} className="select select-bordered select-md w-full ">
-                                            <option value="Capoyuan" selected={formData.brgy === "Capoyuan"}>Capoyuan</option>
-                                            <option value="Palma" selected={formData.brgy === "Palma"}>Palma</option>
-                                            <option value="Igpalge" selected={formData.brgy === "Igpalge"}>Igpalge</option>
+                                            <option value="Capoyuan" selected={formData.brgy == "Capoyuan"}>Capoyuan</option>
+                                            <option value="Palma" selected={formData.brgy == "Palma"}>Palma</option>
+                                            <option value="Igpalge" selected={formData.brgy == "Igpalge"}>Igpalge</option>
                                         </select>
                                         {error.brgy && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">

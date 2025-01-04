@@ -53,7 +53,7 @@ const ManageUsers: React.FC = () => {
 
     const UpdateUserData = (data: UserModel) => {
         setUsers((prevUsers) => {
-            const index = prevUsers.findIndex((user) => user.id === data.id);
+            const index = prevUsers.findIndex((user) => user.id == data.id);
             if (index !== -1) {
                 const updatedUsers = [...prevUsers];
                 updatedUsers[index] = data;
@@ -65,17 +65,17 @@ const ManageUsers: React.FC = () => {
 
     const HandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value.trim().toLowerCase();
-        if (searchValue === '') {
+        if (searchValue == '') {
             setUsers(originalUsers);
         } else {
             const filteredUsers = originalUsers.filter(user => {
                 if (searchValue.toLowerCase().includes('admin')) {
-                    return user.usertype === 0;
+                    return user.usertype == 0;
                 } else if (searchValue.toLowerCase().includes('patient')) {
-                    return user.usertype === 1;
+                    return user.usertype == 1;
                 } else {
                     return Object.values(user).some(value => {
-                        if (typeof value === 'string') {
+                        if (typeof value == 'string') {
                             return value.toLowerCase().includes(searchValue);
                         }
                         return false;
@@ -160,7 +160,7 @@ const ManageUsers: React.FC = () => {
         },
         {
             name: 'Role',
-            selector: (row: UserModel) => (row.usertype === 0 ? 'Admin' : row.usertype === 2 ? 'Staff' : 'Patient'),
+            selector: (row: UserModel) => (row.usertype == 0 ? 'Admin' : row.usertype == 2 ? 'Staff' : 'Patient'),
             sortable: true,
         },
         {
@@ -175,7 +175,7 @@ const ManageUsers: React.FC = () => {
         },
         {
             name: 'Status',
-            selector: (row: UserModel) => (row.userstatus === 0 ? 'Inactive' : 'Active'),
+            selector: (row: UserModel) => (row.userstatus == 0 ? 'Inactive' : 'Active'),
             sortable: true,
         },
         {

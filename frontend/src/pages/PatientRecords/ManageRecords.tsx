@@ -133,7 +133,7 @@ const ManageRecords: React.FC = () => {
                     }
                 }
             );
-            if (response.data.status === 'success') {
+            if (response.data.status == 'success') {
                 callback(response.data.appointment);
             } 
         } catch (error) {
@@ -157,7 +157,7 @@ const ManageRecords: React.FC = () => {
             }
         });
 
-        if (response.data.status === "success") {
+        if (response.data.status == "success") {
             setUsers(response.data.records);
             setFilteredUsers(response.data.records);
         }

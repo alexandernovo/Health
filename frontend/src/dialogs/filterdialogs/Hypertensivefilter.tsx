@@ -16,7 +16,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
     const [filter, setFilter] = useState<UserModel>({
         reg_code: '06',
         region: regions
-            .filter((region: any) => region.reg_code === '06')
+            .filter((region: any) => region.reg_code == '06')
             .map((region: any) => region.name)[0],
         prov_code: '0606',
         mun_code: '060602',
@@ -41,7 +41,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
     }, [filter.reg_code, filter.prov_code, filter.mun_code]);
 
     useEffect(() => {
-        const selectedProvince: any = provincesFiltered.find((province: any) => province.prov_code === filter.prov_code);
+        const selectedProvince: any = provincesFiltered.find((province: any) => province.prov_code == filter.prov_code);
         if (selectedProvince) {
             setFilter(prevState => ({
                 ...prevState,
@@ -51,7 +51,7 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
     }, [filter.prov_code, provincesFiltered]);
 
     useEffect(() => {
-        const selectedMunicipality: any = municipalityFiltered.find((mun: any) => mun.mun_code === filter.mun_code);
+        const selectedMunicipality: any = municipalityFiltered.find((mun: any) => mun.mun_code == filter.mun_code);
         if (selectedMunicipality) {
             setFilter(prevState => ({
                 ...prevState,
@@ -159,9 +159,9 @@ const Hypertensivefilter: React.FC<HypertensivefilterProps> = (props: Hypertensi
                                 /> */}
                                 <label className='text-[13px] font-semibold mb-0 mt-3'>Baranggay</label>
                                 <select name="brgy" value={filter.brgy} onChange={handleChange} className="select select-bordered select-md w-full ">
-                                    <option value="Capoyuan" selected={filter.brgy === "Capoyuan"}>Capoyuan</option>
-                                    <option value="Palma" selected={filter.brgy === "Palma"}>Palma</option>
-                                    <option value="Igpalge" selected={filter.brgy === "Igpalge"}>Igpalge</option>
+                                    <option value="Capoyuan" selected={filter.brgy == "Capoyuan"}>Capoyuan</option>
+                                    <option value="Palma" selected={filter.brgy == "Palma"}>Palma</option>
+                                    <option value="Igpalge" selected={filter.brgy == "Igpalge"}>Igpalge</option>
                                 </select>
                                 <div className='w-full mt-3'>
                                     <div className='flex flex-col w-full'>

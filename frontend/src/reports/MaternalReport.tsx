@@ -332,25 +332,25 @@ const MaternalReport: React.FC<MaternalReportProps> = (props: MaternalReportProp
                                 <label className='text-[12px]'>OB SCORE</label>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="F" checked={maternal?.OBScore === 'F'} className="checkbox checkbox-default checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="F" checked={maternal?.OBScore == 'F'} className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[13px]">F</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="P" checked={maternal?.OBScore === 'P'} className="checkbox checkbox-default checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="P" checked={maternal?.OBScore == 'P'} className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[13px]">P</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="A" checked={maternal?.OBScore === 'A'} className="checkbox checkbox-default checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="A" checked={maternal?.OBScore == 'A'} className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[13px]">A</span>
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label cursor-pointer flex gap-2">
-                                        <input type="checkbox" name="OBScore" value="L" checked={maternal?.OBScore === 'L'} className="checkbox checkbox-default checkbox-xs" />
+                                        <input type="checkbox" name="OBScore" value="L" checked={maternal?.OBScore == 'L'} className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[13px]">L</span>
                                     </label>
                                 </div>

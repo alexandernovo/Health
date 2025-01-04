@@ -196,15 +196,15 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                     <p className='font-semibold'>UTERUS POSITION</p>
                                     <div className='flex gap-5 mt-2'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="uterusPosition" value="ANTEFLEXED" checked={newborn?.uterusPosition === 'ANTEFLEXED'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="uterusPosition" value="ANTEFLEXED" checked={newborn?.uterusPosition == 'ANTEFLEXED'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">ANTEFLEXED</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="uterusPosition" value="RETROFLEXED" checked={newborn?.uterusPosition === 'RETROFLEXED'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="uterusPosition" value="RETROFLEXED" checked={newborn?.uterusPosition == 'RETROFLEXED'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">RETROFLEXED</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="uterusPosition" value="MIDPOSITION" checked={newborn?.uterusPosition === 'MIDPOSITION'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="uterusPosition" value="MIDPOSITION" checked={newborn?.uterusPosition == 'MIDPOSITION'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">MIDPOSITION</span>
                                         </label>
                                     </div>
@@ -212,15 +212,15 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                     <p className='font-semibold mt-3'>SIZE</p>
                                     <div className='flex gap-5 mt-2'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="size" value="SMALL" checked={newborn?.size === 'SMALL'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="size" value="SMALL" checked={newborn?.size == 'SMALL'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">SMALL</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="size" value="NORMAL" checked={newborn?.size === 'NORMAL'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="size" value="NORMAL" checked={newborn?.size == 'NORMAL'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">NORMAL</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="size" value="LARGE" checked={newborn?.size === 'LARGE'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="size" value="LARGE" checked={newborn?.size == 'LARGE'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">LARGE</span>
                                         </label>
                                     </div>
@@ -228,15 +228,15 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                     <p className='font-semibold mt-3'>SHAPE</p>
                                     <div className='flex gap-5 mt-2'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="shape" value="REGULAR" checked={newborn?.shape === 'REGULAR'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="shape" value="REGULAR" checked={newborn?.shape == 'REGULAR'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">REGULAR</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="shape" value="IRREGULAR" checked={newborn?.shape === 'IRREGULAR'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="shape" value="IRREGULAR" checked={newborn?.shape == 'IRREGULAR'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">IRREGULAR</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="shape" value="FIBROID" checked={newborn?.shape === 'FIBROID'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="shape" value="FIBROID" checked={newborn?.shape == 'FIBROID'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">FIBROID</span>
                                         </label>
                                     </div>
@@ -244,15 +244,15 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                     <p className='font-semibold mt-3'>ADNEXAE</p>
                                     <div className='flex gap-5 mt-2'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="adnexae" value="NORMAL" checked={newborn?.adnexae === 'NORMAL'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="adnexae" value="NORMAL" checked={newborn?.adnexae == 'NORMAL'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">NORMAL</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="adnexae" value="ENLARGE" checked={newborn?.adnexae === 'ENLARGE'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="adnexae" value="ENLARGE" checked={newborn?.adnexae == 'ENLARGE'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">ENLARGE</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="adnexae" value="TENDER" checked={newborn?.adnexae === 'TENDER'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="adnexae" value="TENDER" checked={newborn?.adnexae == 'TENDER'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">TENDER</span>
                                         </label>
                                     </div>
@@ -260,11 +260,11 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                     <p className='font-semibold mt-3'>LACERATION</p>
                                     <div className='flex gap-5 mt-2'>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="laceration" value="YES" checked={newborn?.laceration === 'YES'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="laceration" value="YES" checked={newborn?.laceration == 'YES'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">YES</span>
                                         </label>
                                         <label className="items-center cursor-pointer flex gap-2">
-                                            <input type="checkbox" name="laceration" value="NO" checked={newborn?.laceration === 'NO'} className="checkbox checkbox-default checkbox-xs" />
+                                            <input type="checkbox" name="laceration" value="NO" checked={newborn?.laceration == 'NO'} className="checkbox checkbox-default checkbox-xs" />
                                             <span className="label-text text-[13px]">NO</span>
                                         </label>
                                     </div>
@@ -274,18 +274,18 @@ const NewbornReport: React.FC<NewbornReportProps> = (props: NewbornReportProps) 
                                         <div className='flex flex-col'>
                                             <div className='flex gap-5'>
                                                 <label className="items-center cursor-pointer flex gap-2">
-                                                    <input type="checkbox" name="discharge" value="YES" checked={newborn?.discharge === 'YES'} className="checkbox checkbox-default checkbox-xs" />
+                                                    <input type="checkbox" name="discharge" value="YES" checked={newborn?.discharge == 'YES'} className="checkbox checkbox-default checkbox-xs" />
                                                     <span className="label-text text-[13px]">YES</span>
                                                 </label>
                                                 <label className="items-center cursor-pointer flex gap-2">
-                                                    <input type="checkbox" name="discharge" value="NO" checked={newborn?.discharge === 'NO'} className="checkbox checkbox-default checkbox-xs" />
+                                                    <input type="checkbox" name="discharge" value="NO" checked={newborn?.discharge == 'NO'} className="checkbox checkbox-default checkbox-xs" />
                                                     <span className="label-text text-[13px]">NO</span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div className='flex w-[60%] flex-cp; items-center gap-2'>
                                             <label className='font-semibold text-[13px]'>If Yes, please specify:</label>
-                                            <input type="text" placeholder="If Yes, please specify:" required={newborn?.discharge === 'YES'} disabled={newborn?.discharge === 'NO' || newborn?.discharge === '' || newborn?.discharge === null || newborn?.discharge === undefined} name='specify' value={newborn?.specify} className="input input-bordered input-sm flex-1" />
+                                            <input type="text" placeholder="If Yes, please specify:" required={newborn?.discharge == 'YES'} disabled={newborn?.discharge == 'NO' || newborn?.discharge == '' || newborn?.discharge == null || newborn?.discharge == undefined} name='specify' value={newborn?.specify} className="input input-bordered input-sm flex-1" />
                                         </div>
                                     </div>
 

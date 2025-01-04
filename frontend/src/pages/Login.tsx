@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const [inputType, setInputType] = useState('password');
 
     const toggleInputType = () => {
-        setInputType(prevType => (prevType === 'password' ? 'text' : 'password'));
+        setInputType(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
         event.preventDefault();
         try {
             const response = await axios.post('/api/users/login', { username, password });
-            if (response.data && response.data.status === 'success') {
+            if (response.data && response.data.status == 'success') {
                 setLoading(true);
                 const data = response.data;
                 localStorage.setItem("token", data.authorization.token);

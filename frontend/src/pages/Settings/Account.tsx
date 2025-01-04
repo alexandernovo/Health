@@ -16,10 +16,10 @@ const Account: React.FC = () => {
     const [inputType2, setInputType2] = useState('password');
 
     const toggleInputType = () => {
-        setInputType(prevType => (prevType === 'password' ? 'text' : 'password'));
+        setInputType(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     const toggleInputType2 = () => {
-        setInputType2(prevType => (prevType === 'password' ? 'text' : 'password'));
+        setInputType2(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     useEffect(() => {
         setUserModel(user);
@@ -143,9 +143,9 @@ const Account: React.FC = () => {
                             </label> */}
                             <label className='text-[13px] font-semibold mb-0 mt-3'>Baranggay</label>
                             <select name="brgy" value={userModel.brgy} onChange={handleChange} className="select select-bordered select-md w-full ">
-                                <option value="Capoyuan" selected={userModel.brgy === "Capoyuan"}>Capoyuan</option>
-                                <option value="Palma" selected={userModel.brgy === "Palma"}>Palma</option>
-                                <option value="Igpalge" selected={userModel.brgy === "Igpalge"}>Igpalge</option>
+                                <option value="Capoyuan" selected={userModel.brgy == "Capoyuan"}>Capoyuan</option>
+                                <option value="Palma" selected={userModel.brgy == "Palma"}>Palma</option>
+                                <option value="Igpalge" selected={userModel.brgy == "Igpalge"}>Igpalge</option>
                             </select>
                             {error.brgy && error.brgy != "Igpalge" && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 

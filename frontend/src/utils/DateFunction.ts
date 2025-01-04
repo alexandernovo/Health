@@ -20,7 +20,7 @@ export const TimeToString12Hour = (timeString?: string) => {
     let hoursNum = parseInt(hours, 10);
     const period = hoursNum >= 12 ? 'PM' : 'AM';
 
-    if (hoursNum === 0) {
+    if (hoursNum == 0) {
         hoursNum = 12;
     } else if (hoursNum > 12) {
         hoursNum -= 12;
@@ -48,7 +48,7 @@ export const calculateAge = (birthdate?: string): number => {
 
     // Check if the birthday has occurred this year
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (monthDiff < 0 || (monthDiff == 0 && today.getDate() < birthDate.getDate())) {
         age--; // Subtract 1 from age if birthday hasn't occurred yet
     }
 

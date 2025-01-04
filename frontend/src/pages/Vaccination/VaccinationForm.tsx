@@ -83,7 +83,7 @@ const VaccinationForm: React.FC = () => {
     }
 
     const removeOtherVaccines = (keyIdToRemove?: string) => {
-        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId === keyIdToRemove);
+        const indexToRemove = otherVaccinesList.findIndex((item) => item.keyId == keyIdToRemove);
         if (indexToRemove !== -1) {
             const updatedOtherVaccines = [...otherVaccinesList]; // Create a copy of the array
             updatedOtherVaccines.splice(indexToRemove, 1); // Remove the item
