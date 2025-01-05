@@ -47,10 +47,7 @@ class NotificationController extends Controller
         $reminders = DB::table('appointments')
             ->leftJoin('users', 'users.id', 'appointments.user_id')
             ->where('appointments.appointmentStatus', 3)
-            ->where(function ($query) {
-                $query->where('reminded', 0)
-                    ->orWhere('reminded', null);
-            })->get();
+            ->where('reminded', 0)->get();
         $sms = new SMSController();
         $messageArray = [];
 
