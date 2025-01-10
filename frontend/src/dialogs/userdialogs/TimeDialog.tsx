@@ -43,10 +43,21 @@ const TimeDialog: React.FC<TimeDialogProps> = (props: TimeDialogProps) => {
             props.SetTime(selectedTime);
         }
     }
+
     const findTimeDisabled = (time: string) => {
-        const isDisabled = timeAvail.find(x => x.appointmentTime == `${time}:00`)
+        // Debugging: Log the array and the time
+        console.log("timeavail", timeAvail);
+        console.log("time", time);
+
+        // Correct the includes logic
+        let isDisabled = timeAvail.find(x => x.appointmentTime?.includes(time));
+
+        // Debugging: Log the result
+        console.log("isDisabled", isDisabled);
+
+        // Return true if a match is found, otherwise false
         return isDisabled ? true : false;
-    }
+    };
 
     return (
         <>
