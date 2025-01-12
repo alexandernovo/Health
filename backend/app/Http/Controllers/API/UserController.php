@@ -93,6 +93,7 @@ class UserController extends Controller
             'religion' => $request->religion,
             'education' => $request->education,
             'usertype' => $request->usertype,
+            'position' => $request->position,
             'contact_number' => $request->contact_number,
         ];
         // Hash password if provided
@@ -117,56 +118,102 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'message' => 'User activation successfully', 'user' => $user]);
     }
 
+    // public function getAvailableStaff()
+    // {
+
+    //     $staff = DB::select('
+    //         SELECT users.*, userlog.*
+    //         FROM users
+    //         INNER JOIN userlog ON users.id = userlog.user_id
+    //         WHERE users.usertype IN (0, 2)
+    //         AND userlog.userlog_id = (
+    //             SELECT ul.userlog_id
+    //             FROM userlog ul
+    //             WHERE ul.user_id = users.id
+    //             ORDER BY ul.userlog_id DESC
+    //             LIMIT 1
+    //         )
+    //         AND userlog.logstatus != "logout"
+    //     ');
+
+    //     // Loop through each staff and check their log status based on created_at
+    //     foreach ($staff as $key => $user) {
+    //         try {
+    //             // Parse the 'created_at' field from userlog to a Carbon instance
+    //             $logCreatedAt = date('Y-m-d', strtotime($user->created_at));
+
+    //             // Check if the 'created_at' timestamp is before the start of yesterday
+    //             if ($logCreatedAt < date('Y-m-d')) {
+    //                 // Update logstatus to 'logout' if created_at is before the start of yesterday
+    //                 DB::table('userlog')
+    //                     ->where('user_id', $user->user_id)
+    //                     ->update(['logstatus' => 'logout']);
+
+    //                 // Exclude this user from the results
+    //                 unset($staff[$key]);
+    //             }
+    //         } catch (\Exception $e) {
+    //             // Ensure we mark them as logged out in case of error
+    //             DB::table('userlog')
+    //                 ->where('user_id', $user->user_id)
+    //                 ->update(['logstatus' => 'logout']);
+
+    //             // Exclude this user from the results
+    //             unset($staff[$key]);
+    //         }
+    //     }
+
+    //     // Return the filtered staff data
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'Staff fetched successfully',
+    //         'staff' => array_values($staff), // Reindex the array
+    //     ]);
+    // }
+
     public function getAvailableStaff()
     {
+        try {
+            // Get the latest log entry for each user using a subquery
+            $latestLogs = DB::table('userlog')
+                ->select('user_id', DB::raw('MAX(userlog_id) as latest_log_id'))
+                ->groupBy('user_id');
 
-        $staff = DB::select('
-            SELECT users.*, userlog.*
-            FROM users
-            INNER JOIN userlog ON users.id = userlog.user_id
-            WHERE users.usertype = 2
-            AND userlog.userlog_id = (
-                SELECT ul.userlog_id
-                FROM userlog ul
-                WHERE ul.user_id = users.id
-                ORDER BY ul.userlog_id DESC
-                LIMIT 1
-            )
-            AND userlog.logstatus != "logout"
-        ');
+            // Fetch users with their latest log entry, filtering by usertype and logstatus
+            $staff = DB::table('users')
+                ->joinSub($latestLogs, 'latest_logs', function ($join) {
+                    $join->on('users.id', '=', 'latest_logs.user_id');
+                })
+                ->join('userlog', 'userlog.userlog_id', '=', 'latest_logs.latest_log_id')
+                ->whereIn('users.usertype', [0, 2])
+                ->where('userlog.logstatus', '!=', 'logout')
+                ->get()
+                ->filter(function ($user) {
+                    // Check if the created_at timestamp is outdated
+                    $logCreatedAt = \Carbon\Carbon::parse($user->created_at);
+                    if ($logCreatedAt->lt(now()->startOfDay())) {
+                        // Update outdated logs to 'logout'
+                        DB::table('userlog')
+                            ->where('user_id', $user->id)
+                            ->update(['logstatus' => 'logout']);
+                        return false; // Exclude the user
+                    }
+                    return true; // Include the user
+                })
+                ->values(); // Reindex the collection
 
-        // Loop through each staff and check their log status based on created_at
-        foreach ($staff as $key => $user) {
-            try {
-                // Parse the 'created_at' field from userlog to a Carbon instance
-                $logCreatedAt = date('Y-m-d', strtotime($user->created_at));
-
-                // Check if the 'created_at' timestamp is before the start of yesterday
-                if ($logCreatedAt < date('Y-m-d')) {
-                    // Update logstatus to 'logout' if created_at is before the start of yesterday
-                    DB::table('userlog')
-                        ->where('user_id', $user->user_id)
-                        ->update(['logstatus' => 'logout']);
-
-                    // Exclude this user from the results
-                    unset($staff[$key]);
-                }
-            } catch (\Exception $e) {
-                // Ensure we mark them as logged out in case of error
-                DB::table('userlog')
-                    ->where('user_id', $user->user_id)
-                    ->update(['logstatus' => 'logout']);
-
-                // Exclude this user from the results
-                unset($staff[$key]);
-            }
+            // Return the filtered staff data
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Staff fetched successfully',
+                'staff' => $staff,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while fetching staff',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        // Return the filtered staff data
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Staff fetched successfully',
-            'staff' => array_values($staff), // Reindex the array
-        ]);
     }
 }

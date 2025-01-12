@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
     // Polar Area Chart Options
     const option: ApexOptions = {
         chart: {
-            type: 'polarArea',
+            type: 'pie',
         },
         stroke: {
             colors: ['#fff']
@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
     // Donut Chart Options (Capoyuan)
     const options2: ApexOptions = {
         chart: {
-            type: 'polarArea',
+            type: 'pie',
 
         },
         responsive: [{
@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
     // Donut Chart Options (Palma)
     const options3: ApexOptions = {
         chart: {
-            type: 'polarArea',
+            type: 'pie',
         },
         responsive: [{
             breakpoint: 580,
@@ -171,19 +171,19 @@ const Dashboard: React.FC = () => {
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
                         <h6 className='font-semibold ml-[55px]'>CAPOYUAN</h6>
-                        <ReactApexChart options={option} series={option.series} type="polarArea" />
+                        <ReactApexChart options={option} series={option.series} type="pie" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
                         <h6 className='font-semibold ml-[78px]'>PALMA</h6>
-                        <ReactApexChart options={options2} series={options2.series} type="polarArea" />
+                        <ReactApexChart options={options2} series={options2.series} type="pie" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
                     <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
                         <h6 className='font-semibold ml-[70px]'>IGPALGE</h6>
-                        <ReactApexChart options={options3} series={options3.series} type="polarArea" />
+                        <ReactApexChart options={options3} series={options3.series} type="pie" />
                     </div>
                 </div>
             </div>

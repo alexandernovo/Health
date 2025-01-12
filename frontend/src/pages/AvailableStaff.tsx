@@ -59,12 +59,12 @@ const AvailableStaff: React.FC = () => {
             selector: (row: UserModel) => row.contact_number || '', // Provide a default value
             sortable: true,
         }
-        // ,
-        // {
-        //     name: 'Address',
-        //     selector: (row: UserModel) => row.address || '', // Provide a default value
-        //     sortable: true,
-        // }
+        ,
+        {
+            name: 'Position',
+            selector: (row: UserModel) => row.position || 'None', // Provide a default value
+            sortable: true,
+        }
     ];
 
 

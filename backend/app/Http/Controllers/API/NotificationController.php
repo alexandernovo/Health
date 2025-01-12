@@ -28,10 +28,13 @@ class NotificationController extends Controller
             WHERE 1=1
         ";
 
-        if ($user['usertype'] == 0 || $user['usertype'] == 2) {
+        if ($user && $user['usertype'] == 0 || $user['usertype'] == 2) {
             $query .= " AND notification.receiver = 0";
-        } else {
-            $query .= " AND notification.receiver = " . $user['id'];
+        } else  {
+            if($user)
+            {
+                $query .= " AND notification.receiver = " . $user['id'];
+            }
         }
         $query .= " ORDER BY notification.created_at DESC";
         $data = DB::select($query);

@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('brgy')->nullable();
             $table->string('religion');
             $table->string('gender');
+            $table->string('position')->nullable();
             $table->timestamps();
         });
     }

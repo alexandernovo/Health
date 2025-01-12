@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
     return (
         <div className="navbar bg-base-100 top-0 sticky border-b-[1px] z-10 flex justify-between">
             <div className="navbar-start w-[80%] md:w-auto lg:w-auto">
-                <img src={logo} className="w-[45px] h-[45px] mr-2" alt="Logo" />
+                <img src={logo} className="w-[60px] h-[60px] mr-2" alt="Logo" />
                 <a className="md:text-xl lg:text-xl text-[16px] tracking-wider font-semibold">
                     ALIGTOS BARANGAY HEALTH STATION AND BIRTHING CLINIC MANAGEMENT SYSTEM
                 </a>

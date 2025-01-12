@@ -24,6 +24,7 @@ export interface UserModel {
     municipality?: string;
     mun_code?: string;
     brgy?: string;
+    position?: string;
     password?: string;
     gender?: string;
     userstatus?: number;

@@ -11,6 +11,8 @@ import { RootState } from '@store/store';
 import { UserModel } from '@/types/userType';
 import DeclineDialog from '@/dialogs/userdialogs/DeclineDialog';
 import RemarksDialog from '@/dialogs/userdialogs/RemarksDialog';
+import ConfirmationDialog from '@/dialogs/confirmationdialog/ConfirmationDialog';
+
 
 const Appointments: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
@@ -21,8 +23,10 @@ const Appointments: React.FC = () => {
     const [declineDialog, setDeclineDialog] = useState<boolean>(false);
     const [remarksDialog, setRemarksDialog] = useState<boolean>(false);
     const [declineId, setDeclineId] = useState<number>(0);
+    const [approveId, setApproveId] = useState<number>(0);
     const [declineLoad, setDeclineLoad] = useState<boolean>(false);
     const [remark, setRemarks] = useState<string>("");
+    const [showConfirm, setShowConfirm] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -36,6 +40,11 @@ const Appointments: React.FC = () => {
     const handleDeclineDialog = (id?: number) => {
         setDeclineDialog(true);
         id && setDeclineId(id);
+    }
+
+    const handleApproveDialog = (id?: number)=>{
+        setShowConfirm(true);
+        id && setApproveId(id)
     }
 
     const handleDecline = async (remarks: string) => {
@@ -57,6 +66,8 @@ const Appointments: React.FC = () => {
             setDeclineDialog(false);
         }
     }
+
+
 
     const fetchActiveAppointments = async () => {
         try {
@@ -170,7 +181,7 @@ const Appointments: React.FC = () => {
                 row.appointmentStatus == 1 ? (
                     <div className='flex items-center gap-1'>
                         {(user.usertype == 0 || user.usertype == 2) && (
-                            <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => changeStatusAppointment(row.appointment_id, 3)}>
+                            <button className=' btn btn-success btn-xs text-white btn-outline active:text-white hover:text-white text-[13px] px-2' onClick={() => handleApproveDialog(row.appointment_id)}>
                                 Approve
                             </button>
                         )}
@@ -312,6 +323,7 @@ const Appointments: React.FC = () => {
 
             <DeclineDialog isOpen={declineDialog} onDecline={handleDecline} isLoad={declineLoad} setDeclineDialog={() => setDeclineDialog(!declineDialog)} />
             <RemarksDialog isOpen={remarksDialog} setRemarkDialog={() => setRemarksDialog(!remarksDialog)} remarks={remark} />
+            <ConfirmationDialog Toggle={() => setShowConfirm(!showConfirm)} Show={showConfirm} ConfirmButton="Approve it!" ButtonColor="blue" Message="Approve this appointment?" OnConfirm={() => changeStatusAppointment(approveId, 3)} />
         </div >
     )
 }

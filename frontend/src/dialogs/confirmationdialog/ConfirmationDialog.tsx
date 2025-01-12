@@ -12,7 +12,9 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = (props: Confirmati
 
     const handleConfirm = () => {
         props.OnConfirm();
-        props.Toggle();
+        setTimeout(() => {
+            props.Toggle();
+        }, 500)
     }
 
     return (

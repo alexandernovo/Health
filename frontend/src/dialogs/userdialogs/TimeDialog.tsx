@@ -64,18 +64,58 @@ const TimeDialog: React.FC<TimeDialogProps> = (props: TimeDialogProps) => {
             <div tabIndex={-1} aria-hidden="true" className={`${!props.Toggle ? 'hidden' : ''} overflow-y-auto flex justify-center items-center overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
                 <div className="relative p-4 w-full max-w-2xl max-h-full ">
                     <div className="relative bg-white rounded-lg shadow border">
-                        <p className='px-[30px] pt-[30px] font-semibold text-[17px]'>Select Time <span className='italic text-[14px]'>(disabled time is already taken)</span></p>
+                        <p className='px-[30px] pt-[30px] font-semibold text-[17px]'>Select Time <span className='italic text-[14px]'>(red disabled time is already taken)</span></p>
                         <div className="flex items-center justify-between p-[30px] pb-0 rounded-t">
                             <div className="flex items-center mb-4">
-                                <input type="radio" disabled={findTimeDisabled("08:30")} id='timeRadio1' checked={selectedTime == "08:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="08:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <input
+                                    type="radio"
+                                    id="timeRadio1"
+                                    checked={selectedTime === "08:30"}
+                                    onChange={(e) => handleSelectedTime(e.target.value)}
+                                    value="08:30"
+                                    disabled={findTimeDisabled("08:30")}
+                                    name="timeRadio"
+                                    className={`w-4 h-4 cursor-pointer appearance-none rounded-full 
+                                    ${findTimeDisabled("08:30")
+                                            ? 'bg-red-500 border-red-600 hover:bg-red-600 focus:ring-red-500'
+                                            : 'bg-green-500 border-green-600 hover:bg-green-600 focus:ring-green-500'} 
+                                    focus:ring-2 checked:ring-2 checked:ring-offset-2`}
+                                />
+
                                 <label htmlFor="timeRadio1" className="ms-2 text-sm font-medium text-gray-400">8:30 - 9:30</label>
                             </div>
                             <div className="flex items-center mb-4">
-                                <input type="radio" disabled={findTimeDisabled("09:30")} id='timeRadio2' checked={selectedTime == "09:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="09:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <input
+                                    type="radio"
+                                    id="timeRadio1"
+                                    checked={selectedTime === "09:30"}
+                                    onChange={(e) => handleSelectedTime(e.target.value)}
+                                    value="09:30"
+                                    disabled={findTimeDisabled("09:30")}
+                                    name="timeRadio"
+                                    className={`w-4 h-4 cursor-pointer appearance-none rounded-full 
+                                    ${findTimeDisabled("09:30")
+                                            ? 'bg-red-500 border-red-600 hover:bg-red-600 focus:ring-red-500'
+                                            : 'bg-green-500 border-green-600 hover:bg-green-600 focus:ring-green-500'} 
+                                    focus:ring-2 checked:ring-2 checked:ring-offset-2`}
+                                />
                                 <label htmlFor="timeRadio2" className="ms-2 text-sm font-medium text-gray-400">9:30 - 10:30</label>
                             </div>
                             <div className="flex items-center mb-4">
-                                <input type="radio" disabled={findTimeDisabled("10:30")} id='timeRadio3' checked={selectedTime == "10:30"} onChange={(e) => handleSelectedTime(e.target.value)} value="10:30" name="timeRadio" className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                                <input
+                                    type="radio"
+                                    id="timeRadio1"
+                                    checked={selectedTime === "10:30"}
+                                    onChange={(e) => handleSelectedTime(e.target.value)}
+                                    value="10:30"
+                                    disabled={findTimeDisabled("10:30")}
+                                    name="timeRadio"
+                                    className={`w-4 h-4 cursor-pointer appearance-none rounded-full 
+                                    ${findTimeDisabled("10:30")
+                                            ? 'bg-red-500 border-red-600 hover:bg-red-600 focus:ring-red-500'
+                                            : 'bg-green-500 border-green-600 hover:bg-green-600 focus:ring-green-500'} 
+                                    focus:ring-2 checked:ring-2 checked:ring-offset-2`}
+                                />
                                 <label htmlFor="timeRadio3" className="ms-2 text-sm font-medium text-gray-400">10:30 - 11:30</label>
                             </div>
                         </div>

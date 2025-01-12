@@ -48,6 +48,35 @@ const Register: React.FC = () => {
         password: '',
         confirmPassword: ''
     });
+    const educationalAttainment = [
+        "Select Educational Attainment",
+        "Elementary",
+        "High School Undergraduate",
+        "High School Graduate",
+        "College Undergraduate",
+        "College Graduate",
+        "Postgraduate",
+        "Doctorate",
+        "Vocational",
+        "Others"
+    ];
+
+    const religions = [
+        "Roman Catholic",
+        "Islam",
+        "Iglesia ni Cristo",
+        "Evangelical Christianity",
+        "Other Christian Denominations",
+        "Philippine Independent Church",
+        "Seventh-Day Adventist",
+        "Jehovah's Witnesses",
+        "Buddhism",
+        "Hinduism",
+        "Judaism",
+        "Non-religious",
+        "Indigenous Beliefs",
+        "Others"
+    ];
 
     const [error, setError] = useState<UserModel>({
         firstname: '',
@@ -332,14 +361,21 @@ const Register: React.FC = () => {
                                         </select>
                                         {error.brgy && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 
-                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                        {/* <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                                 <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                                 <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                             </svg>
                                             <input type="text" name="education" value={formData.education} onChange={handleChange} className="grow" placeholder='Education' />
+                                        </label> */}
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                            <select value={formData.education} className="outline-0 grow w-full h-full" name="education" onChange={handleChange}>
+                                                {educationalAttainment.map(x => (
+                                                    <option value={x}>{x}</option>
+                                                ))}
+                                            </select>
                                         </label>
-
                                         <label className='text-[13px] font-semibold mb-0 mt-3 text-white'>Birthdate</label>
                                         <label className="h-[45px] input input-bordered flex items-center w-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
@@ -356,12 +392,20 @@ const Register: React.FC = () => {
                                             </svg>
                                             <input type="text" name="occupation" value={formData.occupation} onChange={handleChange} className="grow" placeholder='Occupation' />
                                         </label>
-                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                        {/* <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                                 <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                                 <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                             </svg>
                                             <input type="text" name="religion" value={formData.religion} onChange={handleChange} className="grow" placeholder='Religion' />
+                                        </label> */}
+                                        <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                            <select value={formData.religion} className="outline-0 grow w-full h-full" name="religion" onChange={handleChange}>
+                                                {religions.map(x => (
+                                                    <option value={x}>{x}</option>
+                                                ))}
+                                            </select>
                                         </label>
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
