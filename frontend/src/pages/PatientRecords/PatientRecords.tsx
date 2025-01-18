@@ -5,6 +5,7 @@ import { UserModel } from '@/types/userType';
 import { Link } from 'react-router-dom';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { AppointmentModel } from '@/types/appointmentType';
+import { DateToString, TimeToString12Hour } from '@/utils/DateFunction';
 
 const PatientRecords: React.FC = () => {
     const token: string | null = localStorage.getItem('token');
@@ -54,7 +55,7 @@ const PatientRecords: React.FC = () => {
         catch (error) {
             console.log(error);
         }
-        finally{
+        finally {
             setLoading(false);
         }
     };
@@ -69,27 +70,54 @@ const PatientRecords: React.FC = () => {
         record.consultationTypeName?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const RedirectTo = (consultationTypeName?: string) => {
+    const RedirectTo = (consultationTypeName?: string, appointment_id?: number) => {
         if (consultationTypeName == "Maternal Health Records") {
-            return `/maternal_records/${user_id}`;
+            return `/udpatematernal/${appointment_id}`;
         }
         else if (consultationTypeName == "Newborn Delivery Record") {
-            return `/newborn_record/${user_id}`;
+            return `/newborndeliveryformupdate/${appointment_id}`;
         }
         else if (consultationTypeName == "Family Planning") {
-            return `/familyPlanning_record/${user_id}`;
+            return `/familyplanning_form_update/${appointment_id}`;
         }
         else if (consultationTypeName == "Hypertensive/Diabetic") {
-            return `/hypertensive_record/${user_id}`
+            return `/hypertensive_update/${appointment_id}`
         }
         else if (consultationTypeName == "Vaccination") {
-            return `/vaccination_record/${user_id}`
+            return `/vaccination_update/${appointment_id}`
         }
         else if (consultationTypeName == "Immunization") {
-            return `/immunization_record/${user_id}`
+            return `/immunization_update/${appointment_id}`
         }
         else if (consultationTypeName == "Check-up") {
-            return `/ekonsulta_records/${user_id}`
+            return `/ekonsulta_form_update/${appointment_id}`
+        }
+        else {
+            return "";
+        }
+    }
+
+    const RedirectToPrint = (consultationTypeName?: string, appointment_id?: number) => {
+        if (consultationTypeName == "Maternal Health Records") {
+            return `/maternal_report/${appointment_id}`;
+        }
+        else if (consultationTypeName == "Newborn Delivery Record") {
+            return `/newborn_report/${appointment_id}`;
+        }
+        else if (consultationTypeName == "Family Planning") {
+            return `/familyplanning_report/${appointment_id}`;
+        }
+        else if (consultationTypeName == "Hypertensive/Diabetic") {
+            return `/hypertensive_report/${appointment_id}`
+        }
+        else if (consultationTypeName == "Vaccination") {
+            return `/vaccination_report/${appointment_id}`
+        }
+        else if (consultationTypeName == "Immunization") {
+            return `/immunization_report/${appointment_id}`
+        }
+        else if (consultationTypeName == "Check-up") {
+            return `/ekonsulta_report/${appointment_id}`
         }
         else {
             return "";
@@ -97,27 +125,41 @@ const PatientRecords: React.FC = () => {
     }
 
     const columns: TableColumn<AppointmentModel>[] = [
-        {
-            name: 'Patient Name',
-            selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
-            sortable: true,
-            width: '40%'
-        },
+        // {
+        //     name: 'Patient Name',
+        //     selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
+        //     sortable: true,
+        //     width: '40%'
+        // },
         {
             name: 'Consultation Type',
             selector: (row: AppointmentModel) => row.consultationTypeName || '',
             sortable: true,
         },
         {
+            name: 'Appointment Date',
+            selector: (row: AppointmentModel) => DateToString(row.appointmentDate) || '',
+            sortable: true,
+        },
+        {
             name: 'Action',
             cell: (row: AppointmentModel) => (
-                <Link to={RedirectTo(row.consultationTypeName)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />
-                    </svg>
-                    View
-                </Link >
+                <div className='flex gap-2'>
+                    <Link to={RedirectTo(row.consultationTypeName, row.appointment_id)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                            <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                        </svg>
+                        Update
+                    </Link >
+                    <Link to={RedirectToPrint(row.consultationTypeName, row.appointment_id)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                            <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />
+                        </svg>
+                        View
+                    </Link >
+                </div>
             ),
             sortable: false,
         },

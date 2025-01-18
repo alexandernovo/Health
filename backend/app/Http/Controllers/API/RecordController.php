@@ -24,6 +24,13 @@ class RecordController extends Controller
                 ->orWhereHas('immunization')
                 ->orWhereHas('ekonsulta')
                 ->orWhereHas('hypertensive')->get();
+            $usersRecord = User::whereHas('maternal')
+                ->orWhereHas('newborn')
+                ->orWhereHas('family')
+                ->orWhereHas('vaccination')
+                ->orWhereHas('immunization')
+                ->orWhereHas('ekonsulta')
+                ->orWhereHas('hypertensive')->get();
 
             if ($usersRecord->isNotEmpty()) {
                 return response()->json([
@@ -48,52 +55,17 @@ class RecordController extends Controller
     public function getUserRecord($id)
     {
         try {
-            $userRecords = Appointment::where('user_id', $id)
-                ->where(function ($query) {
-                    $query->whereHas('maternal')
-                        ->orWhereHas('newborn')
-                        ->orWhereHas('family')
-                        ->orWhereHas('hypertensive')
-                        ->orWhereHas('vaccination')
-                        ->orWhereHas('immunization')
-                        ->orWhereHas('ekonsulta');
-                })
-                ->whereIn('appointment_id', function ($subQuery) use ($id) {
-                    $subQuery->select(DB::raw('MAX(appointment_id)'))
-                        ->from('appointments')
-                        ->where('user_id', $id)
-                        ->groupBy('consultationTypeId');
-                })
-                ->with('consultation', 'user')
+            $userRecords = User::join('appointments', 'appointments.user_id', 'users.id')
+                ->join('consultationtype', 'appointments.consultationTypeId', 'consultationtype.consultationTypeId')
+                ->where('appointmentStatus', 4)
+                ->where('users.id', $id)
+                ->orderBy('appointments.appointmentDate', 'DESC')
                 ->get();
-
-            // Remove duplicates based on consultationTypeId
-            $userRecords = $userRecords->unique('consultationTypeId');
-
-            if ($userRecords->isNotEmpty()) {
-                $mappedRecords = $userRecords->map(function ($appointment) {
-                    return [
-                        'firstname' => $appointment->user->firstname,
-                        'lastname' => $appointment->user->lastname,
-                        'appointment_id' => $appointment->appointment_id,
-                        'consultationTypeId' => $appointment->consultationTypeId,
-                        'consultationTypeName' => $appointment->consultation->consultationTypeName,
-                        'isActive' => $appointment->isActive,
-                        'user_id' => $appointment->user_id,
-                    ];
-                });
-
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Patient records fetched successfully',
-                    'record' => $mappedRecords
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'norecord',
-                    'message' => 'No Records Found',
-                ]);
-            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient records fetched successfully',
+                'record' => $userRecords
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failed',
