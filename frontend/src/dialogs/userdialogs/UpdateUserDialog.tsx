@@ -76,7 +76,10 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
     const medicalPositions = [
         "Doctor",
         "Nurse",
+        "Nurse II",
+        "Nursing Attendant",
         "Midwife",
+        "Midwife II",
         "Medical Technologist",
         "Radiologic Technologist",
         "Pharmacist",

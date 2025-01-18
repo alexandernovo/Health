@@ -85,7 +85,10 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
     const medicalPositions = [
         "Doctor",
         "Nurse",
+        "Nurse II",
+        "Nursing Attendant",
         "Midwife",
+        "Midwife II",
         "Medical Technologist",
         "Radiologic Technologist",
         "Pharmacist",
