@@ -84,14 +84,14 @@ const Sidebar: React.FC = () => {
                     </svg>
                     Available Staff
                 </Link>
-                {user.usertype == 1 && (
-                    <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to="/patient_history">
+                {/* {user.usertype == 1 && ( */}
+                    <Link className='border p-3 rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1' to={user.usertype == 1 ? `/patient_history` : '/appointment_logs'}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mb-[2px]">
                             <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                         </svg>
                         History
                     </Link>
-                )}
+                {/* )} */}
 
                 <Link className={`border p-3 ${isActiveRoute(settingRoute) ? "active-route" : ""} rounded-lg font-semibold uppercase text-[14px] bg-[#219EBC] text-white flex items-end gap-1`} to="/settings">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mb-[2px]">

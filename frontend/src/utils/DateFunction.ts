@@ -85,3 +85,18 @@ export const DateTimeToString = (dateTimeString?: string): string => {
 
     return `${formattedDate} ${formattedTime}`;
 }
+
+export const DateToStringNew = (dateTimeString?: string): string => {
+    if (!dateTimeString) {
+        return ''; // Or you can return some default value if necessary
+    }
+
+    const dateTime = new Date(dateTimeString);
+    if (isNaN(dateTime.getTime())) {
+        return ''; // Or you can handle the error accordingly
+    }
+
+    const formattedDate = dateTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    return `${formattedDate} `;
+}

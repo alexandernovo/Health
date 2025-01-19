@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { AppointmentModel } from '@/types/appointmentType';
+import { AppointmentLogsModel } from '@/types/appointmentLogs';
 import { UserModel } from '@/types/userType';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { Link } from 'react-router-dom';
-import { DateToString } from '@/utils/DateFunction'
+import { DateTimeToString } from '@/utils/DateFunction'
 
 
-const PatientHistory: React.FC = () => {
-    const user: UserModel = useSelector((state: RootState) => state.userState);
+const AppointmentLogs: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
-    const [appointment, setAppointment] = useState<AppointmentModel[]>([]);
+    const [appointment, setAppointment] = useState<AppointmentLogsModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -27,7 +26,7 @@ const PatientHistory: React.FC = () => {
 
     const fetchHistory = async () => {
         setLoading(true);
-        const response = await axios.get(`api/patient/getHistory/${user.id}`, {
+        const response = await axios.get(`api/appointment/getAppointmentLogs`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -35,16 +34,11 @@ const PatientHistory: React.FC = () => {
 
         if (response.data.status == "success") {
             setLoading(false);
-            console.log(response.data.history);
-            setAppointment(response.data.history);
+            console.log(response.data.data);
+            setAppointment(response.data.data);
         }
     }
 
-    const filteredRecords = appointment.filter((appoint) =>
-        appoint.firstname?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        appoint.lastname?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        appoint.consultationTypeName?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
@@ -75,33 +69,47 @@ const PatientHistory: React.FC = () => {
             return "";
         }
     }
-    const columns: TableColumn<AppointmentModel>[] = [
-        // {
-        //     name: 'Patient Name',
-        //     selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
-        //     sortable: true,
-        //     width: '40%'
-        // },
+    const columns: TableColumn<AppointmentLogsModel>[] = [
+        {
+            name: 'Staff Name',
+            selector: (row: AppointmentLogsModel) => `${row.firstname} ${row.lastname}` || '',
+            sortable: true,
+            width: '20%'
+        },
+        {
+            name: 'Description',
+            selector: (row: AppointmentLogsModel) => row.status_desc || '',
+            sortable: true,
+        },
         {
             name: 'Consultation Type',
-            selector: (row: AppointmentModel) => row.consultationTypeName || '',
+            selector: (row: AppointmentLogsModel) => row.consultationTypeName || '',
             sortable: true,
         },
         {
             name: 'Date',
-            selector: (row: AppointmentModel) => DateToString(row.appointmentDate) || '',
+            selector: (row: AppointmentLogsModel) => DateTimeToString(row.created_at) || '',
             sortable: true,
         },
         {
             name: 'Action',
-            cell: (row: AppointmentModel) => (
-                <Link to={RedirectTo(row.appointment_id, row.consultationTypeName)} className={`btn btn-outline btn-xs flex gap-1 btn-primary px-4`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clipRule="evenodd" />
-                    </svg>
-                    View
-                </Link >
+            cell: (row: AppointmentLogsModel) => (
+                row.appointmentStatus == 4 ? (
+                    <Link
+                        to={RedirectTo(row.appointment_id, row.consultationTypeName)}
+                        className="btn btn-outline btn-xs flex gap-1 btn-primary px-4"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                            <path
+                                fillRule="evenodd"
+                                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                        View
+                    </Link>
+                ) : "N/A"
             ),
             sortable: false,
         },
@@ -137,7 +145,7 @@ const PatientHistory: React.FC = () => {
                 <div className='pb-5 px-5'>
                     <DataTable
                         columns={columns}
-                        data={filteredRecords}
+                        data={appointment}
                         noHeader
                         pagination
                         highlightOnHover
@@ -151,4 +159,4 @@ const PatientHistory: React.FC = () => {
     )
 }
 
-export default PatientHistory
+export default AppointmentLogs

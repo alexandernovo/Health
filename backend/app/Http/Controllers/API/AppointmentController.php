@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Notification;
+use App\Models\AppointmentLogs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -73,6 +74,13 @@ class AppointmentController extends Controller
                     date("F d, Y", strtotime($request->appointmentDate)) . ' at ' .
                     date('H:i a', strtotime($request->appointmentTime))
             ]);
+
+            AppointmentLogs::create([
+                'appointment_id' => $appointment->appointment_id,
+                'user_id' => $userNow['id'],
+                'status_desc' => 'Created and approved the appointment.'
+            ]);
+
             $sms = new SMSController();
             $sms->settings($request->user_id, 5, $appointment->appointment_id);
         }
@@ -194,6 +202,14 @@ class AppointmentController extends Controller
                         date('H:i a')
                 ]);
 
+                $logsappoint_message = ($status == 1) ? 'Pending' : (($status == 2) ? 'Declined' : (($status == 3) ? 'Approved' : 'Mark as Done')) . " the appointment.";
+
+                AppointmentLogs::create([
+                    'appointment_id' => $id,
+                    'user_id' => $userNow['id'],
+                    'status_desc' => $logsappoint_message
+                ]);
+
                 $sms = new SMSController();
                 $sms->settings($appointment->user_id, $status, $id);
 
@@ -234,6 +250,12 @@ class AppointmentController extends Controller
                         date('H:i a')
                 ]);
 
+                AppointmentLogs::create([
+                    'appointment_id' => $request->id,
+                    'user_id' => $userNow['id'],
+                    'status_desc' => "Declined the appointment."
+                ]);
+
                 $sms = new SMSController();
                 $sms->settings($appointment->user_id, 2, $request->id);
 
@@ -261,6 +283,21 @@ class AppointmentController extends Controller
         return response()->json([
             'message' => 'Date Fetch Successfully',
             'time' => $data,
+            'status' => 'success',
+        ], 200);
+    }
+
+    public function getAppointmentLogs()
+    {
+        $data = AppointmentLogs::select('appointments.*', 'consultationtype.*','users.*', 'appointment_logs.*', 'appointment_logs.created_at')->join('appointments', 'appointments.appointment_id', 'appointment_logs.appointment_id')
+            ->join('consultationtype', 'consultationtype.consultationTypeId', 'appointments.consultationTypeId')
+            ->join('users', 'users.id', 'appointment_logs.user_id')
+            ->orderBy('appointment_logs.created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'message' => 'Date Fetch Successfully',
+            'data' => $data,
             'status' => 'success',
         ], 200);
     }

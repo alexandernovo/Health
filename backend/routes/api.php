@@ -43,6 +43,7 @@ Route::prefix('appointment')->group(function () {
     Route::post('/getAppointmentSchedByDate', [AppointmentController::class, 'getAppointmentSchedByDate']);
     Route::post('/declineAppointment', [AppointmentController::class, 'declineAppointment']);
     Route::put('/updateAppointment', [AppointmentController::class, 'updateAppointment']);
+    Route::get('/getAppointmentLogs', [AppointmentController::class, 'getAppointmentLogs']);
     Route::get('/getAppointments/{status}', [AppointmentController::class, 'getAppointments']);
     Route::get('/getAppointmentById/{id}', [AppointmentController::class, 'getAppointmentById']);
     Route::post('/changeAppointmentStatus/{id}/{status}', [AppointmentController::class, 'changeAppointmentStatus']);
