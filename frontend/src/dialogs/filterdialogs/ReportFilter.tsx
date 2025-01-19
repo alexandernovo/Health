@@ -22,7 +22,7 @@ const ReportFilter: React.FC<ReportFilterProps> = (props: ReportFilterProps) => 
         { value: 'Newborn Delivery Record', label: 'Newborn Delivery Record' },
         { value: 'Maternal Health Records', label: 'Maternal Health Records' },
         { value: 'Immunization', label: 'Immunization' },
-        { value: 'Ekonsulta', label: 'Check-up' },
+        { value: 'Check-up', label: 'Check-up' },
         { value: 'Vaccination', label: 'Vaccination' },
     ];
 
