@@ -76,12 +76,12 @@ const PatientHistory: React.FC = () => {
         }
     }
     const columns: TableColumn<AppointmentModel>[] = [
-        {
-            name: 'Patient Name',
-            selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
-            sortable: true,
-            width: '40%'
-        },
+        // {
+        //     name: 'Patient Name',
+        //     selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
+        //     sortable: true,
+        //     width: '40%'
+        // },
         {
             name: 'Consultation Type',
             selector: (row: AppointmentModel) => row.consultationTypeName || '',
