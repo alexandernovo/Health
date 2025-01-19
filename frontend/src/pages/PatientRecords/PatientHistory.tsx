@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { Link } from 'react-router-dom';
-import { StringToDate } from '@/utils/DateFunction'
+import { DateToString } from '@/utils/DateFunction'
 
 
 const PatientHistory: React.FC = () => {
@@ -76,12 +76,12 @@ const PatientHistory: React.FC = () => {
         }
     }
     const columns: TableColumn<AppointmentModel>[] = [
-        // {
-        //     name: 'Patient Name',
-        //     selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
-        //     sortable: true,
-        //     width: '40%'
-        // },
+        {
+            name: 'Patient Name',
+            selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname}` || '',
+            sortable: true,
+            width: '40%'
+        },
         {
             name: 'Consultation Type',
             selector: (row: AppointmentModel) => row.consultationTypeName || '',
@@ -89,7 +89,7 @@ const PatientHistory: React.FC = () => {
         },
         {
             name: 'Date',
-            selector: (row: AppointmentModel) => StringToDate(row.appointmentDate) || '',
+            selector: (row: AppointmentModel) => DateToString(row.appointmentDate) || '',
             sortable: true,
         },
         {
