@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { Link } from 'react-router-dom';
+import { DateTimeToString } from '@/utils/DateFunction'
 
 
 const PatientHistory: React.FC = () => {
@@ -84,6 +85,11 @@ const PatientHistory: React.FC = () => {
         {
             name: 'Consultation Type',
             selector: (row: AppointmentModel) => row.consultationTypeName || '',
+            sortable: true,
+        },
+        {
+            name: 'Date',
+            selector: (row: AppointmentModel) => DateTimeToString(row.appointmentDate) || '',
             sortable: true,
         },
         {

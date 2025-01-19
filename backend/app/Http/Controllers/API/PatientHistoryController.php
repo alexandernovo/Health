@@ -38,6 +38,7 @@ class PatientHistoryController extends Controller
                         'lastname' => $appointment->user->lastname,
                         'appointment_id' => $appointment->appointment_id,
                         'consultationTypeId' => $appointment->consultationTypeId,
+                        'appointmentDate' => $appointment->appointmentDate,
                         'consultationTypeName' => $appointment->consultation->consultationTypeName,
                         'isActive' => $appointment->isActive,
                         'user_id' => $appointment->user_id,
