@@ -80,6 +80,11 @@ const AppointmentLogs: React.FC = () => {
             name: 'Description',
             selector: (row: AppointmentLogsModel) => row.status_desc || '',
             sortable: true,
+            cell: (row: AppointmentLogsModel) => (
+                <div style={{ wordWrap: 'break-word' }}>
+                    {row.status_desc || ''}
+                </div>
+            ),
         },
         {
             name: 'Consultation Type',

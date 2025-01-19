@@ -9,6 +9,8 @@ use App\Models\Vaccination;
 use App\Models\OtherVaccines;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\AppointmentLogs;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\SMSController;
@@ -37,6 +39,13 @@ class VaccinationController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
+            $userNow = Auth::guard('api')->user();
+            AppointmentLogs::create([
+                'appointment_id' => $appointment->appointment_id,
+                'user_id' => $userNow['id'],
+                'status_desc' => 'Created new Vaccination record and mark the appointment as done.'
+            ]);
+
             $sms = new SMSController();
             $sms->settings($request->user_id, 4, $request->appointment_id);
             return response()->json([

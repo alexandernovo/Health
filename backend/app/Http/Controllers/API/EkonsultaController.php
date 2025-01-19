@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Ekonsulta;
+use App\Models\AppointmentLogs;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -29,6 +31,12 @@ class EkonsultaController extends Controller
                 $appointment->update(["appointmentStatus" => 4]);
             }
 
+            $userNow = Auth::guard('api')->user();
+            AppointmentLogs::create([
+                'appointment_id' => $appointment->appointment_id,
+                'user_id' => $userNow['id'],
+                'status_desc' => 'Created new Check-up record and mark the appointment as done.'
+            ]);
             $sms = new SMSController();
             $sms->settings($request->user_id, 4, $request->appointment_id);
 

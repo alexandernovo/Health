@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\FamilyPlanning;
 use App\Models\FamilyAssessment;
 use App\Models\Appointment;
+use App\Models\AppointmentLogs;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\SMSController;
 use Exception;
 
@@ -103,6 +105,14 @@ class FamilyPlanningController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
+
+            $userNow = Auth::guard('api')->user();
+            AppointmentLogs::create([
+                'appointment_id' => $appointment->appointment_id,
+                'user_id' => $userNow['id'],
+                'status_desc' => 'Created new Family Planning record and mark the appointment as done.'
+            ]);
+
             $sms = new SMSController();
             $sms->settings($request->user_id, 4, $request->appointment_id);
             return response()->json([

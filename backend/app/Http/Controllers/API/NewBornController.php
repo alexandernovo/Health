@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Appointment;
 use App\Models\NewBorn;
 use App\Models\PostPartrum;
+use App\Models\AppointmentLogs;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Http\Controllers\Api\SMSController;
@@ -76,6 +78,12 @@ class NewBornController extends Controller
             if ($appointment) {
                 $appointment->update(["appointmentStatus" => 4]);
             }
+            $userNow = Auth::guard('api')->user();
+            AppointmentLogs::create([
+                'appointment_id' => $appointment->appointment_id,
+                'user_id' => $userNow['id'],
+                'status_desc' => 'Created new Newbor Delivery record and mark the appointment as done.'
+            ]);
             $sms = new SMSController();
             $sms->settings($request->user_id, 4, $request->appointment_id);
             return response()->json([
