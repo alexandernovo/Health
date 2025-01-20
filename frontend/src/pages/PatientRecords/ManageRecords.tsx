@@ -186,7 +186,7 @@ const ManageRecords: React.FC = () => {
     const columns: TableColumn<UserModel>[] = [
         {
             name: 'Patient Name',
-            selector: (row: UserModel) => `${row.firstname || ''} ${row.lastname || ''}`,
+            selector: (row: UserModel) => `${row.firstname || ''} ${row.lastname || ''} ${row.extension || ''}`,
             sortable: true,
         },
         {

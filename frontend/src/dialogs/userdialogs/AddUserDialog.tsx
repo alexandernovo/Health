@@ -30,6 +30,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
     const userInitialData = {
         firstname: '',
         lastname: '',
+        extension: '',
         username: '',
         contact_number: '+63',
         address: '',
@@ -259,19 +260,27 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
                             <div className='md:w-full lg:w-full'>
                                 <form onSubmit={handleSubmit} className='w-full'>
                                     <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between'>
-                                        <div className='md:w-[49%] lg:w-[49%] w-full'>
+                                        <div className='md:w-full lg:w-full w-full'>
                                             <label className="input input-bordered flex items-center mb-1 md:mb-0 lg:mb-0 h-[45px] relative pl-[37px]" >
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                                 <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} className="grow" placeholder="Firstname*" />
                                             </label>
                                             {error.firstname && <p className="text-red-500 text-[13px]">{error.firstname}</p>}
                                         </div>
+                                    </div>
+                                    <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between mt-3'>
                                         <div className='md:w-[49%] lg:w-[49%] w-full'>
                                             <label className="h-[45px] input input-bordered flex items-center relative pl-[37px]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                                 <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} className="grow" placeholder="Lastname*" />
                                             </label>
                                             {error.lastname && <p className="text-red-500 text-[13px]">{error.lastname}</p>}
+                                        </div>
+                                        <div className='md:w-[49%] lg:w-[49%] w-full'>
+                                            <label className="h-[45px] input input-bordered flex items-center relative pl-[37px]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                                <input type="text" name="extension" value={formData.extension} onChange={handleChange} className="grow" placeholder="Extension" />
+                                            </label>
                                         </div>
                                     </div>
                                     <div className='w-full'>

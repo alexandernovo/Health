@@ -6,6 +6,7 @@ export interface UserModel {
     token?: string;
     firstname?: string;
     lastname?: string;
+    extension?: string;
     birthdate?: string;
     age?: number;
     occupation?: string;
@@ -44,6 +45,7 @@ export const userInitialValue = () => {
         token: "",
         firstname: "",
         lastname: "",
+        extension: "",
         birthdate: "",
         age: undefined,
         occupation: "",

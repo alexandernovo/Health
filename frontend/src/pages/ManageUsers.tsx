@@ -39,6 +39,7 @@ const ManageUsers: React.FC = () => {
     const [toUpdate, setToUpdate] = useState<UserModel>({
         firstname: '',
         lastname: '',
+        extension: '',
         username: '',
         contact_number: '',
         address: '',
@@ -155,7 +156,7 @@ const ManageUsers: React.FC = () => {
     const columns: TableColumn<UserModel>[] = [
         {
             name: 'Name',
-            selector: (row: UserModel) => `${row.firstname} ${row.lastname}`,
+            selector: (row: UserModel) => `${row.firstname} ${row.lastname} ${row.extension || ''}`,
             sortable: true,
         },
         {

@@ -72,7 +72,7 @@ const AppointmentLogs: React.FC = () => {
     const columns: TableColumn<AppointmentLogsModel>[] = [
         {
             name: 'Staff Name',
-            selector: (row: AppointmentLogsModel) => `${row.firstname} ${row.lastname}` || '',
+            selector: (row: AppointmentLogsModel) => `${row.firstname} ${row.lastname} ${row.extension || ''}` || '',
             sortable: true,
             width: '20%'
         },

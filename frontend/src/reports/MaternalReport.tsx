@@ -101,7 +101,7 @@ const MaternalReport: React.FC<MaternalReportProps> = (props: MaternalReportProp
                                 <div className='w-[50%]'>
                                     <p className='text-[13px] flex w-[100%] gap-1 table'>
                                         <span className='table-cell w-[50px]'>Name:</span>
-                                        <span className='table-cell border-b-[1px] border-black'>{appointment.firstname} {appointment.lastname}</span>
+                                        <span className='table-cell border-b-[1px] border-black'>{appointment.firstname} {appointment.lastname} {appointment.extension || ''}</span>
                                     </p>
                                 </div>
                                 <div className='w-[40%]'>
