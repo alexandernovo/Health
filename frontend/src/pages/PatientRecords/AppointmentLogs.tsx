@@ -101,6 +101,11 @@ const AppointmentLogs: React.FC = () => {
             name: 'Date',
             selector: (row: AppointmentLogsModel) => DateTimeToString(row.created_at) || '',
             sortable: true,
+            cell: (row: AppointmentLogsModel) => (
+                <div style={{ wordWrap: 'break-word' }}>
+                    {DateTimeToString(row.created_at) || ''}
+                </div>
+            ),
         },
         {
             name: 'Action',
