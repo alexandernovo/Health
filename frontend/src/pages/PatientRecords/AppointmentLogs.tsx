@@ -77,6 +77,12 @@ const AppointmentLogs: React.FC = () => {
             width: '20%'
         },
         {
+            name: 'Patient Name',
+            selector: (row: AppointmentLogsModel) => `${row.patfirst} ${row.patlast} ${row.patext || ''}` || '',
+            sortable: true,
+            width: '20%'
+        },
+        {
             name: 'Description',
             selector: (row: AppointmentLogsModel) => row.status_desc || '',
             sortable: true,

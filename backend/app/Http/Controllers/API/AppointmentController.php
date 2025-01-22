@@ -291,11 +291,23 @@ class AppointmentController extends Controller
 
     public function getAppointmentLogs()
     {
-        $data = AppointmentLogs::select('appointments.*', 'consultationtype.*','users.*', 'appointment_logs.*', 'appointment_logs.created_at')->join('appointments', 'appointments.appointment_id', 'appointment_logs.appointment_id')
+        $data = AppointmentLogs::select(
+            'appointments.*',
+            'consultationtype.*',
+            'users.*',
+            'appointment_logs.*',
+            'appointment_logs.created_at',
+            'u2.firstname AS patfirst',
+            'u2.lastname AS patlast',
+            'u2.extension AS patext'
+        )
+            ->join('appointments', 'appointments.appointment_id', 'appointment_logs.appointment_id')
             ->join('consultationtype', 'consultationtype.consultationTypeId', 'appointments.consultationTypeId')
             ->join('users', 'users.id', 'appointment_logs.user_id')
+            ->join('users AS u2', 'u2.id', 'appointments.user_id')
             ->orderBy('appointment_logs.created_at', 'DESC')
             ->get();
+
 
         return response()->json([
             'message' => 'Date Fetch Successfully',
