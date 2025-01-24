@@ -44,6 +44,7 @@ const UpdateUserDialog: React.FC<UpdateUserDialogProps> = (props: UpdateUserDial
         religion: "Roman Catholic",
         confirmPassword: ""
     }
+    
     const educationalAttainment = [
         "Select Educational Attainment",
         "Elementary",

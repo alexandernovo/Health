@@ -9,6 +9,8 @@ use App\Models\Maternal;
 use App\Models\MedicalAssessment;
 use App\Models\Appointment;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+
 
 class PatientHistoryController extends Controller
 {
@@ -20,6 +22,8 @@ class PatientHistoryController extends Controller
     public function getHistory($user_id)
     {
         try {
+            $userNow = Auth::guard('api')->user();
+
             $userHistory = Appointment::whereHas('maternal')
                 ->orWhereHas('newborn')
                 ->orWhereHas('family')
@@ -28,7 +32,7 @@ class PatientHistoryController extends Controller
                 ->orWhereHas('immunization')
                 ->orWhereHas('ekonsulta')
                 ->with('consultation', 'user')
-                ->where('user_id', $user_id)
+                ->where('user_id', $userNow['id'])
                 ->get();
 
             if ($userHistory->isNotEmpty()) {

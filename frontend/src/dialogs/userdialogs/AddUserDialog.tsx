@@ -44,17 +44,16 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         gender: '',
         usertype: 1,
         password: '',
-        civil_status: '',
+        civil_status: 'Single',
         birthdate: '',
-        occupation: '',
+        occupation: 'Doctor',
         religion: 'Roman Catholic',
-        education: '',
+        education: 'Elementary',
         confirmPassword: '',
         position: '',
     }
 
     const educationalAttainment = [
-        "Select Educational Attainment",
         "Elementary",
         "High School Undergraduate",
         "High School Graduate",
