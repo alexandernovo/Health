@@ -43,7 +43,7 @@ const Register: React.FC = () => {
         mun_code: '060602',
         civil_status: '',
         education: '',
-        religion: '',
+        religion: 'Roman Catholic',
         brgy: "Igpalge",
         gender: '',
         password: '',

@@ -47,7 +47,7 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props: AddUserDialogProps) 
         civil_status: '',
         birthdate: '',
         occupation: '',
-        religion: '',
+        religion: 'Roman Catholic',
         education: '',
         confirmPassword: '',
         position: '',

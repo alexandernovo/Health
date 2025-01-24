@@ -35,6 +35,14 @@ class AuthController extends Controller
         }
 
         $user = Auth::guard('api')->user();
+
+        if ($user->userstatus == 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Account is deactivated.',
+            ]);
+        }
+
         UserLog::insert(['user_id' => $user['id'], 'logstatus' => 'login', 'created_at' => date('Y-m-d H:i:s')]);
 
         return response()->json([
