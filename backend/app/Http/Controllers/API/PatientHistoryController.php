@@ -24,15 +24,17 @@ class PatientHistoryController extends Controller
         try {
             $userNow = Auth::guard('api')->user();
 
-            $userHistory = Appointment::whereHas('maternal')
-                ->orWhereHas('newborn')
-                ->orWhereHas('family')
-                ->orWhereHas('hypertensive')
-                ->orWhereHas('vaccination')
-                ->orWhereHas('immunization')
-                ->orWhereHas('ekonsulta')
-                ->with('consultation', 'user')
+            $userHistory = Appointment::where(function ($query) use ($userNow) {
+                $query->whereHas('maternal')
+                    ->orWhereHas('newborn')
+                    ->orWhereHas('family')
+                    ->orWhereHas('hypertensive')
+                    ->orWhereHas('vaccination')
+                    ->orWhereHas('immunization')
+                    ->orWhereHas('ekonsulta');
+            })
                 ->where('user_id', $userNow['id'])
+                ->with('consultation', 'user')
                 ->get();
 
             if ($userHistory->isNotEmpty()) {
