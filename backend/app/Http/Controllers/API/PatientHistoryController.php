@@ -50,6 +50,8 @@ class PatientHistoryController extends Controller
                         'user_id' => $appointment->user_id,
                     ];
                 });
+            } else {
+                $mappedRecords = [];
             }
 
             return response()->json([
