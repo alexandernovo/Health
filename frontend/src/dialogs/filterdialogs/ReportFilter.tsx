@@ -3,6 +3,7 @@ import { UserModel } from '@/types/userType';
 import { initialReportFilter, ReportFilterParam } from '@/types/reportfilter';
 import axios from 'axios';
 import Select from 'react-select';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface ReportFilterProps {
     Toggle: () => void,
@@ -104,7 +105,7 @@ const ReportFilter: React.FC<ReportFilterProps> = (props: ReportFilterProps) => 
                                         classNamePrefix="select"
                                         placeholder="Select Patient..."
                                         onChange={handlePatientChange}
-                                        options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
+                                        options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${getMiddleInitial(patient.middlename || '')} ${patient.lastname} ${patient.extension || ''}` }))}
                                     />
 
                                     <Select

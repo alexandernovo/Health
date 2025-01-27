@@ -7,6 +7,7 @@ import ConfirmationDialog from '@dialogs/confirmationdialog/ConfirmationDialog';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import DataTable, { TableColumn } from 'react-data-table-component';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const ManageUsers: React.FC = () => {
     const token: string | null = localStorage.getItem('token');
@@ -156,7 +157,7 @@ const ManageUsers: React.FC = () => {
     const columns: TableColumn<UserModel>[] = [
         {
             name: 'Name',
-            selector: (row: UserModel) => `${row.firstname} ${row.lastname} ${row.extension || ''}`,
+            selector: (row: UserModel) => `${row.firstname} ${getMiddleInitial(row.middlename ?? '')} ${row.lastname} ${row.extension || ''}`,
             sortable: true,
         },
         {

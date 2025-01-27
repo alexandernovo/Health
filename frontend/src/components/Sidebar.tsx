@@ -6,6 +6,7 @@ import { RootState } from '@store/store';
 import { UserModel } from '@/types/userType';
 import { useLocation } from 'react-router-dom';
 import { settingRoute, patientRecordRoutes, appointmentRoute } from '@/utils/RouteList'
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const Sidebar: React.FC = () => {
     const user: UserModel = useSelector((state: RootState) => state.userState);
@@ -28,7 +29,7 @@ const Sidebar: React.FC = () => {
                     {user.firstname == "Admin" ? (
                         user.firstname
                     ) :
-                        `${user.firstname} ${user.lastname}`
+                        `${user.firstname} ${getMiddleInitial(user.middlename || '')} ${user.lastname} ${user.extension || ''}`
                     }
                 </p>
             </div>

@@ -7,7 +7,7 @@ import { DateToString, calculateAge } from '@/utils/DateFunction';
 import { VaccinationModel, VaccinationModelInitialValue } from '@/types/vaccination';
 import { OtherVaccinesModel, OtherVaccinesModelInitialValue } from '@/types/otherVaccines';
 import Select from 'react-select';
-import { generateRandomId } from '@/utils/CommonFunctions';
+import { generateRandomId, getMiddleInitial } from '@/utils/CommonFunctions';
 import { StringToDate } from '@/utils/DateFunction';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
@@ -132,7 +132,7 @@ const VaccinationForm: React.FC = () => {
                         <div className='w-1/3'>
                             <div className='flex flex-col w-full'>
                                 <label className='font-semibold text-[14px]'>Patient Name</label>
-                                <input type="text" readOnly value={`${appointment.firstname} ${appointment.lastname}`} placeholder="Patient Name" className="input input-bordered w-full" />
+                                <input type="text" readOnly value={`${appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} ${appointment.lastname} ${appointment.extension || ''}`} placeholder="Patient Name" className="input input-bordered w-full" />
                             </div>
                         </div>
                         <div className='w-1/3'>

@@ -12,6 +12,7 @@ import { UserModel } from '@/types/userType';
 import DeclineDialog from '@/dialogs/userdialogs/DeclineDialog';
 import RemarksDialog from '@/dialogs/userdialogs/RemarksDialog';
 import ConfirmationDialog from '@/dialogs/confirmationdialog/ConfirmationDialog';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 
 const Appointments: React.FC = () => {
@@ -140,7 +141,7 @@ const Appointments: React.FC = () => {
     const columns: TableColumn<AppointmentModel>[] = [
         {
             name: 'Patient Name',
-            selector: (row: AppointmentModel) => `${row.firstname} ${row.lastname} ${row.extension || ''}`,
+            selector: (row: AppointmentModel) => `${row.firstname} ${getMiddleInitial(row.middlename || '')} ${row.lastname} ${row.extension || ''}`,
             sortable: true,
             width: '17%'
         },

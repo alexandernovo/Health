@@ -28,6 +28,7 @@ const Register: React.FC = () => {
 
     const [formData, setFormData] = useState<UserModel>({
         firstname: '',
+        middlename: '',
         lastname: '',
         extension: '',
         username: '',
@@ -45,7 +46,7 @@ const Register: React.FC = () => {
         education: '',
         religion: 'Roman Catholic',
         brgy: "Igpalge",
-        gender: '',
+        gender: 'Male',
         password: '',
         confirmPassword: ''
     });
@@ -211,6 +212,7 @@ const Register: React.FC = () => {
                         id: data.user.id,
                         token: data.authorization.token,
                         firstname: data.user.firstname,
+                        middlename: data.user.middlename,
                         lastname: data.user.lastname,
                         extension: data.user.extension,
                         username: data.user.username,
@@ -254,13 +256,20 @@ const Register: React.FC = () => {
                                 <img src={doctor} className='md:w-[200px] md:h-[220px] lg:w-[200px] lg:h-[220px] mx-auto bg-blend-normal' />
                                 <p className='font-semibold text-[20px] mb-2 text-white tracking-wide'>REGISTER HERE</p>
                                 <form onSubmit={handleSubmit} className='w-full'>
-                                    <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between'>
-                                        <div className='md:w-full lg:w-full w-full'>
+                                    <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between mt-3'>
+                                        <div className='md:w-[49%] lg:w-[49%] w-full'>
                                             <label className="input input-bordered flex items-center mb-1 md:mb-0 lg:mb-0 h-[45px] relative pl-[37px]" >
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
                                                 <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} className="grow" placeholder="Firstname*" />
                                             </label>
                                             {error.firstname && <p className="text-red-500 text-[13px]">{error.firstname}</p>}
+                                        </div>
+                                        <div className='md:w-[49%] lg:w-[49%] w-full'>
+                                            <label className="input input-bordered flex items-center mb-1 md:mb-0 lg:mb-0 h-[45px] relative pl-[37px]" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                                <input type="text" name="middlename" value={formData.middlename} onChange={handleChange} className="grow" placeholder="Middlename" />
+                                            </label>
+                                            {error.middlename && <p className="text-red-500 text-[13px]">{error.middlename}</p>}
                                         </div>
                                     </div>
                                     <div className='flex gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between mt-3'>
@@ -394,6 +403,7 @@ const Register: React.FC = () => {
                                             </svg>
                                             <input type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} className="grow" placeholder='Birthdate' />
                                         </label>
+                                        {error.birthdate && <p className="text-red-500 text-[13px]">{error.birthdate}</p>}
 
                                         <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">

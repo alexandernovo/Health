@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
-            $table->string('extension');
+            $table->string('extension')->nullable();
             $table->string('username')->unique();
             $table->string('password');
             $table->integer('usertype');
             $table->integer('userstatus');
             $table->date('birthdate');
-            $table->string('education');
+            $table->string('education')->nullable();
             $table->string('civil_status');
-            $table->string('occupation');
+            $table->string('occupation')->nullable();
             $table->string('contact_number');
             $table->string('address')->nullable();
             $table->string('region')->nullable();
@@ -33,8 +34,8 @@ return new class extends Migration
             $table->string('municipality')->nullable();
             $table->string('mun_code')->nullable();
             $table->string('brgy')->nullable();
-            $table->string('religion');
-            $table->string('gender');
+            $table->string('religion')->nullable();
+            $table->string('gender')->nullable();
             $table->string('position')->nullable();
             $table->timestamps();
         });

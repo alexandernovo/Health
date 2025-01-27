@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import { RootState } from '@store/store';
 import { useSelector } from 'react-redux';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const UpdateAppointments: React.FC = () => {
     const token: string | null = localStorage.getItem('token');
@@ -23,6 +24,7 @@ const UpdateAppointments: React.FC = () => {
     const [appointment, setAppointments] = useState<AppointmentModel>({
         appointment_id: undefined,
         firstname: undefined,
+        middlename: undefined,
         lastname: undefined,
         contact_number: '',
         address: '',
@@ -207,8 +209,8 @@ const UpdateAppointments: React.FC = () => {
                                             classNamePrefix="select"
                                             placeholder="Select Patient..."
                                             onChange={handlePatientChange}
-                                            value={{ value: appointment.user_id, label: `${appointment.firstname} ${appointment.lastname}` }}
-                                            options={patients.map((patient: UserModel) => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
+                                            value={{ value: appointment.user_id, label: `${appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} ${appointment.lastname} ${appointment.extension || ''} ${appointment.extension || ''}` }}
+                                            options={patients.map((patient: UserModel) => ({ value: patient.id, label: `${patient.firstname} ${getMiddleInitial(patient.middlename || '')} ${patient.lastname} ${patient.extension || ''}}` }))}
                                         />
                                         {error.user_id && <p className="text-red-500 text-[13px] mt-[5px]">Patient is required</p>}
                                     </div>
@@ -216,7 +218,7 @@ const UpdateAppointments: React.FC = () => {
                                 : (
                                     <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                         <label className='font-semibold text-[14px]'>Patient Name</label>
-                                        <input readOnly type="text" value={`${user.firstname} ${user.lastname}`} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                        <input readOnly type="text" value={`${user.firstname} ${getMiddleInitial(user.middlename || '')} ${user.lastname} ${user.extension || ''}`} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
                                     </div>
                                 )
                             }

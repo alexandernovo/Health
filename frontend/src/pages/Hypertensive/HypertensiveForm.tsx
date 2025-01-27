@@ -7,6 +7,7 @@ import { DateToString, calculateAge } from '@/utils/DateFunction';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 
 const HypertensiveForm: React.FC = () => {
@@ -102,7 +103,7 @@ const HypertensiveForm: React.FC = () => {
                             <div className='w-[30%]'>
                                 <div className='flex flex-col w-full'>
                                     <label className='font-semibold text-[14px]'>Patient Name</label>
-                                    <input type="text" readOnly value={`${appointment.firstname} ${appointment.lastname}`} placeholder="Patient Name" className="input input-bordered w-full" />
+                                    <input type="text" readOnly value={`${appointment.firstname} ${getMiddleInitial(appointment?.middlename || '')} ${appointment.lastname} ${appointment.extension || ''}`} placeholder="Patient Name" className="input input-bordered w-full" />
                                 </div>
                             </div>
                             <div className='w-[20%]'>

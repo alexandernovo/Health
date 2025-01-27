@@ -44,6 +44,8 @@ const Login: React.FC = () => {
                         token: data.authorization.token,
                         firstname: data.user.firstname,
                         lastname: data.user.lastname,
+                        middlename: data.user.middlename,
+                        extension: data.user.extension,
                         username: data.user.username,
                         address: data.user.address,
                         contact_number: data.user.contact_number,

@@ -4,7 +4,7 @@ import { AppointmentModel } from '@/types/appointmentType';
 import { DateToString, calculateAge } from '@/utils/DateFunction';
 import { Immunization, ImmunizationInitialValue } from '@/types/Immunization';
 import { ImmunizationResult, ImmunizationResultInitialValue } from '@/types/immunizationResult';
-import { generateRandomId } from '@/utils/CommonFunctions';
+import { generateRandomId, getMiddleInitial } from '@/utils/CommonFunctions';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
 import axios from 'axios';
@@ -119,7 +119,7 @@ const ImmunizationForm: React.FC = () => {
             <div className='w-1/3'>
               <div className='flex flex-col w-full'>
                 <label className='font-semibold text-[14px]'>Patient Name</label>
-                <input type="text" readOnly value={`${appointment.firstname} ${appointment.lastname}`} placeholder="Patient Name" className="input input-bordered w-full" />
+                <input type="text" readOnly value={`${appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} ${appointment.lastname} ${appointment.extension || ''}`} placeholder="Patient Name" className="input input-bordered w-full" />
               </div>
             </div>
             <div className='w-1/3'>

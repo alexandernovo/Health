@@ -2,6 +2,7 @@ import { UserModel } from '@/types/userType';
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component';
 import axios from 'axios';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const AvailableStaff: React.FC = () => {
     const [availableStaff, setAvailableStaff] = useState<UserModel[]>([]);
@@ -46,7 +47,7 @@ const AvailableStaff: React.FC = () => {
     const columns: TableColumn<UserModel>[] = [
         {
             name: 'Staff Name',
-            selector: (row: UserModel) => `${row.firstname || ''} ${row.lastname || ''} ${row.extension || ''}`,
+            selector: (row: UserModel) => `${row.firstname || ''} ${getMiddleInitial(row.middlename || '')} ${row.lastname || ''} ${row.extension || ''}`,
             sortable: true,
         },
         {

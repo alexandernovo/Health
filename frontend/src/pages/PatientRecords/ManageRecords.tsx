@@ -8,6 +8,7 @@ import { ReportFilterParam, initialReportFilter } from '@/types/reportfilter';
 import PatientRecordDialog from '@/dialogs/patientrecordsdialog/PatientRecordDialog';
 import { useNavigate } from 'react-router-dom';
 import { AppointmentModel } from '@/types/appointmentType';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const ManageRecords: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
@@ -32,7 +33,7 @@ const ManageRecords: React.FC = () => {
         appointmentStatus: 3,
         isActive: undefined,
         user_id: undefined,
-        appointmentType : null
+        appointmentType: null
     });
     const navigate = useNavigate();
 
@@ -49,12 +50,12 @@ const ManageRecords: React.FC = () => {
         let url = await redirectToForm(filter);
         url += "?isWalkin=true";
         console.log(url);  // You can check what URL is returned
-    
+
         if (url) {
             navigate(url);  // Navigate to the returned URL if it's valid
         }
     };
-    
+
 
     const redirectToReport = (filter: ReportFilterParam): string => {
 
@@ -83,7 +84,7 @@ const ManageRecords: React.FC = () => {
             saveAppointment(filter, (appointmentData) => {
                 console.log(filter.reportType);
                 let redirectUrl = ''; // Default empty string
-    
+
                 switch (filter.reportType) {
                     case "Maternal Health Records":
                         redirectUrl = `/managematernal/${appointmentData.appointment_id}`;
@@ -109,12 +110,12 @@ const ManageRecords: React.FC = () => {
                     default:
                         break; // Leave redirectUrl as empty string
                 }
-    
+
                 resolve(redirectUrl); // Resolve with the correct URL
             });
         });
     }
-    
+
     const saveAppointment = async (filter: ReportFilterParam, callback: (appointmentData: AppointmentModel) => void) => {
         try {
             const response = await axios.post(
@@ -135,7 +136,7 @@ const ManageRecords: React.FC = () => {
             );
             if (response.data.status == 'success') {
                 callback(response.data.appointment);
-            } 
+            }
         } catch (error) {
             console.log(error);
         }
@@ -186,7 +187,7 @@ const ManageRecords: React.FC = () => {
     const columns: TableColumn<UserModel>[] = [
         {
             name: 'Patient Name',
-            selector: (row: UserModel) => `${row.firstname || ''} ${row.lastname || ''} ${row.extension || ''}`,
+            selector: (row: UserModel) => `${row.firstname || ''} ${getMiddleInitial(row.middlename || '')} ${row.lastname || ''} ${row.extension || ''}`,
             sortable: true,
         },
         {

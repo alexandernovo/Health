@@ -7,6 +7,7 @@ import { MedicalAssessmentModel } from '@/types/MedicalAssessment';
 import axios from 'axios';
 import { DateToString, TimeToString12Hour, calculateAge, StringToDate } from '@/utils/DateFunction';
 import ReactToPrint from "react-to-print";
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface MaternalReportProps {
     appointment_id?: string
@@ -101,7 +102,7 @@ const MaternalReport: React.FC<MaternalReportProps> = (props: MaternalReportProp
                                 <div className='w-[50%]'>
                                     <p className='text-[13px] flex w-[100%] gap-1 table'>
                                         <span className='table-cell w-[50px]'>Name:</span>
-                                        <span className='table-cell border-b-[1px] border-black'>{appointment.firstname} {appointment.lastname} {appointment.extension || ''}</span>
+                                        <span className='table-cell border-b-[1px] border-black'>{appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''}</span>
                                     </p>
                                 </div>
                                 <div className='w-[40%]'>

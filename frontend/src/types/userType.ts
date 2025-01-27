@@ -5,6 +5,7 @@ export interface UserModel {
     id?: number;
     token?: string;
     firstname?: string;
+    middlename?: string;
     lastname?: string;
     extension?: string;
     birthdate?: string;

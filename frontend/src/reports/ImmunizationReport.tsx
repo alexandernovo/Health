@@ -7,6 +7,7 @@ import logoMaternal from '@assets/images/logo-maternal.png'
 import logDepartment from '@assets/images/departmenthealth_logo.png'
 import axios from 'axios';
 import { DateToString, calculateAge } from '@/utils/DateFunction';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface ImmunizationReportProps {
   appointment_id?: string
@@ -84,7 +85,7 @@ export const ImmunizationReport: React.FC<ImmunizationReportProps> = ({ appointm
             <div className='flex gap-3'>
               <p className='text-[11px] flex flex-col w-[30%]  font-semibold gap-1 table'>
                 <span className='table-cell w-[40px]'>Name:</span>
-                <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} {appointment.lastname} {appointment.extension || ''}</span>
+                <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''}</span>
               </p>
               <p className='text-[11px] flex flex-col w-[30%]  font-semibold gap-1 table'>
                 <span className='table-cell w-[60px]'>Birthdate:</span>

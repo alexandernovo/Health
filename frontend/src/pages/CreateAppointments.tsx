@@ -10,6 +10,7 @@ import { setToastState } from '@/store/common/global';
 import { RootState } from '@store/store';
 import { useSelector } from 'react-redux';
 import TimeDialog from '@/dialogs/userdialogs/TimeDialog';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 
 const CreateAppointments: React.FC = () => {
@@ -225,7 +226,7 @@ const CreateAppointments: React.FC = () => {
                                             classNamePrefix="select"
                                             placeholder="Select Patient..."
                                             onChange={handlePatientChange}
-                                            options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
+                                            options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${getMiddleInitial(patient.middlename || '')} ${patient.lastname} ${patient.extension || ''}` }))}
                                         />
                                         {error.user_id && <p className="text-red-500 text-[13px] mt-[5px]">Patient is required</p>}
                                     </div>
@@ -233,7 +234,7 @@ const CreateAppointments: React.FC = () => {
                                 : (
                                     <div className='md:w-[49%] lg:w-[49%] w-full px-5'>
                                         <label className='font-semibold text-[14px]'>Patient Name</label>
-                                        <input readOnly type="text" value={`${user.firstname} ${user.lastname}`} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
+                                        <input readOnly type="text" value={`${user.firstname} ${getMiddleInitial(user.middlename || '')} ${user.lastname} ${user.extension || ''}`} name="address" className="input input-bordered w-full h-[48px]" placeholder="Address" />
                                     </div>
                                 )
                             }

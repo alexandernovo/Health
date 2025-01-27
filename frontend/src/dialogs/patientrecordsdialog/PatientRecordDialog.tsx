@@ -4,6 +4,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import { initialReportFilter, ReportFilterParam } from '@/types/reportfilter';
 import { ConsultationModel } from '@/types/consultationType';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface PatientRecordDialogProps {
     Toggle: () => void;
@@ -126,7 +127,7 @@ const PatientRecordDialog: React.FC<PatientRecordDialogProps> = (props: PatientR
                                     classNamePrefix="select"
                                     placeholder="Select Patient..."
                                     onChange={handlePatientChange}
-                                    options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${patient.lastname}` }))}
+                                    options={patients.map(patient => ({ value: patient.id, label: `${patient.firstname} ${getMiddleInitial(patient.middlename || '')} ${patient.lastname} ${patient.extension || ''}` }))}
                                 />
 
                                 {/* <Select

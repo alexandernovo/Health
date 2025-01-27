@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { Link } from 'react-router-dom';
 import { DateTimeToString } from '@/utils/DateFunction'
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 
 const AppointmentLogs: React.FC = () => {
@@ -72,13 +73,13 @@ const AppointmentLogs: React.FC = () => {
     const columns: TableColumn<AppointmentLogsModel>[] = [
         {
             name: 'Staff Name',
-            selector: (row: AppointmentLogsModel) => `${row.firstname} ${row.lastname} ${row.extension || ''}` || '',
+            selector: (row: AppointmentLogsModel) => `${row.firstname} ${getMiddleInitial(row.middlename || '')} ${row.lastname} ${row.extension || ''}` || '',
             sortable: true,
             width: '20%'
         },
         {
             name: 'Patient Name',
-            selector: (row: AppointmentLogsModel) => `${row.patfirst} ${row.patlast} ${row.patext || ''}` || '',
+            selector: (row: AppointmentLogsModel) => `${row.patfirst} ${getMiddleInitial(row.patmiddle || '')} ${row.patlast} ${row.patext || ''}` || '',
             sortable: true,
             width: '20%'
         },

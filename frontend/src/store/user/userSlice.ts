@@ -6,6 +6,8 @@ const userInitialState: UserModel = {
     token: "",
     firstname: "",
     lastname: "",
+    middlename: "",
+    extension: "",
     username: "",
     usertype: 0,
     birthdate: "",

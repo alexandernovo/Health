@@ -7,6 +7,7 @@ import { VaccinationModel, VaccinationModelInitialValue } from '@/types/vaccinat
 import { OtherVaccinesModel, OtherVaccinesModelInitialValue } from '@/types/otherVaccines';
 import { DateToString, calculateAge } from '@/utils/DateFunction';
 import axios from 'axios';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface VaccinationReportProps {
     appointment_id?: string
@@ -113,7 +114,7 @@ const VaccinationReport: React.FC<VaccinationReportProps> = (props: VaccinationR
                             )}
 
                             <div className='mt-3'>
-                                <p className='text-[12px] '>Name: <span className='underline font-semibold'>{appointment.firstname} {appointment.lastname} {appointment.extension || ''}</span></p>
+                                <p className='text-[12px] '>Name: <span className='underline font-semibold'>{appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''}</span></p>
                                 <p className='text-[12px]  mt-2'>Date of Birth: <span className='underline font-semibold'>{DateToString(appointment.birthdate)}</span></p>
                                 <p className='text-[12px]  mt-2'>Address: <span className='underline font-semibold'>{appointment.address}</span></p>
                             </div>

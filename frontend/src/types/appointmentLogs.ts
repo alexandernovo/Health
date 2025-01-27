@@ -5,6 +5,7 @@ export interface AppointmentLogsModel extends UserModel {
     status_desc?: string;
     consultationTypeName?: string;
     patfirst?: string;
+    patmiddle?: string;
     patlast?: string;
     patext?: string;
     appointmentDate?: string;

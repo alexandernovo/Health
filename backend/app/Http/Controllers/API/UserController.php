@@ -56,6 +56,7 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'brgy' => 'required|string',
+            'birthdate' => 'required',
             'gender' => 'required|string',
             'civil_status' => 'required',
             'contact_number' => ['required', 'string', 'regex:/^\+?63\d{10}$/']
@@ -76,6 +77,7 @@ class UserController extends Controller
 
         $data = [
             'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
             'lastname' => $request->lastname,
             'username' => $request->username,
             'extension' => $request->extension,

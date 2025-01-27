@@ -3,7 +3,7 @@ import { FamilyAssessmentModel, FamilyAssessmentModelInitialValue } from '@/type
 import { FamilyPlanningModel, FamilyPlanningModelInitialValue } from '@/types/familyPlanning'
 import { AppointmentModel } from '@/types/appointmentType';
 import { calculateAge, DateToString } from '@/utils/DateFunction';
-import { generateRandomId } from '@/utils/CommonFunctions';
+import { generateRandomId, getMiddleInitial } from '@/utils/CommonFunctions';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setToastState } from '@/store/common/global';
@@ -265,7 +265,7 @@ const FamilyPlanningForm: React.FC = () => {
                     <div className='flex gap-2 px-5 mt-2'>
                         <div className='flex flex-col w-[20%]'>
                             <label className='font-semibold text-[13px]'>Client Name</label>
-                            <input type="text" readOnly value={`${appointment.firstname} ${appointment.lastname}`} placeholder="Client Name" className="input input-bordered input-primary w-full" />
+                            <input type="text" readOnly value={`${appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} ${appointment.lastname} ${appointment.extension || ''}`} placeholder="Client Name" className="input input-bordered input-primary w-full" />
                         </div>
                         <div className='flex flex-col w-[20%]'>
                             <label className='font-semibold text-[13px]'>Date of Birth</label>

@@ -113,6 +113,7 @@ class AppointmentController extends Controller
                 return [
                     'appointment_id' => $appointment->appointment_id,
                     'firstname' => $appointment->user->firstname,
+                    'middlename' => $appointment->user->middlename,
                     'remarks' => $appointment->appointmentRemarks,
                     'lastname' => $appointment->user->lastname,
                     'extension' => $appointment->user->extension,
@@ -156,6 +157,7 @@ class AppointmentController extends Controller
             'appointment_id' => $appointment->appointment_id,
             'remarks' => $appointment->appointmentRemarks,
             'firstname' => $appointment->user->firstname,
+            'middlename' => $appointment->user->middlename,
             'lastname' => $appointment->user->lastname,
             'extension' => $appointment->user->extension,
             'birthdate' => $appointment->user->birthdate,
@@ -299,6 +301,7 @@ class AppointmentController extends Controller
             'appointment_logs.created_at',
             'u2.firstname AS patfirst',
             'u2.lastname AS patlast',
+            'u2.middlename AS patmiddle',
             'u2.extension AS patext'
         )
             ->join('appointments', 'appointments.appointment_id', 'appointment_logs.appointment_id')

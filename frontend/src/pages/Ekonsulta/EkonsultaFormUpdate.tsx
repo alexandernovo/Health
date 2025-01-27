@@ -6,6 +6,7 @@ import { setToastState } from '@/store/common/global';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { DateToString, TimeToString12Hour, calculateAge } from '@/utils/DateFunction';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 const EkonsultaFormUpdate: React.FC = () => {
 
@@ -134,7 +135,7 @@ const EkonsultaFormUpdate: React.FC = () => {
                             <div className='px-2 mt-5'>
                                 <div className='flex flex-col'>
                                     <label className='font-semibold text-[13px]'>Patient Name</label>
-                                    <input type="text" readOnly value={`${appointment.firstname} ${appointment.lastname}`} className="input input-bordered input-sm w-[50%]" />
+                                    <input type="text" readOnly value={`${appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} ${appointment.lastname} ${appointment.extension || ''}`} className="input input-bordered input-sm w-[50%]" />
                                 </div>
                                 <div className='flex w-full gap-4'>
                                     <div className='flex flex-col mt-2  w-[30%]'>
