@@ -216,3 +216,14 @@
 .active-route {
   background-color: #134e4a !important;
 }
+.apexcharts-canvas svg {
+  overflow: visible;
+}
+
+.apexcharts-canvas svg foreignObject {
+  overflow: visible;
+}
+.apexcharts-legend
+{
+  top: 0 !important
+}

@@ -57,6 +57,9 @@ const Dashboard: React.FC = () => {
             Igpalge.vaccination, Igpalge.checkup, Igpalge.immunization,
             Igpalge.hypertensive, Igpalge.familyplanning, Igpalge.newborn, Igpalge.maternal
         ],
+        legend: {
+            height: 300, // Allow the legend to expand as needed
+        },
         labels: typeOfConsultation.slice(1).map(x => x.label), // Use labels from the array
         colors: customColors.slice(1), // Apply custom colors
         dataLabels: {
@@ -84,6 +87,9 @@ const Dashboard: React.FC = () => {
                 }
             }
         }],
+        legend: {
+            height: 300, // Allow the legend to expand as needed
+        },
         series: [
             Capoyuan.vaccination, Capoyuan.checkup, Capoyuan.immunization, Capoyuan.hypertensive,
             Capoyuan.familyplanning, Capoyuan.newborn, Capoyuan.maternal
@@ -111,6 +117,9 @@ const Dashboard: React.FC = () => {
                 }
             }
         }],
+        legend: {
+            height: 300, // Allow the legend to expand as needed
+        },
         series: [
             Palma.vaccination, Palma.checkup, Palma.immunization, Palma.hypertensive,
             Palma.familyplanning, Palma.newborn, Palma.maternal
@@ -169,19 +178,19 @@ const Dashboard: React.FC = () => {
             </div>
             <div className="flex justify-between">
                 <div className="w-1/3 px-2">
-                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
+                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[260px]">
                         <h6 className='font-semibold ml-[55px]'>CAPOYUAN</h6>
                         <ReactApexChart options={option} series={option.series} type="pie" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
-                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
+                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[260px]">
                         <h6 className='font-semibold ml-[78px]'>PALMA</h6>
                         <ReactApexChart options={options2} series={options2.series} type="pie" />
                     </div>
                 </div>
                 <div className="w-1/3 px-2">
-                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[230px]">
+                    <div className="card border border-gray-100 bg-base-100 shadow-md mb-3 p-2 rounded-[25px] chart-container h-[260px]">
                         <h6 className='font-semibold ml-[70px]'>IGPALGE</h6>
                         <ReactApexChart options={options3} series={options3.series} type="pie" />
                     </div>
