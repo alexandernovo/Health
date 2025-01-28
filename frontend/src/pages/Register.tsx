@@ -225,6 +225,8 @@ const Register: React.FC = () => {
                         religion: data.user.religion,
                         gender: data.user.gender,
                         usertype: data.user.usertype,
+                        brgy: data.user.brgy,
+                        position: data.user.position,
                         isSignedIn: true
                     }
                     dispatch(storeUser(userToStore));

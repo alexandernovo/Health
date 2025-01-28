@@ -64,6 +64,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                         id: data.user.id,
                         token: data.authorization.token,
                         firstname: data.user.firstname,
+                        middlename: data.user.middlename,
+                        extension: data.user.extension,
+                        brgy: data.user.brgy,
                         lastname: data.user.lastname,
                         username: data.user.username,
                         address: data.user.address,
@@ -75,6 +78,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }: MainLayoutProps) =>
                         occupation: data.user.occupation,
                         education: data.user.education,
                         religion: data.user.religion,
+                        position: data.user.position,
                         isSignedIn: true
 
                     }

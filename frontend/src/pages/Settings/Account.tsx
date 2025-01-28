@@ -5,22 +5,98 @@ import { useSelector, useDispatch } from 'react-redux';
 import { UserModel, userInitialValue } from '@/types/userType';
 import { setToastState } from '@/store/common/global';
 import { storeUser } from '@/store/user/userSlice';
+import { regions, getProvincesByRegion, getCityMunByProvince, getBarangayByMun } from 'phil-reg-prov-mun-brgy'
 
 const Account: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
     const user: UserModel = useSelector((state: RootState) => state.userState);
-    const [userModel, setUserModel] = useState<UserModel>(userInitialValue);
     const [error, setError] = useState<UserModel>(userInitialValue);
     const dispatch = useDispatch();
     const [inputType, setInputType] = useState('password');
     const [inputType2, setInputType2] = useState('password');
+    const userInitialData = {
+        firstname: '',
+        middlename: '',
+        lastname: '',
+        extension: '',
+        username: '',
+        contact_number: '+63',
+        address: '',
+        reg_code: '06',
+        region: regions
+            .filter((region: any) => region.reg_code == '06')
+            .map((region: any) => region.name)[0],
+        prov_code: '0606',
+        mun_code: '060602',
+        brgy: "Igpalge",
+        gender: 'Male',
+        usertype: 1,
+        password: '',
+        civil_status: 'Single',
+        birthdate: '',
+        occupation: 'Doctor',
+        religion: 'Roman Catholic',
+        education: 'Elementary',
+        confirmPassword: '',
+        position: '',
+    }
+    const [userModel, setUserModel] = useState<UserModel>(userInitialData);
 
+    const educationalAttainment = [
+        "Elementary",
+        "High School Undergraduate",
+        "High School Graduate",
+        "College Undergraduate",
+        "College Graduate",
+        "Postgraduate",
+        "Doctorate",
+        "Vocational",
+        "Others"
+    ];
+
+    const religions = [
+        "Roman Catholic",
+        "Islam",
+        "Iglesia ni Cristo",
+        "Evangelical Christianity",
+        "Other Christian Denominations",
+        "Philippine Independent Church",
+        "Seventh-Day Adventist",
+        "Jehovah's Witnesses",
+        "Buddhism",
+        "Hinduism",
+        "Judaism",
+        "Non-religious",
+        "Indigenous Beliefs",
+        "Others"
+    ];
+
+    const medicalPositions = [
+        "Doctor",
+        "Nurse",
+        "Nurse II",
+        "Nursing Attendant",
+        "Midwife",
+        "Midwife II",
+        "Medical Technologist",
+        "Radiologic Technologist",
+        "Pharmacist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Nutritionist/Dietitian",
+        "Laboratory Technician",
+        "Hospital Administrator",
+        "Receptionist",
+        "Emergency Medical Technician",
+        "Others"
+    ];
     const toggleInputType = () => {
         setInputType(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
     const toggleInputType2 = () => {
         setInputType2(prevType => (prevType == 'password' ? 'text' : 'password'));
     };
+
     useEffect(() => {
         setUserModel(user);
     }, []);
@@ -96,7 +172,22 @@ const Account: React.FC = () => {
                                 {error.lastname && <p className="text-red-500 text-[13px]">{error.lastname}</p>}
                             </div>
                         </div>
-
+                        <div className='flex mt-2 gap-2 w-full flex-wrap md:flex-nowrap lg:flex-nowrap justify-between'>
+                            <div className='md:w-[49%] lg:w-[49%] w-full'>
+                                <label className="input input-bordered flex items-center mb-1 md:mb-0 lg:mb-0 h-[45px] relative pl-[37px]" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                    <input type="text" name="middlename" value={userModel.middlename} onChange={handleChange} className="grow" placeholder="Middlename" />
+                                </label>
+                                {error.middlename && <p className="text-red-500 text-[13px]">{error.middlename}</p>}
+                            </div>
+                            <div className='md:w-[49%] lg:w-[49%] w-full'>
+                                <label className="h-[45px] input input-bordered flex items-center relative pl-[37px]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1 absolute left-[16px]"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                    <input type="text" name="extension" value={userModel.extension} onChange={handleChange} className="grow" placeholder="Extension" />
+                                </label>
+                                {error.extension && <p className="text-red-500 text-[13px]">{error.extension}</p>}
+                            </div>
+                        </div>
                         <div className='w-full'>
                             <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
@@ -149,14 +240,21 @@ const Account: React.FC = () => {
                             </select>
                             {error.brgy && error.brgy != "Igpalge" && <p className="text-red-500 text-[13px]">{error.brgy}</p>}
 
-                            <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                            {/* <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                     <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                     <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                 </svg>
                                 <input type="text" name="education" value={userModel.education} onChange={handleChange} className="grow" placeholder='Education' />
+                            </label> */}
+                            <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                <select value={userModel.education} className="outline-0 grow w-full h-full" name="education" onChange={handleChange}>
+                                    {educationalAttainment.map(x => (
+                                        <option value={x}>{x}</option>
+                                    ))}
+                                </select>
                             </label>
-
                             <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                     <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
@@ -172,13 +270,45 @@ const Account: React.FC = () => {
                                 </svg>
                                 <input type="text" name="occupation" value={userModel.occupation} onChange={handleChange} className="grow" placeholder='Occupation' />
                             </label>
-                            <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                            {/* <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-70 mr-1">
                                     <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
                                     <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                 </svg>
                                 <input type="text" name="religion" value={userModel.religion} onChange={handleChange} className="grow" placeholder='Religion' />
+                            </label> */}
+                            <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                <select value={userModel.religion} className="outline-0 grow w-full h-full" name="religion" onChange={handleChange}>
+                                    {religions.map(x => (
+                                        <option value={x}>{x}</option>
+                                    ))}
+                                </select>
                             </label>
+                            {userModel.usertype != 1 && (
+                                <>
+                                    <label className='text-[13px] font-semibold mb-0 mt-3'>Position*</label>
+                                    <label className="h-[45px] input input-bordered flex items-center w-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 mr-1"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                        <select
+                                            value={medicalPositions.includes(userModel.position || '') ? userModel.position : ""}
+                                            className="outline-0 grow w-full h-full"
+                                            name="position"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="" disabled>
+                                                Select a position
+                                            </option>
+                                            {medicalPositions.map((x, index) => (
+                                                <option key={index} value={x}>
+                                                    {x}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                    </label>
+                                </>
+                            )}
                             <label className="h-[45px] input input-bordered flex items-center w-full mt-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                     className="w-4 h-4 opacity-70 mr-1"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
