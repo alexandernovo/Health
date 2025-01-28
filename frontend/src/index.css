@@ -218,11 +218,14 @@
 }
 .apexcharts-canvas svg {
   overflow: visible;
+  height: 200px;
 }
 
 .apexcharts-canvas svg foreignObject {
   overflow: visible;
+  z-index: 5;
 }
+
 .apexcharts-legend
 {
   top: 0 !important
