@@ -6,6 +6,7 @@ import { EkonsultaModel, initialEkonsultaModel } from '@/types/enkonsultaType';
 import axios from 'axios';
 import { DateToString, TimeToString12Hour, calculateAge } from '@/utils/DateFunction';
 import { AppointmentModel } from '@/types/appointmentType';
+import { getMiddleInitial } from '@/utils/CommonFunctions';
 
 interface EkonsultaReportProps {
     appointment_id?: string
@@ -107,7 +108,7 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                             <p className='text-[13px] font-semibold'>PERSONAL DETAILS</p>
                         </div>
                         <div className='p-1 pt-5'>
-                            <p className='text-[13px] font-semibold'>Patient Name: <span className='underline'>{appointment.lastname}, {appointment.firstname} {appointment.extension || ''}</span></p>
+                            <p className='text-[13px] font-semibold'>Patient Name: <span className='underline'>{appointment.lastname}, {appointment.firstname} {getMiddleInitial(appointment.middlename || '')} {appointment.extension || ''}</span></p>
                             <div className='flex items-center gap-5'>
                                 <p className='text-[13px] mt-1 font-semibold'>Birthdate: <span className='underline'>{DateToString(appointment.birthdate)}</span></p>
                                 <p className='text-[13px] mt-1 font-semibold'>Age: <span className='underline'>{calculateAge(appointment.birthdate)}</span></p>

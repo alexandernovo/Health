@@ -281,8 +281,9 @@ class AppointmentController extends Controller
     {
         $date = date('Y-m-d', strtotime($request->post('appointmentDate')));
         $data = Appointment::where("appointmentDate", $date)
-            ->where("appointmentStatus", 3)
+            ->whereIn("appointmentStatus", [3, 4])
             ->get();
+
 
         return response()->json([
             'message' => 'Date Fetch Successfully',

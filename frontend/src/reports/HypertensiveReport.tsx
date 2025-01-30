@@ -82,7 +82,7 @@ const HypertensiveReport: React.FC<HypertensiveReportProps> = (props: Hypertensi
                     <div className='mt-5 flex gap-2'>
                         <p className='text-[11px] flex flex-col w-[25%]  font-semibold gap-1 table'>
                             <span className='table-cell w-[40px]'>Name:</span>
-                            <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''} </span>
+                            <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} {getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''} </span>
                         </p>
 
                         <p className='text-[11px] flex flex-col w-[25%]  font-semibold gap-1 table'>

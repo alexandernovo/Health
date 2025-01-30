@@ -117,7 +117,7 @@ const FamilyPlanningReport: React.FC<FamilyPlanningReportProps> = (props: Family
                             <div className='flex gap-2'>
                                 <p className='text-[11px] flex w-[40%] font-semibold gap-1 table'>
                                     <span className='table-cell w-[95px] font-semibold'>NAME OF CLIENT:</span>
-                                    <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} ${getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''} </span>
+                                    <span className='table-cell border-b-[1px] font-semibold border-black'>{appointment.firstname} {getMiddleInitial(appointment.middlename || '')} {appointment.lastname} {appointment.extension || ''} </span>
                                 </p>
                                 <p className='text-[11px] flex flex-col w-[15%]  font-semibold gap-1 table'>
                                     <span className='table-cell border-b-[1px] font-semibold border-black'>{DateToString(appointment.birthdate)}</span>
