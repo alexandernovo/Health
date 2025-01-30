@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
     const token: string | null = localStorage.getItem("token");
 
     const customColors = [
-        '#1C4D9C','#F87171', '#1E8B2D', '#7F1D1D', '#C22B7A', '#B28D18', '#F59E0B', '#DB2777'
+        '#1C4D9C','#F87171', '#1E8B2D', '#7F1D1D', '#C22B7A', '#B28D18', '#F59E0B', '#0ea5e9'
     ];
 
     // Updated typeOfConsultation array with icons and labels
