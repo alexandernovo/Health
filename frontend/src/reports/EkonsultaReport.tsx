@@ -91,11 +91,11 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                             </div>
                             <div className='flex justify-start items-center w-[50%] gap-2'>
                                 <label className='text-[13px]'>Patient Type:</label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input checked={ekonsulta.patientType == true} type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">New</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.patientType == false} className="checkbox  checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">Old</span>
                                 </label>
@@ -163,11 +163,11 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                             <div className='flex w-[40%]'>
                                 <label className='font-semibold text-[13px]'>NHTS No.: {ekonsulta.NHTSNo}</label>
                             </div>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input checked={ekonsulta.NHTSClass == true} name='NHTSClass' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">Member</span>
                             </label>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input type="checkbox" checked={ekonsulta.NHTSClass == false} name='NHTSClass' className="checkbox  checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">Dependent</span>
                             </label>
@@ -176,11 +176,11 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                             <div className='flex w-[40%]'>
                                 <label className='font-semibold text-[13px]'>PHIC No.: {ekonsulta.PHICNo}</label>
                             </div>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input checked={ekonsulta.PHICClass == true} name='PHICClass' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">Member</span>
                             </label>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input checked={ekonsulta.PHICClass == false} name='PHICClass' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">Dependent</span>
                             </label>
@@ -234,36 +234,36 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                             </div>
                             <div className='w-[50%] p-1'>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.hospitalization} name='hospitalization' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Hospitalization</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.emphysema} name='emphysema' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Emphysema</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.pneumonia} name='pneumonia' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Pneumonia</span>
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.asthma} name='asthma' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Asthma</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.epilepsy} name='epilepsy' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Epilepsy/Seizure Disorder</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.thyroid} name='thyroid' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Thyroid Diseases</span>
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
                                     <div>
-                                        <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                             <input checked={ekonsulta.cancer} name='cancer' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">Cancer, specify organ</span>
                                         </label>
@@ -272,7 +272,7 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                         </p>
                                     </div>
                                     <div>
-                                        <label className="label cursor-pointer flex gap-2 justify-start">
+                                        <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                             <input checked={ekonsulta.hepatitis} name='hepatitis' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                             <span className="label-text text-[8px]">hepatitis, specify type</span>
                                         </label>
@@ -287,15 +287,15 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.cerebrovascular} name='cerebrovascular' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Cerebrovascular Disease</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.hyperlipidemia} name='hyperlipidemia' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Hyperlipidemia</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.TB} name='TB' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">TB, specify organ</span>
                                         <p className="text-[8px] underline">
@@ -304,16 +304,16 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.coronary} name='coronary' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Coronary Artery Disease</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.hypertension} name='hypertension' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Hypertension, highest Bp</span>
 
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.ifPTB} name='ifPTB' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">if PTB, what category</span>
                                         <p className="text-[8px] underline">
@@ -322,29 +322,29 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.diabetes} name='diabetes' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Diabetes Mellitus</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.pepticUlcer} name='pepticUlcer' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Peptic Ulcer Disease</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.liverDisease} name='liverDisease' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Liver Diseases</span>
                                     </label>
                                 </div>
                                 <div className='flex items-center'>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.minorsurgeries} name='minorsurgeries' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Minor Surgeries</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input checked={ekonsulta.COPD} name='COPD' type="checkbox" className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">COPD</span>
                                     </label>
-                                    <label className="label cursor-pointer flex gap-2">
+                                    <label className="label cursor-pointer flex gap-2 py-0">
                                         <input type="checkbox" checked={ekonsulta.Others} name='Others' className="checkbox  checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Others</span>
                                     </label>
@@ -381,22 +381,22 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                         <div className='flex gap-2 justify-between px-1'>
                             <div className='flex gap-2 items-center'>
                                 <label className='font-semibold text-[13px]'>Prostate Cancer Screening Done:</label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.prostateCancerScreeningDone == true} name='prostateCancerScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">Yes</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.prostateCancerScreeningDone == false} name='prostateCancerScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">No</span>
                                 </label>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <label className='font-semibold text-[13px]'>HIV/AIDS Screening Done:</label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hivAidsScreeningDone == true} name='hivAidsScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">Yes</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2">
+                                <label className="label cursor-pointer flex gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hivAidsScreeningDone == false} name='hivAidsScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[13px]">No</span>
                                 </label>
@@ -404,11 +404,11 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                         </div>
                         <div className='flex gap-2 items-center px-1'>
                             <label className='font-semibold text-[13px]'>Prostate Cancer Screening Done:</label>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input type="checkbox" checked={ekonsulta.prostateCancerScreeningDone == true} name='prostateCancerScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">Yes</span>
                             </label>
-                            <label className="label cursor-pointer flex gap-2">
+                            <label className="label cursor-pointer flex gap-2 py-0">
                                 <input type="checkbox" checked={ekonsulta.prostateCancerScreeningDone == false} name='prostateCancerScreeningDone' className="checkbox checkbox-default checkbox-xs" />
                                 <span className="label-text text-[13px]">No</span>
                             </label>
@@ -426,80 +426,80 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                         </div>
                         <div className='flex'>
                             <div className='w-1/3 border border-r-1'>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.expandedNewbornScreening} name='expandedNewbornScreening' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Expanded Newborn Screening</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.CBC2} name='CBC2' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">CBC</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.bloodType} name='bloodType' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Blood Type</span>
                                     <span className='label-text text-[8px]'>{ekonsulta.bloodTypeSpecify}</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.FBS} name='FBS' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">FBS</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.sputumMicroscopy} name='sputumMicroscopy' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Sputum Microscopy</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.slitSkinSmear} name='slitSkinSmear' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Slit-skin Smear</span>
                                 </label>
                             </div>
                             <div className='w-1/3 border border-r-1'>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.totalCholesterol} name='totalCholesterol' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Total Cholesterol</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.hdlCholesterol} name='hdlCholesterol' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">HDL Cholesterol</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.serumandBun} name='serumandBun' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Serum Creatinine and BUN</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.routineUrinalysis} name='routineUrinalysis' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Routine Urinalysis</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.katoKatz} name='katoKatz' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Kato-Katz for Schistosomiasis</span>
                                 </label>
-                                <label className="label cursor-pointer flex gap-2 justify-start">
+                                <label className="label cursor-pointer flex gap-2 justify-start py-0">
                                     <input type="checkbox" checked={ekonsulta.rapidPlasma} name='rapidPlasma' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Rapid Plasma Reagin For Syphilis</span>
                                 </label>
                             </div>
                             <div className='w-1/3 border'>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.igmAndIgG} name='igmAndIgG' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Igm and IgG Dengue Test</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.nonStructure} name='nonStructure' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Non-structure protein 1 (NS1)</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hepaB} name='hepaB' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Hepa B Rapid Test</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.fecalysis} name='fecalysis' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Fecalysis</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.malarialSmear} name='malarialSmear' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Malarial Smear</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.nucleicAndAmplification} name='nucleicAndAmplification' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Nucleic acid amplification test</span>
                                 </label>
@@ -512,116 +512,116 @@ export const EkonsultaReport: React.FC<EkonsultaReportProps> = ({ appointment_id
                         </div>
                         <div className='flex'>
                             <div className='w-1/5 border-r-[1px] border-black p-1'>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Allergy</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.allergy} name='allergy' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Asthma</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.cancer} name='cancer' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Cancer, specify organ</span>
                                 </label>
                                 <span className='text-[8px] underline ml-4 mt-0'>{ekonsulta.cancerSpecify}</span>
 
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.cerebrovascular} name='cerebrovascular' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Cerebrovascular Diseases</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.coronary} name='coronary' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Coronary Artery Disease</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.diabetes} name='diabetes' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Diabetes Melitus</span>
                                 </label>
                             </div>
                             <div className='w-1/5 border-r-[1px] border-black p-1'>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.emphysema} name='emphysema' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Emphysema</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.epilepsy} name='epilepsy' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Epilepsy/Seizure Disorder</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hepatitis} name='hepatitis' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Hepatitis, specify type</span>
                                 </label>
                                 {/* <span className='text-[8px] underline ml-4 mt-0'>{ekonsulta.hepatitisSpecify}</span> */}
 
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hyperlipidemia} name='hyperlipidemia' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Hyperlipidemia</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.hypertension} name='hypertension' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Hypertension, highest BP</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.pepticUlcer} name='pepticUlcer' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Peptic Ulcer Disease</span>
                                 </label>
                             </div>
                             <div className='w-1/5 border-r-[1px] border-black p-1'>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.pneumonia} name='pneumonia' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Pneumonia</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.thyroid} name='thyroid' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Thyroid Diseases</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.TB} name='TB' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">TB, specify organ</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.ifPTB} name='ifPTB' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">If PTB what category</span>
                                     <span className='text-[8px] underline ml-4 mt-0'>{ekonsulta.ifPTBSpecify}</span>
                                 </label>
-                                <label className="label cursor-pointer flex justify-start gap-2">
+                                <label className="label cursor-pointer flex justify-start gap-2 py-0">
                                     <input type="checkbox" checked={ekonsulta.Others} name='Others' className="checkbox checkbox-default checkbox-xs" />
                                     <span className="label-text text-[8px]">Others</span>
                                 </label>
                             </div>
                             <div className='w-1/5 border-r-[1px] border-black p-1'>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input type="checkbox" checked={ekonsulta.allergy} name='allergy' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Allergy (Food)</span>
                                     </div>
                                 </label>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input type="checkbox" checked={ekonsulta.DrugBl} name='DrugBl' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Allergy (Drug)</span>
                                     </div>
                                 </label>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input checked={ekonsulta.DisabilityBl} name='DisabilityBl' type="checkbox" className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Disability</span>
                                     </div>
                                 </label>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input type="checkbox" checked={ekonsulta.DrugBl} name='DrugBl' className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Drug</span>
                                     </div>
                                 </label>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input checked={ekonsulta.HandicapBl} name='HandicapBl' type="checkbox" className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Handicap</span>
                                     </div>
                                 </label>
-                                <label className="label cursor-pointer flex justify-between gap-2">
+                                <label className="label cursor-pointer flex justify-between gap-2 py-0">
                                     <div className="flex justify-start gap-2">
                                         <input checked={ekonsulta.ImpairmentBl} name='ImpairmentBl' type="checkbox" className="checkbox checkbox-default checkbox-xs" />
                                         <span className="label-text text-[8px]">Impairment</span>
