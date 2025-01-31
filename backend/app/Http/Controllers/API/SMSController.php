@@ -23,7 +23,7 @@ class SMSController extends Controller
             $client = new Client($basic);
 
             // Create and send the SMS
-            $message = new SMS($data['contact_number'], "Aligtos Brgy Health Station", $data['message']);
+            $message = new SMS($this->removePlus($data['contact_number']), "Aligtos Brgy Health Station", $data['message']);
             $response = $client->sms()->send($message);
 
             // Check if the message was sent successfully
@@ -39,6 +39,15 @@ class SMSController extends Controller
         }
     }
 
+    private function removePlus($contact)
+    {
+        if (!empty($contact) && strpos($contact, '+') === 0) {
+            $contact = ltrim($contact, '+');
+            return $contact;
+        }
+        return $contact;
+    }
+    
     public function reminders($message, $number)
     {
         $data_text = [
